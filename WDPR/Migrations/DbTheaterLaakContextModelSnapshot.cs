@@ -21,6 +21,14 @@ namespace WDPR.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("img")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("naam")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("id");
 
                     b.ToTable("Voorstelling");
