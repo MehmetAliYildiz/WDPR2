@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using WDPR.Models;
 
 public class DbTheaterLaakContext : DbContext
@@ -9,6 +9,7 @@ public class DbTheaterLaakContext : DbContext
     }
 
     public DbSet<Voorstelling> Voorstelling { get; set; }
+    public DbSet<Gebruiker> Gebruiker {get; set; }
     // public DbSet<Dag> Dag { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
