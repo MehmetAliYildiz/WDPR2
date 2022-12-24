@@ -9,9 +9,7 @@ public class DbTheaterLaakContext : DbContext
     }
 
     public DbSet<Voorstelling> Voorstelling { get; set; }
-    // public DbSet<Dag> Dag { get; set; }
     public DbSet<Gebruiker> Gebruiker { get; set; }
-
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
         builder.UseSqlite("Data Source=DbTheaterLaakContext2.db");

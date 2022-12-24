@@ -9,19 +9,46 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WDPR.Migrations
 {
     [DbContext(typeof(DbTheaterLaakContext))]
-    [Migration("20221220130422_1")]
-    partial class _1
+    [Migration("20221222140806_3")]
+    partial class _3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.1");
 
+            modelBuilder.Entity("WDPR.Models.Gebruiker", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("naam")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("wachtwoord")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Gebruiker");
+                });
+
             modelBuilder.Entity("WDPR.Models.Voorstelling", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("beschrijving")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("img")
                         .IsRequired()

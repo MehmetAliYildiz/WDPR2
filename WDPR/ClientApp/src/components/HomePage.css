@@ -1,0 +1,47 @@
+.Section1 {
+    background-image: url("../../src/HomeImages/HeroAfbeelding.png");
+    height: 540px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.Section1 h1 {
+    color: white;
+    font-weight: 900;
+    width: 70%;
+}
+
+.Logo {
+    width: 250px;
+    height: 250px;
+}
+
+.LogoDiv {
+    background-color: white;
+    border-radius: 10px;
+
+}
+
+.Section2 {
+    background-color: white;
+    height: 540px;
+    display: flex;
+    justify-content: center;
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.Section2 div {
+    display: block;
+    text-align: center;
+    background-color: #8B0001;
+    color: white;
+}
+
+.Icoon {
+    width: 100px;
+    height: 100px;
+}
