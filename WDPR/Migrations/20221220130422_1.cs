@@ -13,7 +13,9 @@ namespace WDPR.Migrations
                 columns: table => new
                 {
                     id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    img = table.Column<string>(type: "TEXT", nullable: false),
+                    naam = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
