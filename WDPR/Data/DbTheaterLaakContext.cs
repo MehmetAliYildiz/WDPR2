@@ -13,7 +13,7 @@ public class DbTheaterLaakContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
-        builder.UseSqlite("Data Source=DbTheaterLaakContext.db");
+        builder.UseSqlite("Data Source=DbTheaterLaakContext2.db");
     }
 
     protected override void OnModelCreating(ModelBuilder builder)

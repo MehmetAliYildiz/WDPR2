@@ -1,0 +1,53 @@
+#first {
+    width: 50%;
+    float: left;
+    height: 237px;
+}
+
+#second {
+    width: 50%;
+    float: right;
+    height: 237px;
+}
+
+img {
+    width: 405px;
+    height:237px;
+}
+
+#page1{
+    position: absolute;
+    text-align: center;
+    left: 17%;
+    font-weight: bold;
+}
+
+#page2 {
+    width:60% ;
+}
+.container {
+    position: relative;
+    width: 50%;
+    float: left;
+    margin:0;
+    padding:0;
+}
+
+.container2 {
+    position: relative;
+
+    float: left;
+    width: 80%;
+    margin:0;
+    padding:0;
+}
+
+*{
+
+    padding:0;
+    box-sizing: border-box;
+}
+
+.card-title{
+    text-align: center;
+}
