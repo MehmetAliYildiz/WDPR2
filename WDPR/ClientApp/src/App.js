@@ -1,5 +1,11 @@
-import Login from "./components/Login/Login"
-import {Routes, Route} from 'react-router-dom'
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Voorstelling from "./components/Voorstelling";
+import './custom.css';
+import Tickets from "./components/Tickets"
+import Homepage from './components/Homepage';
+import Doneer from './components/Doneer';
+import Inloggen from './components/Inloggen';
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
@@ -7,17 +13,17 @@ import {Routes, Route} from 'react-router-dom'
   crossorigin="anonymous"
 />
 
-
-function App() {
+export default function App() {
   return (
-    <div className='App'>
+    <>
       <Routes>
-        <Route path="/" element={<Login/>}/>
-
+        <Route path='/' element={<Homepage />}></Route>
+        <Route path='/Voorstelling' element={<Voorstelling />}></Route>
+        <Route path='/Tickets' element={<Tickets />}></Route>
+        <Route path='/doneren' element={<Doneer />}></Route>
+        <Route path='/inloggen' element={<Inloggen />}></Route>
       </Routes>
-    </div>
-
+    </>
   );
 }
 
-export default App;
