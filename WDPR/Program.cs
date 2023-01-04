@@ -1,22 +1,32 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using WDPR;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DbTheaterLaakContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DbTheaterLaakContext") ?? throw new InvalidOperationException("Connection string 'DbBoekingContext' not found.")));
-
 // Add services to the container.
 
 var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
-builder.Services.AddCors(o => o.AddPolicy(MyAllowSpecificOrigins, builder =>
+builder.Services.AddCors(options =>
 {
-    builder.AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader();
-}));
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("https://localhost:7260").AllowAnyMethod().AllowAnyHeader();
+                      });
+});
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
+
+var host = new WebHostBuilder()
+      .UseKestrel()
+      .UseContentRoot(Directory.GetCurrentDirectory())
+      .UseIISIntegration()
+      .UseStartup<Startup>()
+      .Build();
 
 var app = builder.Build();
 
@@ -42,4 +52,5 @@ app.MapControllerRoute(
 
 app.MapFallbackToFile("index.html");;
 
+host.Run();
 app.Run();

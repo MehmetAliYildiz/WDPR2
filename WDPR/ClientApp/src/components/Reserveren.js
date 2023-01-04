@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import ZaalLijst from './ZaalLijst';
 
 function Reserveren() {
     const [selectedObject, setSelectedObject] = useState(null);
@@ -8,13 +10,17 @@ function Reserveren() {
         navigateToWebForm(object);
     }
 
+    const navigate = useNavigate();
+
+    const handleButtonClick = (zaalId) => {
+        navigate(`/reserveren/zaal?zaalId=${zaalId}`);
+        console.log(`Button with zaalId ${zaalId} clicked`);
+    };
+
     return (
         <div>
             <h1>Select an object to rent:</h1>
-            <button onClick={() => handleObjectSelection('Bicycle')}>Zaal 1</button>
-            <button onClick={() => handleObjectSelection('Kayak')}>Zaal 2</button>
-            <button onClick={() => handleObjectSelection('Tent')}>Zaal 3</button>
-            <button onClick={() => handleObjectSelection('Camping stove')}>Zaal 4</button>
+            <ZaalLijst onButtonClick={handleButtonClick} />
             {selectedObject && <button onClick={() => navigateToWebForm(selectedObject)}>Next</button>}
         </div>
     );
