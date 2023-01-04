@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "bootstrap": "^5.2.3",
+    "react-router-dom": "^6.6.0"
+  },
+  "devDependencies": {
+    "node-sass": "^8.0.0"
+  }
+}

@@ -1,0 +1,72 @@
+.payment-options {
+    overflow-y: auto;
+    max-height: 30vh;
+}
+
+.popup-footer {
+    box-shadow: 0px -6px 3px -3px rgba(0, 0, 0, 0.1);
+
+    margin: 0px -36px 0px -36px;
+}
+
+.popup-footer-inner {
+    margin: 0px 36px 0px 36px;
+}
+
+.payment-option {
+    border-radius: 12px;
+    border-color: rgb(220, 220, 220);
+    border-width: 2px;
+    border-block-style: none;
+
+    padding: 12px 18px 12px 18px;
+    margin: 8px 0px 8px 0px;
+
+    text-align: left;
+    width: 98%;
+    background-color: rgb(240, 240, 240);
+}
+
+.payment-option-selected {
+    border-radius: 12px;
+    border-color: rgb(220, 220, 220);
+    border-width: 2px;
+    border-block-style: none;
+
+    padding: 12px 18px 12px 18px;
+    margin: 8px 0px 8px 0px;
+    box-shadow: 5px 0px 12px -2px rgba(0, 0, 0, 0.3);
+
+    text-align: left;
+    width: 98%;
+    background-color: rgb(255, 255, 255);
+}
+
+#done-button {
+    border: 0px;
+    border-radius: 8px;
+    padding: 8px 12px 8px 12px;
+
+    width: 100%;
+    color: rgb(255, 255, 255);
+    background-color: rgb(139, 0, 1);
+
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#done-button:hover {
+    background-color: rgb(180, 40, 43);
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
+}
+
+#done-button:active {
+    background-color: rgb(114, 0, 0);
+}
+
+
+#done-button:disabled {
+    opacity: 0.3;
+    box-shadow: none;
+    background-color: rgb(139, 0, 1);
+}
