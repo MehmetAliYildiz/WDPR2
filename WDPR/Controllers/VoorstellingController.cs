@@ -46,7 +46,7 @@ namespace WDPR.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutVoorstelling(int id, Voorstelling voorstelling)
         {
-            if (id != voorstelling.id)
+            if (id != voorstelling.Id)
             {
                 return BadRequest();
             }
@@ -80,7 +80,7 @@ namespace WDPR.Controllers
             _context.Voorstelling.Add(voorstelling);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetVoorstelling", new { id = voorstelling.id }, voorstelling);
+            return CreatedAtAction("GetVoorstelling", new { id = voorstelling.Id }, voorstelling);
         }
 
         // DELETE: api/Voorstelling/5
@@ -101,7 +101,7 @@ namespace WDPR.Controllers
 
         private bool VoorstellingExists(int id)
         {
-            return _context.Voorstelling.Any(e => e.id == id);
+            return _context.Voorstelling.Any(e => e.Id == id);
         }
     }
 }
