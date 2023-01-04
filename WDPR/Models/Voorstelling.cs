@@ -1,7 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations;
 namespace WDPR.Models;
-
 public class Voorstelling
 {
     [Key]
