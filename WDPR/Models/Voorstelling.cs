@@ -1,4 +1,4 @@
-﻿namespace WDPR.Models;
+﻿
 
 public class Voorstelling
 {
