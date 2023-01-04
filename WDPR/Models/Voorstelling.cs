@@ -1,11 +1,12 @@
+
 using System.Runtime;
 using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations;
 
 namespace WDPR.Models;
-
 public class Voorstelling
 {
+    [Key]
     public int Id { get; set; }
     public string Name { get; set; }
     public Zaal Zaal { get; set; }
