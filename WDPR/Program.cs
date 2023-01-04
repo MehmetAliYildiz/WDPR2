@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+
 using WDPR;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -43,13 +45,6 @@ builder.Services.AddAuthentication(opt =>
     };
 });
 
-builder.Services.AddCors(o => o.AddPolicy(MyAllowSpecificOrigins, builder =>
-{
-    builder.AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader();
-}));
-
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
 
@@ -86,4 +81,5 @@ app.MapControllerRoute(
 
 app.MapFallbackToFile("index.html");;
 
+host.Run();
 app.Run();
