@@ -19,9 +19,9 @@ export default function Homepage() {
                     </div>
                 </section>
                 <section className="Section2">
-                    <ContentKaart header="Doneren" icoon={Donate_icoon} actie="Doneer" paragraph="Steun Theater Laak om onze voorstellingen betaalbaar te houden voor iedereen!" link="/doneren" />
-                    <ContentKaart header="Tickets" icoon={Tickets_icoon} actie="Tickets" paragraph="Koop hier je tickets voor je favoriete voorstelling bij Theater Laak" link="/tickets" />
-                    <ContentKaart header="Inloggen" icoon={Login_icoon} actie="Inloggen" paragraph="Login bij je account" link="/inloggen" />
+                    <ContentKaart header="Doneren" icoon={Donate_icoon} actie="DONEER" paragraph="Steun Theater Laak om onze voorstellingen betaalbaar te houden voor iedereen!" link="/doneren" />
+                    <ContentKaart header="Tickets" icoon={Tickets_icoon} actie="TICKETS" paragraph="Koop hier je tickets voor je favoriete voorstelling bij Theater Laak" link="/tickets" />
+                    <ContentKaart header="Inloggen" icoon={Login_icoon} actie="INLOGGEN" paragraph="Login bij je account" link="/inloggen" />
                 </section>
                 <section className="Section3">
                     <div>
