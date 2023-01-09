@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DbTheaterLaakContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DbTheaterLaakContext") ?? throw new InvalidOperationException("Connection string 'DbBoekingContext' not found.")));
 
-var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 builder.Services.AddCors(options =>
 {
@@ -48,13 +48,6 @@ builder.Services.AddAuthentication(opt =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
 
-var host = new WebHostBuilder()
-      .UseKestrel()
-      .UseContentRoot(Directory.GetCurrentDirectory())
-      .UseIISIntegration()
-      .UseStartup<Startup>()
-      .Build();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -79,7 +72,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
-app.MapFallbackToFile("index.html");;
+app.MapFallbackToFile("index.html"); ;
 
-host.Run();
 app.Run();

@@ -17,6 +17,7 @@ body {
     color: white;
     font-weight: 900;
     width: 80%;
+    font-size: 5vw;
 }
 
 .Logo {
@@ -42,7 +43,8 @@ body {
     /* transform: translateY(150px); */
     width: 90%;
     height: 50px;
-    color: white;
+    color: black;
+    font-size: larger;
     background-color: #F39A05;
     border-radius: 10px;
     border: 0px;
@@ -68,6 +70,7 @@ body {
 .Section3 {
     background-image: url("../../src/HomeImages/Achtergrond_image_laag.png");
     height: 540px;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -90,7 +93,8 @@ body {
 
 .V2 {
     transform: translateY(0px);
-    width: 200px;
+    width: 60%;
+
 }
 
 @media screen and (max-width: 500px) {
@@ -98,6 +102,7 @@ body {
         background-image: url("../../src/HomeImages/Achtergrond_image_laag.png");
         height: 700px;
         display: flex;
+        width: 100%;
         /* align-items: center; */
         justify-content: space-between;
     }
@@ -106,7 +111,5 @@ body {
         color: white;
         font-weight: 500;
         width: 100%;
-        margin-top: 1%;
-        margin-bottom: 3%;
     }
 }
