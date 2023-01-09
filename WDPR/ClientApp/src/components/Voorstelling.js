@@ -15,13 +15,14 @@ function Voorstelling() {
             setPost(res.data);
             console.log(res.data);
         });
+        //api("Voorstelling")
     }, []);
 
     return (
         <div className="Voorstelling">
             <div>
                 <input
-                    type={"tex"}
+                    type={"text"}
                     placeholder={"voor naam van voorstelling in..."}
                     onChange={(e) => setSearchNaam(e.target.value)}
                 />
@@ -42,7 +43,6 @@ function Voorstelling() {
                             </div>
                         </div>
                         <div className="col">
-
                                     <div className="card-body">
                                         <p className="card-text">
                                             Lorem Ipsum is simply dummy text of the printing and typesetting industry.
@@ -51,24 +51,8 @@ function Voorstelling() {
                                             specimen book.
                                         </p>
                                     </div>
-
                         </div>
                     </div>
-                    // <div>
-                    //
-                    //     <div className={"container"}>
-                    //         <p id="page1" key={item.id}>{item.naam}</p>
-                    //         <img id="img" src={item.img} />
-                    //     </div>
-                    //     <div id="second">
-                    //         <div className={"container2"}>
-                    //         <p id={"page2"}>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    //             Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                    //             when an unknown printer took a galley of type and scrambled it to make a type
-                    //             specimen book.</p>
-                    //         </div>
-                    //     </div>
-                    // </div>
                 ))}
         </div>
     );
