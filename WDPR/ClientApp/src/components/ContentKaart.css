@@ -39,6 +39,7 @@
         border-style: solid;
         border-color: #F39A05;
         transition: all 100ms;
-
+        margin-left: 5px;
+        margin-right: 5px;
     }
 }

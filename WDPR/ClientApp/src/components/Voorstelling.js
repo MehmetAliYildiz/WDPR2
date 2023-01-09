@@ -8,7 +8,7 @@ function Voorstelling() {
     const [searchNaam, setSearchNaam] = useState("");
 
     useEffect(() => {
-        Axios.get("https://localhost:7260/api/Voorstelling").then((res) =>{
+        Axios.get("https://localhost:7260/api/Voorstelling").then((res) => {
             setPost(res.data);
             console.log(res.data);
         });
@@ -17,26 +17,28 @@ function Voorstelling() {
 
     return (
         <div className="Voorstelling">
-            <div>
-                <input
+            <div className="Zoekveld">
+                <p>Zoek Naar Voorstelling</p>
+                <input className="input"
                     type={"text"}
-                    placeholder={"voor naam van voorstelling in..."}
+                    placeholder={"Zoeken"}
                     onChange={(e) => setSearchNaam(e.target.value)}
                 />
             </div>
-            {post.filter((value) =>{
-                if (searchNaam === ""){
+            {post.filter((value) => {
+                if (searchNaam === "") {
                     return value;
                 } else if (value.name.toLowerCase().includes(searchNaam.toLowerCase())) {
                     return value
                 }
             }).map(item => (
-                <div className="row row-cols-1 row-cols-md-2 g-4">
+                //<div className="row row-cols-1 row-cols-md-2 g-4">
+                <div className="VoorstellingKaart">
 
                     <div className="col">
                         <div className="card">
                             <h5 className="card-title" key={item.Id}>{item.name}</h5>
-                            <img src={item.img} className="card-img-top" alt="..."/>
+                            <img src={item.img} className="card-img-top" alt="..." />
                         </div>
                     </div>
                     <div className="col">
