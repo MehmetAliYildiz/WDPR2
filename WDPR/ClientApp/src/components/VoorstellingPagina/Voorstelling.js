@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import "./Voorstelling.css";
+import ".//Voorstelling.css";
 import 'bootstrap/dist/css/bootstrap.css';
 function Voorstelling() {
 

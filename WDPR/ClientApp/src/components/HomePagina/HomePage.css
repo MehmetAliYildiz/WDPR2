@@ -3,7 +3,7 @@ body {
 }
 
 .Section1 {
-    background-image: url("../../src/HomeImages/HeroAfbeelding.png");
+    background-image: url(".//HomeImages/HeroAfbeelding.png");
     display: flex;
     height: 540px;
     width: 100%;
@@ -66,7 +66,7 @@ body {
 }
 
 .Section3 {
-    background-image: url("../../src/HomeImages/Achtergrond_image_laag.png");
+    background-image: url(".//HomeImages/Achtergrond_image_laag.png");
     height: 540px;
     display: flex;
     align-items: center;
@@ -95,7 +95,7 @@ body {
 
 @media screen and (max-width: 500px) {
     .Section3 {
-        background-image: url("../../src/HomeImages/Achtergrond_image_laag.png");
+        background-image: url(".//HomeImages/Achtergrond_image_laag.png");
         height: 700px;
         display: flex;
         /* align-items: center; */

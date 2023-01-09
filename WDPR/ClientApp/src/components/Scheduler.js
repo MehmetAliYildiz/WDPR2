@@ -1,10 +1,10 @@
 ﻿import React, { Component } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import Flatpickr from "react-flatpickr";
 import Popup from './Popup';
 import "./../style/FlatpickrCustom.css";
 import './../style/Scheduler.css';
+import Flatpickr from "react-flatpickr";
 
 class Scheduler extends Component {
     constructor(props) {
@@ -118,14 +118,14 @@ class Scheduler extends Component {
                 }
                 children.push(
                     <td key={j * i}>
-                        <button className="scheduler-row" style={{ height: "10vh", top: `${i * 10 + 2}vh`, position: "absolute"}} type="button" onClick={() => this.createAppointment(`${dateString} ${this.calcTime(i)}`, `${dateString} ${this.calcTime(i + 1)}`)}>
+                        <button className="scheduler-row" style={{ height: "10vh", top: `${i * 10 + 2}vh`, position: "absolute" }} type="button" onClick={() => this.createAppointment(`${dateString} ${this.calcTime(i)}`, `${dateString} ${this.calcTime(i + 1)}`)}>
                             {/* {`Row ${i + 1} ${this.calcTime(i)}`}*/}
                         </button>
                     </td>
                 )
             }
             //Create the parent and add the children
-            table.push(<tr key={ i }>{children}</tr>)
+            table.push(<tr key={i}>{children}</tr>)
         }
         return table
     }
@@ -203,7 +203,7 @@ class Scheduler extends Component {
     render() {
         const weekdayNames = ["Zondag", "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag"];
         const monthNames = ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December"]
-        
+
         let day = weekdayNames[this.state.date.getDay()]
         let month = monthNames[this.state.date.getMonth()]
         let dateString = `${day}, ${this.state.date.getDate()} ${month} ${this.state.date.getFullYear()}`;
@@ -257,7 +257,7 @@ class Scheduler extends Component {
                             <label>
                                 Afspraakduur
                             </label>
-                        <br/>
+                            <br />
                             <table>
                                 <tbody>
                                     <tr>
@@ -486,7 +486,7 @@ class Appointment extends Component {
     handleMouseMove = (event) => {
         if (this.state.transformState.dragging) {
             // De nieuwe positie zodat het element de muis volgt
-            let currentXActual = this.state.transformState.savedPosition.x +  this.getClientX(event) - this.state.transformState.initialMousePosition.x;
+            let currentXActual = this.state.transformState.savedPosition.x + this.getClientX(event) - this.state.transformState.initialMousePosition.x;
             let currentYActual = this.state.transformState.savedPosition.y + (this.getClientY(event) - this.state.transformState.initialMousePosition.y) / this.state.calcVars.supx;
             let currentYFloored = Math.floor(currentYActual / (this.state.calcVars.minimumTimeUH)) * this.state.calcVars.minimumTimeUH;
 
@@ -639,17 +639,17 @@ class Appointment extends Component {
             <div className="resizing-table">
                 <div className="resizing-table-row">
                     <div style={{ width: "10px", height: "10px", cursor: "nw-resize" }} onMouseDown={event => this.handleMouseDown(event, "nw")}></div>
-                    <div style={{ flex: 1, cursor: "n-resize" }}                        onMouseDown={event => this.handleMouseDown(event, "n")}> </div>
+                    <div style={{ flex: 1, cursor: "n-resize" }} onMouseDown={event => this.handleMouseDown(event, "n")}> </div>
                     <div style={{ width: "10px", height: "10px", cursor: "ne-resize" }} onMouseDown={event => this.handleMouseDown(event, "ne")}></div>
                 </div>
                 <div className="resizing-table-row" style={{ height: "100%" }}>
-                    <div style={{ width: "10px", cursor: "w-resize" }}                  onMouseDown={event => this.handleMouseDown(event, "w")}></div>
+                    <div style={{ width: "10px", cursor: "w-resize" }} onMouseDown={event => this.handleMouseDown(event, "w")}></div>
                     <div style={{ flex: 1, height: "100%", zIndex: "-1" }}>                                                                     </div>
-                    <div style={{ width: "10px", cursor: "e-resize" }}                  onMouseDown={event => this.handleMouseDown(event, "e")}></div>
+                    <div style={{ width: "10px", cursor: "e-resize" }} onMouseDown={event => this.handleMouseDown(event, "e")}></div>
                 </div>
                 <div className="resizing-table-row">
                     <div style={{ width: "10px", height: "10px", cursor: "sw-resize" }} onMouseDown={event => this.handleMouseDown(event, "sw")}></div>
-                    <div style={{ flex: 1, cursor: "s-resize" }}                        onMouseDown={event => this.handleMouseDown(event, "s")}> </div>
+                    <div style={{ flex: 1, cursor: "s-resize" }} onMouseDown={event => this.handleMouseDown(event, "s")}> </div>
                     <div style={{ width: "10px", height: "10px", cursor: "se-resize" }} onMouseDown={event => this.handleMouseDown(event, "se")}></div>
                 </div>
             </div>

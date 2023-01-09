@@ -1,8 +1,8 @@
 import React from "react";
-import Logo from "../../src/HomeImages/Logo_theater_laak_V2.png";
-import Donate_icoon from "../../src/HomeImages/Donate_icoon.png";
-import Login_icoon from "../../src/HomeImages/Login_icoon.png";
-import Tickets_icoon from "../../src/HomeImages/Ticket_Icoon.png";
+import Logo from ".//HomeImages/Logo_theater_laak_V2.png";
+import Donate_icoon from ".//HomeImages/Donate_icoon.png";
+import Login_icoon from ".//HomeImages/Login_icoon.png";
+import Tickets_icoon from ".//HomeImages/Ticket_Icoon.png";
 import ContentKaart from "./ContentKaart";
 import "./HomePage.css";
 
