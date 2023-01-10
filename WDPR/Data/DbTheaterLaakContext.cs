@@ -10,6 +10,7 @@ public class DbTheaterLaakContext : IdentityDbContext
     }
 
     public DbSet<Voorstelling> Voorstelling { get; set; }
+    public DbSet<Reservering> Reserveringen { get; set; }
     public DbSet<Gebruiker> Gebruiker { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)

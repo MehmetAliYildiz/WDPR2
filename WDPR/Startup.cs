@@ -31,7 +31,7 @@ namespace WDPR
             }));
 
             services.AddDbContext<DbTheaterLaakContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("DbTheaterLaakContext") ?? throw new InvalidOperationException("Connection string 'DbBoekingContext' not found.")));
+                options.UseSqlite(Configuration.GetConnectionString("DbTheaterLaakContext") ?? throw new InvalidOperationException("Connection string 'DbTheaterContext' not found.")));
             // Add services to the container.
             services.AddControllers();
 

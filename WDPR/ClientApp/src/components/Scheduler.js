@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react';
+import { unmountComponentAtNode } from 'react-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import Flatpickr from "react-flatpickr";
@@ -26,6 +27,17 @@ class Scheduler extends Component {
         this.setAppointmentPopupFalse = this.setAppointmentPopup.bind(this, false);
         this.handleAppointmentNameChange = this.handleAppointmentNameChange.bind(this);
         this.handleMouseMove = this.handleMouseMove.bind(this);
+    }
+
+    tryGetAppointment = () => {
+        let appointments = this.state.appointments;
+        for (let i = 0; i < appointments.length; i++) {
+            if (appointments[i].allowModify) {
+                return appointments[i];
+            }
+        }
+
+        return null;
     }
 
     componentDidMount = async () => {
@@ -78,6 +90,8 @@ class Scheduler extends Component {
     }
 
     createAppointment = (startDate, endDate) => {
+        if (this.tryGetAppointment() != null) return;
+
         this.state.selectedAppointment.startTime = new Date(startDate);
         this.state.selectedAppointment.endTime = new Date(endDate);
         this.state.selectedAppointment.name = "";
@@ -241,7 +255,7 @@ class Scheduler extends Component {
                 </header>
                 <div className="scheduler-body">
                     <div id="scheduler-back" className="scheduler-back" onMouseMove={handleMouseMove} style={{ position: "relative" }}>
-                        <AppointmentRenderer appointments={this.state.appointments} ref={ref} />
+                        <AppointmentRenderer appointments={this.state.appointments} ref={ref} scheduler={this} />
                         <table className="scheduler-content">
                             <tbody>
                                 <tr>
@@ -331,6 +345,7 @@ class AppointmentRenderer extends Component {
         super(props)
         this.state = {
             refs: [],
+            scheduler: props.scheduler,
             parentRef: React.createRef(),
             appointments: props.appointments,
             elements: [],
@@ -347,7 +362,14 @@ class AppointmentRenderer extends Component {
             for (let i = 0; i < this.props.appointments.length; i++) {
                 let ref = React.createRef();
                 el.push(
-                    <Appointment key={"appointment-" + this.props.appointments[i].id} appointment={this.props.appointments[i]} allAppointments={this.props.appointments} ref={ref} parentDivRef={this.state.parentRef} />
+                    <Appointment
+                        key={"appointment-" + this.props.appointments[i].id}
+                        appointment={this.props.appointments[i]}
+                        allAppointments={this.props.appointments} ref={ref}
+                        parentDivRef={this.state.parentRef}
+                        renderer={this}
+                        scheduler={this.state.scheduler}
+                        elementIndex={i} />
                 );
                 references.push(ref);
             }
@@ -361,6 +383,7 @@ class AppointmentRenderer extends Component {
 
     handleMouseMove = (event) => {
         for (let i = 0; i < this.state.refs.length; i++) {
+            if (this.state.refs[i].current == null) return;
             this.state.refs[i].current.handleMouseMove(event);
         }
     }
@@ -380,6 +403,9 @@ class Appointment extends Component {
         this.state = {
             appointment: props.appointment,
             allAppointments: props.allAppointments,
+            renderer: props.renderer,
+            scheduler: props.scheduler,
+            elementIndex: props.elementIndex,
             calcVars: {
                 su: 'vh', // Size unit
                 supx: 1,  // Size unit (in pixels)
@@ -392,6 +418,7 @@ class Appointment extends Component {
 
             buttonRef: React.createRef(),
             parentDivRef: props.parentDivRef,
+            outerDivRef: React.createRef(),
 
             transformState: {
                 dragging: false,
@@ -654,6 +681,21 @@ class Appointment extends Component {
         document.removeEventListener('mouseup', this.handleMouseUp);
     }
 
+    // Verwijder de huidige appointment
+    removeElement = () => {
+        this.state.renderer.setState({
+            elements: this.state.renderer.state.elements.filter((_, i) => i !== this.state.elementIndex)
+        });
+
+        this.state.scheduler.setState({
+            appointments: this.state.scheduler.state.appointments.filter(a => a !== this.state.appointment)
+        });
+
+        this.setState({
+            elementIndex: this.state.elementIndex - 1
+        });
+    };
+
     // Render de appointment
     render() {
         const deadEnd = (event) => { }
@@ -688,8 +730,17 @@ class Appointment extends Component {
             </div>
         );
 
+        const removeButton = (
+            <button title="Verwijder reservering" className="remove-button" onClick={this.removeElement}>
+                <svg viewBox="0 0 16 16" width="1.5em" height="1.5em" role="presentation" focusable="false" aria-hidden="false">
+                    <path d="M11.868 3.205L8 7.072 4.133 3.205l-.928.927L7.073 8l-3.868 3.867.928.928L8 8.927l3.868 3.868.927-.928L8.928 8l3.867-3.868-.927-.927z"></path>
+                </svg>
+            </button>
+        );
+
         return (
-            <div className="appointment-outer" style={buttonStyle} >
+            <div className="appointment-outer" style={buttonStyle} ref={this.state.outerDivRef}>
+                {appointment.allowModify ? removeButton : ""}
                 {appointment.allowModify ? resizingTable : ""}
                 <button type="button" ref={this.state.buttonRef} className="appointment" disabled={!appointment.allowModify} onMouseDown={moveMouseDown} style={{ cursor: cursorStyle }}>
                     <label style={{ cursor: cursorStyle }}>

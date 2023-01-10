@@ -18,7 +18,11 @@ class ReserveerForm extends Component
             roomId: null,
             redirect: null,
             paymentPopup: false,
-            paymentOption: null
+            paymentOption: null,
+            schedulerRef: React.createRef(),
+            validation: {
+                validAppointment: false
+            }
         };
         this.setPaymentPopupFalse = this.setPaymentPopup.bind(this, false);
     }
@@ -53,15 +57,6 @@ class ReserveerForm extends Component
         this.setState({ [event.target.name]: event.target.value });
     };
 
-    handleSubmit = event => {
-        const zaalId = this.getZaalId();
-
-        event.preventDefault();
-        console.log(
-            `Renting room with id ${zaalId} from ${this.state.startDate} to ${this.state.endDate}`
-        );
-    };
-
     getZaalId = event => {
         const queryParameters = new URLSearchParams(window.location.search)
         const zaalId = queryParameters.get("zaalId")
@@ -90,6 +85,25 @@ class ReserveerForm extends Component
         this.setState({ popupFocusFlag: value });
     }
 
+    validateAppointment = () => {
+        this.state.validation.validAppointment = this.state.schedulerRef.current.tryGetAppointment() != null;
+        this.setState({ validation: this.state.validation });
+
+        return this.state.validation.validAppointment;
+    }
+
+    handleSubmit = event => {
+        const zaalId = this.getZaalId();
+        if (!this.validateAppointment()) {
+            return;
+        }
+
+            event.preventDefault();
+        console.log(
+            `Renting room with id ${zaalId} from ${this.state.startDate} to ${this.state.endDate} and ${this.state.schedulerRef.current.tryGetAppointment() != null}`
+        );
+    };
+
     render() {
         if (this.state.redirect === true) {
             return (<Navigate to="/reserveren"/>);
@@ -99,7 +113,7 @@ class ReserveerForm extends Component
                 <h1>
                     Plan een reservering voor zaal {this.getZaalId()}
                 </h1>
-                <Scheduler date={new Date(`${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate() + 1}`)} />
+                <Scheduler ref={this.state.schedulerRef} date={new Date(`${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate() + 1}`)} />
                 <div key="paymentDiv">
                     <button type="button" onClick={() => this.setState({ paymentPopup: true })}>Click me!</button>
                     <Popup
