@@ -12,6 +12,7 @@ class Scheduler extends Component {
         this.state = {
             date: props.date,
             appointmentPopup: false,
+            popupFocusFlag: false,
             appointments: [],
             selectedAppointment: {
                 startTime: new Date(),
@@ -118,8 +119,10 @@ class Scheduler extends Component {
                 }
                 children.push(
                     <td key={j * i}>
-                        <button className="scheduler-row" style={{ height: "10vh", top: `${i * 10 + 2}vh`, position: "absolute"}} type="button" onClick={() => this.createAppointment(`${dateString} ${this.calcTime(i)}`, `${dateString} ${this.calcTime(i + 1)}`)}>
-                            {/* {`Row ${i + 1} ${this.calcTime(i)}`}*/}
+                        <button id={`scheduler-row-button-${i}`} className="scheduler-row" style={{ height: "10vh", top: `${i * 10 + 2}vh`, position: "absolute" }} type="button" onClick={() => this.createAppointment(`${dateString} ${this.calcTime(i)}`, `${dateString} ${this.calcTime(i + 1)}`)}>
+                            <div htmlFor={`scheduler-row-button-${i}`} style={{ display: "none" }}>
+                                {`maak een reservering van ${appendZero(Math.floor(i / 2))}:${appendZero((i * 30) % 60)} tot ${appendZero(Math.floor((i + 1) / 2))}:${appendZero(((i + 1) * 30) % 60)}`}
+                            </div>
                         </button>
                     </td>
                 )
@@ -200,6 +203,14 @@ class Scheduler extends Component {
         this.state.appointmentRef.current.handleMouseMove(event);
     }
 
+    handleBlur = () => {
+        this.setState({ popupFocusFlag: true })
+    }
+
+    setPopupFocusFlag = (value) => {
+        this.setState({ popupFocusFlag: value });
+    }
+
     render() {
         const weekdayNames = ["Zondag", "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag"];
         const monthNames = ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December"]
@@ -217,8 +228,9 @@ class Scheduler extends Component {
             <div className="scheduler">
                 <header>
                     <div className="flatpickr-outer-div">
-                        <label>Datum:&nbsp;</label>
+                        <label htmlFor="datePicker">Datum:&nbsp;</label>
                         <Flatpickr
+                            id="datePicker"
                             value={this.state.date}
                             onChange={date => this.setDate(date)}
                             options={{
@@ -232,6 +244,14 @@ class Scheduler extends Component {
                         <AppointmentRenderer appointments={this.state.appointments} ref={ref} />
                         <table className="scheduler-content">
                             <tbody>
+                                <tr>
+                                    <th style={{ display: "none" }}>
+                                        Starttijd
+                                    </th>
+                                    <th style={{ display: "none" }}>
+                                        Eindtijd
+                                    </th>
+                                </tr>
                                 {this.createTable(this.state.date)}
                             </tbody>
                         </table>
@@ -241,7 +261,12 @@ class Scheduler extends Component {
                 </footer>
 
                 {/* Popup om tijden te kiezen */}
-                <Popup trigger={this.state.appointmentPopup} setTrigger={this.setAppointmentPopup}>
+                <Popup
+                    trigger={this.state.appointmentPopup}
+                    setTrigger={this.setAppointmentPopup}
+                    popupFocusFlag={this.state.popupFocusFlag}
+                    setPopupFocusFlag={this.setPopupFocusFlag}
+                >
                     <form onSubmit={this.handleAppointmentSubmit}>
                         <div>
                             <label>
@@ -260,6 +285,14 @@ class Scheduler extends Component {
                         <br/>
                             <table>
                                 <tbody>
+                                    <tr>
+                                        <th style={{ display: "none" }}>
+                                            Starttijd
+                                        </th>
+                                        <th style={{display: "none"}}>
+                                            Eindtijd
+                                        </th>
+                                    </tr>
                                     <tr>
                                         <td>
                                             <label>
@@ -283,7 +316,7 @@ class Scheduler extends Component {
                                 </tbody>
                             </table>
                         </div>
-                        <button onClick={this.handleAppointmentSubmit}>
+                        <button onClick={this.handleAppointmentSubmit} onBlur={this.handleBlur}>
                             Klaar
                         </button>
                     </form>
