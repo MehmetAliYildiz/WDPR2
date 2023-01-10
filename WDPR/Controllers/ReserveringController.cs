@@ -18,30 +18,15 @@ namespace WDPR.Controllers
 
 
         [HttpGet("{datum}")]
-        public IEnumerable<Reservering> GetAll([FromRoute] string datum)
+        public IActionResult GetAll([FromRoute] string datum)
         {
-            var data = new List<Reservering> {
-                new Reservering(0)
-                {
-                    StartTijd = DateTime.Now.AddHours(+2),
-                    EindTijd = DateTime.Now,
-                    Naam = "Rapsessie"
-                },
-                new Reservering(1)
-                {
-                    StartTijd = DateTime.Now.AddHours(24),
-                    EindTijd = DateTime.Now.AddHours(26),
-                    Naam = "Workshop"
-                },
-                new Reservering(2)
-                {
-                    StartTijd = DateTime.Now.AddDays(1).AddHours(2),
-                    EindTijd = DateTime.Now.AddDays(1),
-                    Naam = "Test"
-                }
-            };
+            DateTime date;
+            if (!DateTime.TryParse(datum, out date))
+            {
+                return BadRequest("\"" + datum + "\" was not recognized as a valid date");
+            }
 
-            return data.Where(r => r.StartTijd.Date.ToString().Equals(DateTime.Parse(datum).ToString()));
+            return Ok(_context.Reserveringen.Where(r => r.StartTijd.Date == DateTime.Parse(datum).Date));
         }
 
         [HttpPost("create")]
@@ -53,9 +38,9 @@ namespace WDPR.Controllers
             }
 
             var overlappingEvents = _context.Reserveringen
-                .Where(r => (r.StartTijd > nieuweReservering.StartTijd && r.StartTijd < nieuweReservering.EindTijd) // [---[##]==]
-                         || (r.EindTijd > nieuweReservering.StartTijd && r.EindTijd < nieuweReservering.EindTijd)   // [==[##]---]
-                         || (r.StartTijd < nieuweReservering.StartTijd && r.EindTijd > nieuweReservering.EindTijd)) // [==[######]==]
+                .Where(r => (r.StartTijd > nieuweReservering.StartTijd && r.StartTijd < nieuweReservering.EindTijd)   // [---[##]==]
+                         || (r.EindTijd > nieuweReservering.StartTijd && r.EindTijd < nieuweReservering.EindTijd)     // [==[##]---]
+                         || (r.StartTijd <= nieuweReservering.StartTijd && r.EindTijd >= nieuweReservering.EindTijd)) // [==[######]==] of [[####]]
                 .ToList();
 
             if (overlappingEvents.Any())

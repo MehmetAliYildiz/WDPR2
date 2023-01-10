@@ -11,12 +11,12 @@ namespace WDPR.Models
         public DateTime EindTijd { get; set; }
         public Bestelling Bestelling { get; set; }
         //public Gebruiker Gebruiker { get; set; }
-        public IEnumerable<Zaal> Zalen { get; set; }
+        public Zaal Zaal { get; set; }
 
         public Reservering(int id) {
             Id = id;
             Bestelling = new Bestelling();
-            Zalen = new List<Zaal>();
+            Zaal = new Zaal(0);
             Naam = "";
         }
     }
