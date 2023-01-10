@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ZaalLijst from './ZaalLijst';
+import Footer from "./navFoot/Footer";
+import NavBar from "./navFoot/navbar";
 
 function Reserveren() {
     const [selectedObject, setSelectedObject] = useState(null);
@@ -19,20 +21,12 @@ function Reserveren() {
 
     return (
         <div>
+            <NavBar></NavBar>
             <h1>Select an object to rent:</h1>
             <ZaalLijst onButtonClick={handleButtonClick} />
             {selectedObject && <button onClick={() => navigateToWebForm(selectedObject)}>Next</button>}
+            <Footer style={{ bottom: "0%", position: "fixed", width: "100vw" }} />
         </div>
-    );
-}
-
-function WebFormPage({ selectedObject }) {
-    return (
-        <form>
-            <input type="hidden" name="selectedObject" value={selectedObject} />
-            {/* other form fields go here */}
-            <button type="submit">Submit</button>
-        </form>
     );
 }
 

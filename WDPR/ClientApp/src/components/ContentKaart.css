@@ -23,6 +23,7 @@
 .ContentKaart p {
     height: 50px;
     padding-bottom: 200px;
+    font-weight: 800;
 }
 
 @media screen and (max-width: 500px) {
@@ -39,6 +40,7 @@
         border-style: solid;
         border-color: #F39A05;
         transition: all 100ms;
-
+        margin-left: 5px;
+        margin-right: 5px;
     }
 }
