@@ -97,7 +97,6 @@ class ReserveerForm extends Component
             return (<Navigate to="/reserveren"/>);
         }
         return (
-        <>
             <div>
                 <NavBar></NavBar>
                 <h1>
@@ -120,7 +119,7 @@ class ReserveerForm extends Component
                                 onClick={() => this.setState({ paymentOption: "iDeal" })}
                                 className={this.selectedStyle(this.state.paymentOption, "iDeal")}
                             >
-                                <img src="img_girl.jpg" alt="Girl in a jacket" width="500" height="600"/> 
+                                <img src="img_girl.jpg" alt="Girl in a jacket" width="500" height="600" />
                                 <p>
                                     iDeal
                                 </p>
@@ -155,7 +154,7 @@ class ReserveerForm extends Component
                                     onClick={() => this.setState({ paymentOption: "iDeal" })}
                                     className={this.selectedStyle(this.state.paymentOption, "iDeal")}
                                 >
-                                    <img src="img_girl.jpg" alt="Girl in a jacket" width="500" height="600"/> 
+                                    <img src="img_girl.jpg" alt="Girl in a jacket" width="500" height="600" />
                                     <p>
                                         iDeal
                                     </p>
@@ -196,13 +195,13 @@ class ReserveerForm extends Component
                                     </button>
                                 </div>
                             </footer>
-                        </Popup>
-                    </div>
+                        </footer>
+                    </Popup>
+                </div>
 
-                    <button type="submit">Rent Room</button>
-                </form>
+                <button type="submit">Rent Room</button>
                 <Footer></Footer>
-            </>
+            </div>
         );
     }
 }

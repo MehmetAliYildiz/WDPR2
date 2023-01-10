@@ -18,7 +18,7 @@ function Footer(props) {
         <ul className="list-unstyled ">
           <li>
             <a className="mb-0" href="/">
-              <img src={"img/Logo_theater_laak_V2 (1).png"} style={{width: "150px", height: '100px'}}  alt="theater laak logo"/>
+              <img src={"img/Logo_theater_laak_V2 (1).png"} style={{width: "128px", height: '128px'}}  alt="theater laak logo"/>
             </a>
           </li>
         
