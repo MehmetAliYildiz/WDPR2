@@ -82,16 +82,32 @@ class ReserveerForm extends Component
         return value == desiredValue ? "payment-option-selected" : "payment-option";
     }
 
+    handleBlur = () => {
+        this.setState({ popupFocusFlag: true })
+    }
+
+    setPopupFocusFlag = (value) => {
+        this.setState({ popupFocusFlag: value });
+    }
+
     render() {
         if (this.state.redirect === true) {
             return (<Navigate to="/reserveren"/>);
         }
         return (
-            <form onSubmit={this.handleSubmit}>
+            <div>
+                <h1>
+                    Plan een reservering voor zaal {this.getZaalId()}
+                </h1>
                 <Scheduler date={new Date(`${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate() + 1}`)} />
                 <div key="paymentDiv">
                     <button type="button" onClick={() => this.setState({ paymentPopup: true })}>Click me!</button>
-                    <Popup trigger={this.state.paymentPopup} setTrigger={this.setPaymentPopup}>
+                    <Popup
+                        trigger={this.state.paymentPopup}
+                        setTrigger={this.setPaymentPopup}
+                        popupFocusFlag={this.state.popupFocusFlag}
+                        setPopupFocusFlag={this.setPopupFocusFlag}
+                    >
                         <h2>Payment methods</h2>
                         <br />
                         <div className="payment-options" name="Scrollable Payment Selection Box">
@@ -144,8 +160,8 @@ class ReserveerForm extends Component
                     </Popup>
                 </div>
 
-                <button type="submit">Rent Room</button>
-            </form>
+                <button type="submit" onClick={this.handleSubmit}>Rent Room</button>
+            </div>
         );
     }
 }
