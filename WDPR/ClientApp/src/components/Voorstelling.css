@@ -1,100 +1,43 @@
-/* #first {
-    width: 50%;
-    float: left;
-    height: 237px;
-}
-
-#second {
-    width: 50%;
-    float: right;
-    height: 237px;
-}
-
-img {
-    width: 405px;
-    height: 237px;
-}
-
-#page1 {
-    position: absolute;
-    text-align: center;
-    left: 17%;
-    font-weight: bold;
-}
-
-#page2 {
-    width: 60%;
-}
-
-.container {
-    position: relative;
-    width: 50%;
-    float: left;
-    margin: 0;
-    padding: 0;
-}
-
-.container2 {
-    position: relative;
-
-    float: left;
-    width: 80%;
-    margin: 0;
-    padding: 0;
-}
-
-* {
-
-    padding: 0;
-    box-sizing: border-box;
-}
-
-.card-title {
-    text-align: center;
-} */
-body {
-    background-color: #F39A05;
-}
-
-
-
-
 .Voorstelling {
     padding-left: 20px;
     padding-right: 20px;
     display: inline-block;
+    color: black;
 }
 
 .VoorstellingKaart {
+    display: flex;
     align-items: center;
     margin: 20px;
-    max-width: 400px;
     padding: 0px;
+    color: black;
 
 }
 
 .card {
-    background-color: #8B0001;
+    background-color: #F39A05;
     justify-content: center;
     align-items: center;
     border-width: 0px;
     border-radius: 0px;
     border-width: 20px;
+    color: black;
 }
 
 card-title {
     justify-content: center;
+    color: black;
 }
 
 .col {
-    justify-content: center;
     border-radius: 0px;
+    color: black;
 }
 
 .card-body {
     color: black;
     font-weight: 900;
-    text-align: center;
+    text-align: left;
     margin: 20px;
 }
 
@@ -106,6 +49,8 @@ card-title {
 
 .card-title {
     color: white;
+    color: black;
+    font-weight: 900;
 }
 
 .Zoekveld {
@@ -124,14 +69,23 @@ card-title {
     border-color: black;
 }
 
-@media screen and (max-width: 5000px) {
+@media screen and (max-width: 850px) {
     .VoorstellingKaart {
         display: inline-block;
         text-align: center;
-        background-color: #8B0001;
+        background-color: #F39A05;
+        margin: 0px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .Voorstelling {
+        padding-left: 5px;
+        padding-right: 5px;
     }
 
     .card-body {
-        color: white
+        color: black;
+        text-align: center;
     }
 }
