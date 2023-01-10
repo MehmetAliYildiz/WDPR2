@@ -6,11 +6,14 @@ import Tickets_icoon from "../../src/HomeImages/Ticket_Icoon.png";
 import Zaal1 from "../../src/HomeImages/Zaal_1.jpg";
 import { Link } from 'react-router-dom';
 import ContentKaart from "./ContentKaart";
+import Footer from "./navFoot/Footer";
+import NavBar from "./navFoot/navbar";
 import "./HomePage.css";
 
 export default function Homepage() {
     return (
         <>
+            <NavBar></NavBar>
             <body>
                 <section className="Section1">
                     <div>
@@ -51,6 +54,7 @@ export default function Homepage() {
                     </div>
                 </section>
             </body>
+            <Footer/>
         </>
     )
 }

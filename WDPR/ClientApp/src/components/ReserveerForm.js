@@ -5,6 +5,8 @@ import { useSearchParams } from "react-router-dom";
 
 import Scheduler from './Scheduler';
 import Popup from './Popup';
+import Footer from "./navFoot/Footer";
+import NavBar from "./navFoot/navbar";
 import './../style/ReserveerForm.css'
 
 
@@ -87,65 +89,69 @@ class ReserveerForm extends Component
             return (<Navigate to="/reserveren"/>);
         }
         return (
-            <form onSubmit={this.handleSubmit}>
-                <Scheduler date={new Date(`${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate() + 1}`)} />
-                <div key="paymentDiv">
-                    <button type="button" onClick={() => this.setState({ paymentPopup: true })}>Click me!</button>
-                    <Popup trigger={this.state.paymentPopup} setTrigger={this.setPaymentPopup}>
-                        <h2>Payment methods</h2>
-                        <br />
-                        <div className="payment-options" name="Scrollable Payment Selection Box">
-                            <button
-                                type="button"
-                                onClick={() => this.setState({ paymentOption: "iDeal" })}
-                                className={this.selectedStyle(this.state.paymentOption, "iDeal")}
-                            >
-                                <img src="img_girl.jpg" alt="Girl in a jacket" width="500" height="600"/> 
-                                <p>
-                                    iDeal
-                                </p>
-                            </button><br />
-                            <button
-                                type="button"
-                                onClick={() => this.setState({ paymentOption: "PayPal" })}
-                                className={this.selectedStyle(this.state.paymentOption, "PayPal")}
-                            >
-                                PayPal
-                            </button><br />
-                            <button
-                                type="button"
-                                onClick={() => this.setState({ paymentOption: "Credit" })}
-                                className={this.selectedStyle(this.state.paymentOption, "Credit")}
-                            >
-                                Credit
-                            </button><br />
-                            <button
-                                type="button"
-                                onClick={() => this.setState({ paymentOption: "Other" })}
-                                className={this.selectedStyle(this.state.paymentOption, "Other")}
-                            >
-                                Other
-                            </button><br />
-                        </div>
-                        <footer className="popup-footer">
-                            <div className="popup-footer-inner">
-                                <br />
+            <>
+                <NavBar></NavBar>
+                <form onSubmit={this.handleSubmit}>
+                    <Scheduler date={new Date(`${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate() + 1}`)} />
+                    <div key="paymentDiv">
+                        <button type="button" onClick={() => this.setState({ paymentPopup: true })}>Click me!</button>
+                        <Popup trigger={this.state.paymentPopup} setTrigger={this.setPaymentPopup}>
+                            <h2>Payment methods</h2>
+                            <br />
+                            <div className="payment-options" name="Scrollable Payment Selection Box">
                                 <button
                                     type="button"
-                                    disabled={!this.state.paymentOption}
-                                    onClick={this.setPaymentPopupFalse}
-                                    id="done-button"
-                                    name="Click to finish selecting payment"
+                                    onClick={() => this.setState({ paymentOption: "iDeal" })}
+                                    className={this.selectedStyle(this.state.paymentOption, "iDeal")}
                                 >
-                                    Klaar
-                                </button>
+                                    <img src="img_girl.jpg" alt="Girl in a jacket" width="500" height="600"/> 
+                                    <p>
+                                        iDeal
+                                    </p>
+                                </button><br />
+                                <button
+                                    type="button"
+                                    onClick={() => this.setState({ paymentOption: "PayPal" })}
+                                    className={this.selectedStyle(this.state.paymentOption, "PayPal")}
+                                >
+                                    PayPal
+                                </button><br />
+                                <button
+                                    type="button"
+                                    onClick={() => this.setState({ paymentOption: "Credit" })}
+                                    className={this.selectedStyle(this.state.paymentOption, "Credit")}
+                                >
+                                    Credit
+                                </button><br />
+                                <button
+                                    type="button"
+                                    onClick={() => this.setState({ paymentOption: "Other" })}
+                                    className={this.selectedStyle(this.state.paymentOption, "Other")}
+                                >
+                                    Other
+                                </button><br />
                             </div>
-                        </footer>
-                    </Popup>
-                </div>
+                            <footer className="popup-footer">
+                                <div className="popup-footer-inner">
+                                    <br />
+                                    <button
+                                        type="button"
+                                        disabled={!this.state.paymentOption}
+                                        onClick={this.setPaymentPopupFalse}
+                                        id="done-button"
+                                        name="Click to finish selecting payment"
+                                    >
+                                        Klaar
+                                    </button>
+                                </div>
+                            </footer>
+                        </Popup>
+                    </div>
 
-                <button type="submit">Rent Room</button>
-            </form>
+                    <button type="submit">Rent Room</button>
+                </form>
+                <Footer></Footer>
+            </>
         );
     }
 }
