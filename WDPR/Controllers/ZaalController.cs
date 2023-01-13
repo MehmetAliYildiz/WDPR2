@@ -6,9 +6,9 @@ namespace WDPR.Controllers{
     public class ZaalMetStoelnummers : Zaal
     {
 
-        public int eersteRangs;
-        public int tweedeRangs;
-        public int derderangs;
+        public int? eersteRangs { get; set; }
+        public int? tweedeRangs { get; set; }
+        public int? derdeRangs { get; set; }
 
         public ZaalMetStoelnummers(int id) : base(id)
         {
@@ -31,6 +31,10 @@ namespace WDPR.Controllers{
         [HttpGet]
         public IEnumerable<Zaal> GetZaal()
         {
+            foreach(Stoel s in _context.Stoel)
+            {
+                Console.WriteLine(s.Id);
+            }
             return _context.Zaal;
         }
 
@@ -44,27 +48,44 @@ namespace WDPR.Controllers{
         [HttpPost]
         public IActionResult PostZaal([FromBody] ZaalMetStoelnummers zms)
         {
-        Zaal nieuweZaal = new Zaal(zms.Id);
-        List<Stoel> lijst = new List<Stoel>();
+            Zaal nieuweZaal = new Zaal(zms.Id);
+            nieuweZaal.Stoelen = new List<Stoel>();
+            _context.Zaal.Add(nieuweZaal);
+            _context.SaveChangesAsync();
 
-        for (int i = 0; i < zms.eersteRangs; i++)
-        {
+            for (int i = 0; i < zms.eersteRangs; i++)
+            {
+                Stoel nieuweStoel = new Stoel(){
+                    Status = "Vrij",
+                    Row = 0,
+                    Rang = 1
+                };
+                nieuweZaal.Stoelen.Add(nieuweStoel);
+            }
+            for (int i = 0; i < zms.tweedeRangs; i++)
+            {
+                Stoel nieuweStoel = new Stoel()
+                {
+                    Status = "Vrij",
+                    Row = 0,
+                    Rang = 2
+                };
+                nieuweZaal.Stoelen.Add(nieuweStoel);
+            }
+            for (int i = 0; i < zms.derdeRangs; i++)
+            {
+                Stoel nieuweStoel = new Stoel()
+                {
+                    Status = "Vrij",
+                    Row = 0,
+                    Rang = 3
+                };
+                nieuweZaal.Stoelen.Add(nieuweStoel);
+            }
 
-            Stoel nieuweStoel = new Stoel(){
-                Status = "Vrij",
-                Row = 0,
-                Rang = 1
-            };
-            _context.Stoel.Add(nieuweStoel);
-            _context.SaveChanges();
-            lijst.Add(nieuweStoel);
+            _context.SaveChangesAsync();
 
-        }
-        nieuweZaal.Stoelen = lijst;
-
-        _context.Zaal.Add(nieuweZaal);
-
-        return Ok();
+            return BadRequest();
         }
     }
 }

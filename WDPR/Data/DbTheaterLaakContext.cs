@@ -23,6 +23,9 @@ public class DbTheaterLaakContext : IdentityDbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+
+        builder.Entity<Zaal>()
+            .HasMany(z => z.Stoelen);
     }
 
 
