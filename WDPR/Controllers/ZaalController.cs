@@ -53,39 +53,30 @@ namespace WDPR.Controllers{
             _context.Zaal.Add(nieuweZaal);
             _context.SaveChangesAsync();
 
-            for (int i = 0; i < zms.eersteRangs; i++)
+            for (int i = 0; i < zms.eersteRangs + zms.tweedeRangs + zms.derdeRangs; i++)
             {
+                int rang = 0;
+                if (i < zms.eersteRangs)
+                {
+                    rang = 1;
+                } else if (i < zms.eersteRangs + zms.tweedeRangs)
+                {
+                    rang = 2;
+                } else
+                {
+                    rang = 3;
+                }
                 Stoel nieuweStoel = new Stoel(){
                     Status = "Vrij",
                     Row = 0,
-                    Rang = 1
-                };
-                nieuweZaal.Stoelen.Add(nieuweStoel);
-            }
-            for (int i = 0; i < zms.tweedeRangs; i++)
-            {
-                Stoel nieuweStoel = new Stoel()
-                {
-                    Status = "Vrij",
-                    Row = 0,
-                    Rang = 2
-                };
-                nieuweZaal.Stoelen.Add(nieuweStoel);
-            }
-            for (int i = 0; i < zms.derdeRangs; i++)
-            {
-                Stoel nieuweStoel = new Stoel()
-                {
-                    Status = "Vrij",
-                    Row = 0,
-                    Rang = 3
+                    Rang = rang
                 };
                 nieuweZaal.Stoelen.Add(nieuweStoel);
             }
 
             _context.SaveChangesAsync();
 
-            return BadRequest();
+            return Ok();
         }
     }
 }
