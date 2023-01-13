@@ -4,6 +4,5 @@
     {
         public int Id { get; set; }
         public float Bedrag { get; set; }
-        //public Gebruiker Gebruiker { get; set; }
     }
 }

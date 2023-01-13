@@ -48,13 +48,6 @@ builder.Services.AddAuthentication(opt =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
 
-var host = new WebHostBuilder()
-      .UseKestrel()
-      .UseContentRoot(Directory.GetCurrentDirectory())
-      .UseIISIntegration()
-      .UseStartup<Startup>()
-      .Build();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -81,5 +74,4 @@ app.MapControllerRoute(
 
 app.MapFallbackToFile("index.html");;
 
-host.Run();
 app.Run();

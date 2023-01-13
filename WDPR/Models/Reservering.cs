@@ -10,7 +10,6 @@ namespace WDPR.Models
         public DateTime StartTijd { get; set; }
         public DateTime EindTijd { get; set; }
         public Bestelling Bestelling { get; set; }
-        //public Gebruiker Gebruiker { get; set; }
         public IEnumerable<Zaal> Zalen { get; set; }
 
         public Reservering(int id) {

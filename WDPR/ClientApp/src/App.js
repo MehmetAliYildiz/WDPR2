@@ -8,6 +8,7 @@ import Doneer from './components/DonatiePagina/Doneer';
 import Login from './components/Login/Login';
 import Reserveren from './components/Reserveren'
 import ReserveerForm from './components/ReserveerForm'
+import StoelenTesten from './components/StoelenReserveren/StoelenTesten';
 
 < link
   rel="stylesheet"
