@@ -29,13 +29,16 @@ namespace WDPR.Controllers
             return Ok(_context.Reserveringen.Where(r => r.StartTijd.Date == DateTime.Parse(datum).Date));
         }
 
-        [HttpPost("create")]
+        [HttpPost("post")]
         public IActionResult Create([FromBody] Reservering nieuweReservering)
         {
             if (nieuweReservering.StartTijd >= nieuweReservering.EindTijd)
             {
-                return BadRequest("Start time must be before end time");
+                return BadRequest("Starttijd moet voor eindtijd zijn");
             }
+
+            nieuweReservering.StartTijd = nieuweReservering.StartTijd.AddHours(1);
+            nieuweReservering.EindTijd = nieuweReservering.EindTijd.AddHours(1);
 
             var overlappingEvents = _context.Reserveringen
                 .Where(r => (r.StartTijd > nieuweReservering.StartTijd && r.StartTijd < nieuweReservering.EindTijd)   // [---[##]==]
@@ -45,7 +48,7 @@ namespace WDPR.Controllers
 
             if (overlappingEvents.Any())
             {
-                return BadRequest("Overlapping events found in the database");
+                return BadRequest("Overlappende reserveringen gevonden in database");
             }
 
             _context.Reserveringen.Add(nieuweReservering);
