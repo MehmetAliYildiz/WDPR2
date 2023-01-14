@@ -51,8 +51,4 @@ app.MapControllerRoute(
 
 app.MapFallbackToFile("index.html");;
 
-<<<<<<< HEAD
 app.Run();
-=======
-app.Run();
->>>>>>> ffbcf60ba9f166985ed2f6b5f047cd4b5264447e

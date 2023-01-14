@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WDPR.Migrations
 {
     [DbContext(typeof(DbTheaterLaakContext))]
-    [Migration("20230111111920_2")]
-    partial class _2
+    [Migration("20230114155229_1")]
+    partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -210,32 +210,6 @@ namespace WDPR.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ReserveringZaal", b =>
-                {
-                    b.Property<int>("ReserveringenId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ZalenZaalId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ReserveringenId", "ZalenZaalId");
-
-                    b.HasIndex("ZalenZaalId");
-
-                    b.ToTable("ReserveringZaal");
-                });
-
-            modelBuilder.Entity("WDPR.Models.Band", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Band");
-                });
-
             modelBuilder.Entity("WDPR.Models.Bestelling", b =>
                 {
                     b.Property<int>("Id")
@@ -292,31 +266,14 @@ namespace WDPR.Migrations
                     b.Property<DateTime>("StartTijd")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("ZaalId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BestellingId");
 
-                    b.ToTable("Reservering");
-                });
-
-            modelBuilder.Entity("WDPR.Models.Stoel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Rang")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("ZaalId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ZaalId");
-
-                    b.ToTable("Stoel");
+                    b.ToTable("Reserveringen");
                 });
 
             modelBuilder.Entity("WDPR.Models.Voorstelling", b =>
@@ -325,8 +282,8 @@ namespace WDPR.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("BandId")
-                        .HasColumnType("INTEGER");
+                    b.Property<DateTime>("Datum")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Img")
                         .IsRequired()
@@ -336,30 +293,13 @@ namespace WDPR.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("ZaalId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("beschrijving")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BandId");
-
-                    b.HasIndex("ZaalId");
-
                     b.ToTable("Voorstelling");
-                });
-
-            modelBuilder.Entity("WDPR.Models.Zaal", b =>
-                {
-                    b.Property<int>("ZaalId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("StaatReserveringenToe")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ZaalId");
-
-                    b.ToTable("Zaal");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -413,21 +353,6 @@ namespace WDPR.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ReserveringZaal", b =>
-                {
-                    b.HasOne("WDPR.Models.Reservering", null)
-                        .WithMany()
-                        .HasForeignKey("ReserveringenId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WDPR.Models.Zaal", null)
-                        .WithMany()
-                        .HasForeignKey("ZalenZaalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("WDPR.Models.Reservering", b =>
                 {
                     b.HasOne("WDPR.Models.Bestelling", "Bestelling")
@@ -437,35 +362,6 @@ namespace WDPR.Migrations
                         .IsRequired();
 
                     b.Navigation("Bestelling");
-                });
-
-            modelBuilder.Entity("WDPR.Models.Stoel", b =>
-                {
-                    b.HasOne("WDPR.Models.Zaal", null)
-                        .WithMany("Stoelen")
-                        .HasForeignKey("ZaalId");
-                });
-
-            modelBuilder.Entity("WDPR.Models.Voorstelling", b =>
-                {
-                    b.HasOne("WDPR.Models.Band", "Band")
-                        .WithMany()
-                        .HasForeignKey("BandId");
-
-                    b.HasOne("WDPR.Models.Zaal", "Zaal")
-                        .WithMany()
-                        .HasForeignKey("ZaalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Band");
-
-                    b.Navigation("Zaal");
-                });
-
-            modelBuilder.Entity("WDPR.Models.Zaal", b =>
-                {
-                    b.Navigation("Stoelen");
                 });
 #pragma warning restore 612, 618
         }

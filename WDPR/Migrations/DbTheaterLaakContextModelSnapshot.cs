@@ -271,29 +271,7 @@ namespace WDPR.Migrations
 
                     b.HasIndex("BestellingId");
 
-                    b.HasIndex("ZaalId");
-
                     b.ToTable("Reserveringen");
-                });
-
-            modelBuilder.Entity("WDPR.Models.Stoel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Rang")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("ZaalId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ZaalId");
-
-                    b.ToTable("Stoel");
                 });
 
             modelBuilder.Entity("WDPR.Models.Voorstelling", b =>
@@ -320,20 +298,6 @@ namespace WDPR.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Voorstelling");
-                });
-
-            modelBuilder.Entity("WDPR.Models.Zaal", b =>
-                {
-                    b.Property<int>("ZaalId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("StaatReserveringenToe")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ZaalId");
-
-                    b.ToTable("Zaal");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -386,20 +350,6 @@ namespace WDPR.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
-            modelBuilder.Entity("ReserveringZaal", b =>
-                {
-                    b.HasOne("WDPR.Models.Reservering", null)
-                        .WithMany()
-                        .HasForeignKey("ReserveringenId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WDPR.Models.Zaal", null)
-                        .WithMany()
-                        .HasForeignKey("ZalenZaalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
 
             modelBuilder.Entity("WDPR.Models.Reservering", b =>
                 {
@@ -410,34 +360,6 @@ namespace WDPR.Migrations
                         .IsRequired();
 
                     b.Navigation("Bestelling");
-                });
-
-            modelBuilder.Entity("WDPR.Models.Stoel", b =>
-                {
-                    b.HasOne("WDPR.Models.Zaal", null)
-                        .WithMany("Stoelen")
-                        .HasForeignKey("ZaalId");
-                });
-            modelBuilder.Entity("WDPR.Models.Voorstelling", b =>
-                {
-                    b.HasOne("WDPR.Models.Band", "Band")
-                        .WithMany()
-                        .HasForeignKey("BandId");
-
-                    b.HasOne("WDPR.Models.Zaal", "Zaal")
-                        .WithMany()
-                        .HasForeignKey("ZaalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Band");
-
-                    b.Navigation("Zaal");
-                });
-
-            modelBuilder.Entity("WDPR.Models.Zaal", b =>
-                {
-                    b.Navigation("Stoelen");
                 });
 #pragma warning restore 612, 618
         }

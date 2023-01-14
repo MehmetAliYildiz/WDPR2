@@ -27,7 +27,7 @@ function Voorstelling() {
                     <input className="input"
                            type={"text"}
                            placeholder={"Zoeken"}
-                           onChange={(e) => setSearchNaam(e.target.value)}
+                           onChange={(e) => setSearchNaam(e.target.value)}/>
                 </div>
                 {post.filter((value) => {
                     if (searchNaam === "") {

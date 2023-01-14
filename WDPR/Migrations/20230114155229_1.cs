@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WDPR.Migrations
 {
-    public partial class _2 : Migration
+    public partial class _1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,18 +49,6 @@ namespace WDPR.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Band",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Band", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Bestelling",
                 columns: table => new
                 {
@@ -89,16 +77,19 @@ namespace WDPR.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Zaal",
+                name: "Voorstelling",
                 columns: table => new
                 {
-                    ZaalId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    StaatReserveringenToe = table.Column<bool>(type: "INTEGER", nullable: false)
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    beschrijving = table.Column<string>(type: "TEXT", nullable: false),
+                    Img = table.Column<string>(type: "TEXT", nullable: false),
+                    Datum = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Zaal", x => x.ZaalId);
+                    table.PrimaryKey("PK_Voorstelling", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -208,7 +199,7 @@ namespace WDPR.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reservering",
+                name: "Reserveringen",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -216,86 +207,17 @@ namespace WDPR.Migrations
                     Naam = table.Column<string>(type: "TEXT", nullable: false),
                     StartTijd = table.Column<DateTime>(type: "TEXT", nullable: false),
                     EindTijd = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    BestellingId = table.Column<int>(type: "INTEGER", nullable: false)
+                    BestellingId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ZaalId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reservering", x => x.Id);
+                    table.PrimaryKey("PK_Reserveringen", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reservering_Bestelling_BestellingId",
+                        name: "FK_Reserveringen_Bestelling_BestellingId",
                         column: x => x.BestellingId,
                         principalTable: "Bestelling",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Stoel",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Rang = table.Column<string>(type: "TEXT", nullable: false),
-                    ZaalId = table.Column<int>(type: "INTEGER", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Stoel", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Stoel_Zaal_ZaalId",
-                        column: x => x.ZaalId,
-                        principalTable: "Zaal",
-                        principalColumn: "ZaalId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Voorstelling",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    ZaalId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Img = table.Column<string>(type: "TEXT", nullable: false),
-                    BandId = table.Column<int>(type: "INTEGER", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Voorstelling", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Voorstelling_Band_BandId",
-                        column: x => x.BandId,
-                        principalTable: "Band",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Voorstelling_Zaal_ZaalId",
-                        column: x => x.ZaalId,
-                        principalTable: "Zaal",
-                        principalColumn: "ZaalId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ReserveringZaal",
-                columns: table => new
-                {
-                    ReserveringenId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ZalenZaalId = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ReserveringZaal", x => new { x.ReserveringenId, x.ZalenZaalId });
-                    table.ForeignKey(
-                        name: "FK_ReserveringZaal_Reservering_ReserveringenId",
-                        column: x => x.ReserveringenId,
-                        principalTable: "Reservering",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ReserveringZaal_Zaal_ZalenZaalId",
-                        column: x => x.ZalenZaalId,
-                        principalTable: "Zaal",
-                        principalColumn: "ZaalId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -337,29 +259,9 @@ namespace WDPR.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservering_BestellingId",
-                table: "Reservering",
+                name: "IX_Reserveringen_BestellingId",
+                table: "Reserveringen",
                 column: "BestellingId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ReserveringZaal_ZalenZaalId",
-                table: "ReserveringZaal",
-                column: "ZalenZaalId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Stoel_ZaalId",
-                table: "Stoel",
-                column: "ZaalId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Voorstelling_BandId",
-                table: "Voorstelling",
-                column: "BandId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Voorstelling_ZaalId",
-                table: "Voorstelling",
-                column: "ZaalId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -383,10 +285,7 @@ namespace WDPR.Migrations
                 name: "Gebruiker");
 
             migrationBuilder.DropTable(
-                name: "ReserveringZaal");
-
-            migrationBuilder.DropTable(
-                name: "Stoel");
+                name: "Reserveringen");
 
             migrationBuilder.DropTable(
                 name: "Voorstelling");
@@ -396,15 +295,6 @@ namespace WDPR.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Reservering");
-
-            migrationBuilder.DropTable(
-                name: "Band");
-
-            migrationBuilder.DropTable(
-                name: "Zaal");
 
             migrationBuilder.DropTable(
                 name: "Bestelling");
