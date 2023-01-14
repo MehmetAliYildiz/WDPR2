@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WDPR.Migrations
 {
     [DbContext(typeof(DbTheaterLaakContext))]
-    partial class DbTheaterLaakContextModelSnapshot : ModelSnapshot
+    [Migration("20230111111920_2")]
+    partial class _2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.1");
@@ -208,6 +210,46 @@ namespace WDPR.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ReserveringZaal", b =>
+                {
+                    b.Property<int>("ReserveringenId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ZalenZaalId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ReserveringenId", "ZalenZaalId");
+
+                    b.HasIndex("ZalenZaalId");
+
+                    b.ToTable("ReserveringZaal");
+                });
+
+            modelBuilder.Entity("WDPR.Models.Band", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Band");
+                });
+
+            modelBuilder.Entity("WDPR.Models.Bestelling", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float>("Bedrag")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Bestelling");
+                });
+
             modelBuilder.Entity("WDPR.Models.Gebruiker", b =>
                 {
                     b.Property<int>("id")
@@ -231,14 +273,60 @@ namespace WDPR.Migrations
                     b.ToTable("Gebruiker");
                 });
 
+            modelBuilder.Entity("WDPR.Models.Reservering", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BestellingId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("EindTijd")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Naam")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("StartTijd")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BestellingId");
+
+                    b.ToTable("Reservering");
+                });
+
+            modelBuilder.Entity("WDPR.Models.Stoel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Rang")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("ZaalId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ZaalId");
+
+                    b.ToTable("Stoel");
+                });
+
             modelBuilder.Entity("WDPR.Models.Voorstelling", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("Datum")
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("BandId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Img")
                         .IsRequired()
@@ -248,13 +336,30 @@ namespace WDPR.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("beschrijving")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("ZaalId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BandId");
+
+                    b.HasIndex("ZaalId");
+
                     b.ToTable("Voorstelling");
+                });
+
+            modelBuilder.Entity("WDPR.Models.Zaal", b =>
+                {
+                    b.Property<int>("ZaalId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("StaatReserveringenToe")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ZaalId");
+
+                    b.ToTable("Zaal");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -307,7 +412,6 @@ namespace WDPR.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
-<<<<<<< HEAD
 
             modelBuilder.Entity("ReserveringZaal", b =>
                 {
@@ -363,8 +467,6 @@ namespace WDPR.Migrations
                 {
                     b.Navigation("Stoelen");
                 });
-=======
->>>>>>> ffbcf60ba9f166985ed2f6b5f047cd4b5264447e
 #pragma warning restore 612, 618
         }
     }

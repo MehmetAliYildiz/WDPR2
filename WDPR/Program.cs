@@ -4,9 +4,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DbTheaterLaakContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DbTheaterLaakContext") ?? throw new InvalidOperationException("Connection string 'DbBoekingContext' not found.")));
 
-// Add services to the container.
-
 var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                      });
+});
+
+// Add services to the container.
 
 builder.Services.AddCors(o => o.AddPolicy(MyAllowSpecificOrigins, builder =>
 {
@@ -42,4 +51,8 @@ app.MapControllerRoute(
 
 app.MapFallbackToFile("index.html");;
 
+<<<<<<< HEAD
 app.Run();
+=======
+app.Run();
+>>>>>>> ffbcf60ba9f166985ed2f6b5f047cd4b5264447e
