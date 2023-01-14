@@ -19,15 +19,15 @@ function Voorstelling() {
 
     return (
         <>
+            {/*<NavBar></NavBar>*/}
             <NavBar></NavBar>
             <div className="Voorstelling">
                 <div className="Zoekveld">
                     <p>Zoek Naar Voorstelling</p>
                     <input className="input"
-                        type={"text"}
-                        placeholder={"Zoeken"}
-                        onChange={(e) => setSearchNaam(e.target.value)}
-                    />
+                           type={"text"}
+                           placeholder={"Zoeken"}
+                           onChange={(e) => setSearchNaam(e.target.value)}
                 </div>
                 {post.filter((value) => {
                     if (searchNaam === "") {
@@ -35,7 +35,7 @@ function Voorstelling() {
                     } else if (value.name.toLowerCase().includes(searchNaam.toLowerCase())) {
                         return value
                     }
-                }).map(item => (
+                }).sort((a,b) => a.datum > b.datum ? 1 : -1).map(item => (
                     //<div className="row row-cols-1 row-cols-md-2 g-4">
                     <div className="VoorstellingKaart">
 
@@ -50,11 +50,14 @@ function Voorstelling() {
                                 <p className="card-text">
                                     {item.beschrijving}
                                 </p>
+                                <p>{item.datum}</p>
+
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
+            {/*<Footer></Footer>*/}
             <Footer></Footer>
         </>
     );
