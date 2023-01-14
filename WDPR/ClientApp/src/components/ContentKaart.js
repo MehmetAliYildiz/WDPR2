@@ -7,7 +7,7 @@ export default function ContentKaart(props) {
         <div className='ContentKaart'>
             <div>
                 <h2>{props.header}</h2>
-                <img class="Icoon" src={props.icoon} alt={props.actie}></img>
+                <img className="Icoon" src={props.icoon} alt={props.actie}></img>
                 <p>{props.paragraph}</p>
             </div>
             <div>

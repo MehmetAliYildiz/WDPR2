@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {FaRegCalendar} from 'react-icons/fa';
 import axios from "axios";
 
-function Login() {
+function Registratie() {
     const wwVergeten = {
         color: '#8B0001',
         float: 'right'
@@ -141,4 +141,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default Registratie;

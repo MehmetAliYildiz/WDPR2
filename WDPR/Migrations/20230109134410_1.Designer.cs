@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WDPR.Migrations
 {
     [DbContext(typeof(DbTheaterLaakContext))]
-    partial class DbTheaterLaakContextModelSnapshot : ModelSnapshot
+    [Migration("20230109134410_1")]
+    partial class _1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.1");
@@ -307,64 +309,6 @@ namespace WDPR.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
-<<<<<<< HEAD
-
-            modelBuilder.Entity("ReserveringZaal", b =>
-                {
-                    b.HasOne("WDPR.Models.Reservering", null)
-                        .WithMany()
-                        .HasForeignKey("ReserveringenId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WDPR.Models.Zaal", null)
-                        .WithMany()
-                        .HasForeignKey("ZalenZaalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("WDPR.Models.Reservering", b =>
-                {
-                    b.HasOne("WDPR.Models.Bestelling", "Bestelling")
-                        .WithMany()
-                        .HasForeignKey("BestellingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Bestelling");
-                });
-
-            modelBuilder.Entity("WDPR.Models.Stoel", b =>
-                {
-                    b.HasOne("WDPR.Models.Zaal", null)
-                        .WithMany("Stoelen")
-                        .HasForeignKey("ZaalId");
-                });
-
-            modelBuilder.Entity("WDPR.Models.Voorstelling", b =>
-                {
-                    b.HasOne("WDPR.Models.Band", "Band")
-                        .WithMany()
-                        .HasForeignKey("BandId");
-
-                    b.HasOne("WDPR.Models.Zaal", "Zaal")
-                        .WithMany()
-                        .HasForeignKey("ZaalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Band");
-
-                    b.Navigation("Zaal");
-                });
-
-            modelBuilder.Entity("WDPR.Models.Zaal", b =>
-                {
-                    b.Navigation("Stoelen");
-                });
-=======
->>>>>>> ffbcf60ba9f166985ed2f6b5f047cd4b5264447e
 #pragma warning restore 612, 618
         }
     }

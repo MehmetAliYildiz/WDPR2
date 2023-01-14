@@ -1,11 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-
-using WDPR;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DbTheaterLaakContext>(options =>
@@ -24,26 +17,12 @@ builder.Services.AddCors(options =>
 
 // Add services to the container.
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<DbTheaterLaakContext>()
-                .AddDefaultTokenProviders();
-builder.Services.AddAuthentication(opt =>
+builder.Services.AddCors(o => o.AddPolicy(MyAllowSpecificOrigins, builder =>
 {
-    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(opt =>
-{
-    opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = "https://localhost:7047",
-        ValidAudience = "https://localhost:7047",
-        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("awef98awef978haweof8g7aw789efhh789awef8h9awh89efh89awe98f89uawef9j8aw89hefawef"))
-    };
-});
+    builder.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+}));
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
@@ -58,8 +37,6 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseAuthentication();
-app.UseAuthorization();
 app.UseStaticFiles();
 app.UseRouting();
 
@@ -74,4 +51,8 @@ app.MapControllerRoute(
 
 app.MapFallbackToFile("index.html");;
 
+<<<<<<< HEAD
 app.Run();
+=======
+app.Run();
+>>>>>>> ffbcf60ba9f166985ed2f6b5f047cd4b5264447e

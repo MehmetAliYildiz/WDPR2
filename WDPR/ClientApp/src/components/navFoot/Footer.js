@@ -4,12 +4,12 @@ import 'bootstrap/dist/js/bootstrap.js';
 import './Footer.css';
 
 
-function Footer() {
+function Footer(props) {
 
     return (
-  <footer className="bg-light text-center text-lg-start">
+        <footer className="bg-light text-center text-lg-start">
 
-  <div className="container">
+            <div className="footer-container" style={props.style}>
 
     <div className="row justify-content-md-center">
 
@@ -18,7 +18,7 @@ function Footer() {
         <ul className="list-unstyled ">
           <li>
             <a className="mb-0" href="/">
-              <img src={"img/Logo_theater_laak_V2 (1).png"} style={{width: "150px", height: '100px'}}  alt="theater laak logo"/>
+              <img src={"img/Logo_theater_laak_V2 (1).png"} style={{width: "128px", height: '128px'}}  alt="theater laak logo"/>
             </a>
           </li>
         
