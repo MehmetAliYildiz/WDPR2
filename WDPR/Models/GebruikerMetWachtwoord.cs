@@ -3,5 +3,5 @@ using Microsoft.AspNetCore.Mvc;
 
 public class GebruikerMetWachwoord : IdentityUser
 {
-    public string? Password { get; init; }
+    public string Password { get; init; }
 }
