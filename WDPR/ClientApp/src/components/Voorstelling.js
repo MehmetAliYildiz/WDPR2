@@ -17,7 +17,7 @@ function Voorstelling() {
 
     return (
         <div className="Voorstelling">
-            <div>
+            <div>\ 
                 <input
                     type={"text"}
                     placeholder={"voor naam van voorstelling in..."}
@@ -30,7 +30,7 @@ function Voorstelling() {
                 } else if (value.name.toLowerCase().includes(searchNaam.toLowerCase())) {
                     return value
                 }
-            }).map(item => (
+            }).sort((a,b) => a.datum > b.datum ? 1 : -1).map(item => (
                 <div className="row row-cols-1 row-cols-md-2 g-4">
 
                     <div className="col">
@@ -43,6 +43,9 @@ function Voorstelling() {
                         <div className="card-body">
                             <p className="card-text">
                                 {item.beschrijving}
+                            </p>
+                            <p className="card-text">
+                                {item.datum}
                             </p>
                         </div>
                     </div>
