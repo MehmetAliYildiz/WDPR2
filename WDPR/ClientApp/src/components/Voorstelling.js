@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import "./Voorstelling.css";
 import 'bootstrap/dist/css/bootstrap.css';
+import Footer from "./navFoot/Footer";
+import NavBar from "./navFoot/navbar";
 function Voorstelling() {
 
     const [post, setPost] = useState([]);
@@ -18,6 +20,7 @@ function Voorstelling() {
     return (
         <>
             {/*<NavBar></NavBar>*/}
+            <NavBar></NavBar>
             <div className="Voorstelling">
                 <div className="Zoekveld">
                     <p>Zoek Naar Voorstelling</p>
@@ -25,7 +28,6 @@ function Voorstelling() {
                            type={"text"}
                            placeholder={"Zoeken"}
                            onChange={(e) => setSearchNaam(e.target.value)}
-                    />
                 </div>
                 {post.filter((value) => {
                     if (searchNaam === "") {
@@ -49,12 +51,14 @@ function Voorstelling() {
                                     {item.beschrijving}
                                 </p>
                                 <p>{item.datum}</p>
+
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
             {/*<Footer></Footer>*/}
+            <Footer></Footer>
         </>
     );
 }

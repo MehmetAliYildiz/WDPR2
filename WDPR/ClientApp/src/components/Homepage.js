@@ -3,12 +3,17 @@ import Logo from "../../src/HomeImages/Logo_theater_laak_V2.png";
 import Donate_icoon from "../../src/HomeImages/Donate_icoon.png";
 import Login_icoon from "../../src/HomeImages/Login_icoon.png";
 import Tickets_icoon from "../../src/HomeImages/Ticket_Icoon.png";
+import Zaal1 from "../../src/HomeImages/Zaal_1.jpg";
+import { Link } from 'react-router-dom';
 import ContentKaart from "./ContentKaart";
+import Footer from "./navFoot/Footer";
+import NavBar from "./navFoot/navbar";
 import "./HomePage.css";
 
 export default function Homepage() {
     return (
         <>
+            <NavBar></NavBar>
             <body>
                 <section className="Section1">
                     <div>
@@ -30,7 +35,26 @@ export default function Homepage() {
                         <button className="button V2">OVER ONS</button>
                     </div>
                 </section>
+                <section className="Section4">
+                    <div className="ContentAside">
+                        <img src={Zaal1} />
+                    </div>
+                    <div className="ContentText">
+                        <div style={{ width: "300px" }}>
+                            <h2>
+                                Eigen zaal huren?
+                            </h2>
+                            <p>
+                                Bij theater laak hebben wij een aantal zalen beschikbaar voor gasten.
+                            </p>
+                            <Link to="/reserveren">
+                                <button className="buttonB">RESERVEER NU</button>
+                            </Link>
+                        </div>
+                    </div>
+                </section>
             </body>
+            <Footer/>
         </>
     )
 }
