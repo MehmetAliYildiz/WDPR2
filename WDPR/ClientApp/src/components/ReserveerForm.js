@@ -2,8 +2,9 @@
 import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
+import axios from 'axios';
 
-import Scheduler from './Scheduler';
+import Scheduler from './Scheduler/Scheduler';
 import Popup from './Popup';
 import Footer from "./navFoot/Footer";
 import NavBar from "./navFoot/navbar";
@@ -20,7 +21,11 @@ class ReserveerForm extends Component
             roomId: null,
             redirect: null,
             paymentPopup: false,
-            paymentOption: null
+            paymentOption: null,
+            schedulerRef: React.createRef(),
+            validation: {
+                validAppointment: false
+            }
         };
         this.setPaymentPopupFalse = this.setPaymentPopup.bind(this, false);
     }
@@ -37,7 +42,7 @@ class ReserveerForm extends Component
             return;
         }
 
-        const res = await fetch(`https://localhost:7260/Zaal/${zaalId}`); 
+        const res = fetch(`https://localhost:7260/Zaal/${zaalId}`); 
         const data = await res.json();
         if (data.length === 0) {
             console.log(`No zaal with ID ${zaalId} found`);
@@ -53,15 +58,6 @@ class ReserveerForm extends Component
 
     handleChange = event => {
         this.setState({ [event.target.name]: event.target.value });
-    };
-
-    handleSubmit = event => {
-        const zaalId = this.getZaalId();
-
-        event.preventDefault();
-        console.log(
-            `Renting room with id ${zaalId} from ${this.state.startDate} to ${this.state.endDate}`
-        );
     };
 
     getZaalId = event => {
@@ -92,6 +88,42 @@ class ReserveerForm extends Component
         this.setState({ popupFocusFlag: value });
     }
 
+    validateAppointment = () => {
+        this.state.validation.validAppointment = this.state.schedulerRef.current.tryGetAppointment() != null;
+        this.setState({ validation: this.state.validation });
+
+        return this.state.validation.validAppointment;
+    }
+
+    handleSubmit = async event => {
+        const zaalId = this.getZaalId();
+        if (!this.validateAppointment()) {
+            return;
+        }
+
+        event.preventDefault();
+        const endpoint = 'https://localhost:7260/reservering/post';
+        const appointment = this.state.schedulerRef.current.tryGetAppointment();
+        const data = {
+            naam: appointment.name,
+            startTijd: appointment.startTime.toISOString(),
+            eindTijd: appointment.endTime.toISOString(),
+            bestelling: {
+                id: 0,
+                bedrag: 0
+            },
+            zaalId: this.getZaalId()
+        };
+        try {
+            const response = axios.post(endpoint, data);
+        } catch (err) {
+            console.error(err);
+        }
+        console.log(
+            `Renting room with id ${zaalId} from ${this.state.startDate} to ${this.state.endDate} and ${this.state.schedulerRef.current.tryGetAppointment() != null}`
+        );
+    };
+
     render() {
         if (this.state.redirect === true) {
             return (<Navigate to="/reserveren"/>);
@@ -102,7 +134,7 @@ class ReserveerForm extends Component
                 <h1>
                     Plan een reservering voor zaal {this.getZaalId()}
                 </h1>
-                <Scheduler date={new Date(`${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate() + 1}`)} />
+                <Scheduler ref={this.state.schedulerRef} date={new Date(`${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate() + 1}`)} />
                 <div key="paymentDiv">
                     <button type="button" onClick={() => this.setState({ paymentPopup: true })}>Click me!</button>
                     <Popup

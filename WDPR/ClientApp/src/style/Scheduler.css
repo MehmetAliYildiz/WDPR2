@@ -127,3 +127,32 @@ button.scheduler-row:hover {
 
     box-shadow: -8px 0px 10px rgba(0, 0, 0, 0.2) inset;
 }
+
+.appointment-outer .remove-button {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    border-radius: 16px;
+    padding: 0px 2px 2px 2px;
+    background-color: rgba(0, 0, 0, 0);
+    border-color: rgba(0, 0, 0, 0);
+
+    background-color: white;
+    box-shadow: -6px 0px 8px rgba(0, 0, 0, 0.2);
+
+    border: solid;
+    border-width: 1px;
+    border-color: rgb(220, 220, 220);
+
+    z-index: 2;
+}
+
+    .appointment-outer .remove-button:hover {
+        background-color: rgba(229, 229, 229, 1.0);
+        border-color: rgb(210, 210, 210);
+    }
+
+.appointment-outer .remove-button:active {
+    background-color: rgba(180, 180, 180, 1.0);
+    border-color: rgb(150, 150, 150);
+}
