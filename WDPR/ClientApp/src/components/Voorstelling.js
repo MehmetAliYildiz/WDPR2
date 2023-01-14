@@ -8,7 +8,7 @@ function Voorstelling() {
     const [searchNaam, setSearchNaam] = useState("");
 
     useEffect(() => {
-        Axios.get("https://localhost:7260/api/Voorstelling").then((res) =>{
+        Axios.get("https://localhost:7260/api/Voorstelling").then((res) => {
             setPost(res.data);
             console.log(res.data);
         });
@@ -16,42 +16,46 @@ function Voorstelling() {
     }, []);
 
     return (
-        <div className="Voorstelling">
-            <div>\ 
-                <input
-                    type={"text"}
-                    placeholder={"voor naam van voorstelling in..."}
-                    onChange={(e) => setSearchNaam(e.target.value)}
-                />
-            </div>
-            {post.filter((value) =>{
-                if (searchNaam === ""){
-                    return value;
-                } else if (value.name.toLowerCase().includes(searchNaam.toLowerCase())) {
-                    return value
-                }
-            }).sort((a,b) => a.datum > b.datum ? 1 : -1).map(item => (
-                <div className="row row-cols-1 row-cols-md-2 g-4">
-
-                    <div className="col">
-                        <div className="card">
-                            <h5 className="card-title" key={item.Id}>{item.name}</h5>
-                            <img src={item.img} className="card-img-top" alt="..."/>
-                        </div>
-                    </div>
-                    <div className="col">
-                        <div className="card-body">
-                            <p className="card-text">
-                                {item.beschrijving}
-                            </p>
-                            <p className="card-text">
-                                {item.datum}
-                            </p>
-                        </div>
-                    </div>
+        <>
+            {/*<NavBar></NavBar>*/}
+            <div className="Voorstelling">
+                <div className="Zoekveld">
+                    <p>Zoek Naar Voorstelling</p>
+                    <input className="input"
+                           type={"text"}
+                           placeholder={"Zoeken"}
+                           onChange={(e) => setSearchNaam(e.target.value)}
+                    />
                 </div>
-            ))}
-        </div>
+                {post.filter((value) => {
+                    if (searchNaam === "") {
+                        return value;
+                    } else if (value.name.toLowerCase().includes(searchNaam.toLowerCase())) {
+                        return value
+                    }
+                }).sort((a,b) => a.datum > b.datum ? 1 : -1).map(item => (
+                    //<div className="row row-cols-1 row-cols-md-2 g-4">
+                    <div className="VoorstellingKaart">
+
+                        <div className="col">
+                            <div className="card">
+                                <h5 className="card-title" key={item.Id}>{item.name}</h5>
+                                <img src={item.img} className="card-img-top" alt="..." />
+                            </div>
+                        </div>
+                        <div className="col">
+                            <div className="card-body">
+                                <p className="card-text">
+                                    {item.beschrijving}
+                                </p>
+                                <p>{item.datum}</p>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+            {/*<Footer></Footer>*/}
+        </>
     );
 }
 export default Voorstelling;
