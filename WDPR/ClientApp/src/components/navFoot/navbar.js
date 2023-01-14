@@ -14,7 +14,7 @@ function Navigatie() {
             <div className="row align-items-center">
               <div className="col-6">
                 <a className="mb-0" href="/">
-                  <img src={"img/Logo_theater_laak_V2 (1).png"} style={{width: "150px", height: '100px'}}  alt="theater laak logo"/>
+                  <img src={"img/Logo_theater_laak_V2 (1).png"} style={{width: "128px", height: '128px'}}  alt="theater laak logo"/>
                 </a>
               </div>
               <div className="col-6">

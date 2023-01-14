@@ -1,7 +1,8 @@
 import React, {useState} from "react";
+import {FaRegCalendar} from 'react-icons/fa';
 import axios from "axios";
 
-function Login() {
+function Registratie() {
     const wwVergeten = {
         color: '#8B0001',
         float: 'right'
@@ -15,7 +16,11 @@ function Login() {
     }
 
     const [naam, setNaam] =useState("");
+    const [datum, setDatum] =useState("");
+    const [email, setEmail] =useState("");
     const [wachtwoord, setWachtwoord] =useState("");
+    const [message, setMessage] =useState("");
+    
 
     const handleChangeNaam = (value) => {
         setNaam(value);
@@ -24,23 +29,36 @@ function Login() {
         setWachtwoord(value);
     };
 
-    const handleLogin = () => {
-        const data = {
-            Naam : naam,
-            Wachtwoord : wachtwoord
-        };
-        const url = 'https://localhost:7260/api/registreer';
-        axios.post(url,data).then((result) => {
-            alert(result.data);
-        }).catch((error)=> {
-            alert(error);
-        })
-    }
-    const [checked, setChecked] = React.useState(false);
-
-    const handleChange = () => {
-      setChecked(!checked);
+    const handleChangeDatum = (value) => {
+        setDatum(value);
     };
+
+    let handleRegistratie = async (e) => {
+        e.preventDefault();
+        try {
+            let res = await fetch("https://localhost:7260/api/Account/registreer", {
+                headers: {'Content-Type': 'application/json'},
+                method: "POST",
+                mode:"cors",
+                body: JSON.stringify({
+                    UserName: naam,
+                    Password : wachtwoord,
+                }),
+            });
+
+            if (res.status === 200) {
+                // setNaam("");
+                // setWachtwoord("")
+                setMessage("gebruiker is ingelogd");
+            } else {
+                setMessage("error " + res.status);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+
     return (
         <section>
         <div className="container py-5 h-100">
@@ -62,34 +80,52 @@ function Login() {
                     style={{width: '185px'}} alt="Theater Laak logo"/>
                         </div>
 
-                        <form>
+                        <form onSubmit={handleRegistratie}>
 
-                        <div className="form-outline mb-4">
-                            <label className="form-label" htmlFor="form2Example11">Email</label>
-                            <input type="email" id="form2Example11" className="form-control" placeholder="email adres" onChange={(e) => handleChangeNaam(e.target.value)}/>
+                        <div className="input-group mb-4">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text" id="Gebruikersnaam"><FaRegCalendar/></span>
+                            </div>
+                            <input type="text" id="form2Example11" className="form-control" name="naam" aria-describedby="Gebruikersnaam" placeholder="naam" onChange={(e) => handleChangeNaam(e.target.value)}/>
                         </div>
 
-                        <div className="form-outline mb-4">
-                            <label className="form-label" htmlFor="form2Example11">Email</label>
-                            <input type="email" id="form2Example11" className="form-control" placeholder="email adres" onChange={(e) => handleChangeNaam(e.target.value)}/>
+                        <div className="form-outline input-group mb-4">
+                            <div className="input-group-prepend">
+                            <span className="input-group-text" id="basic-addon1">@</span>
+                            </div>
+                            <input type="date" id="form2Example11" className="form-control" name="datum" placeholder="datum" onChange={(e) => handleChangeNaam(e.target.value)}/>
                         </div>
 
-                        <div className="form-outline mb-4">
-                            <label className="form-label" htmlFor="form2Example22">Wachtwoord</label>
-                            <input type="password" id="form2Example22" className="form-control" placeholder="wachtwoord" onChange={(e) => handleChangeWachtwoord(e.target.value)}/>
-                            <label><input type="checkbox" checked={checked} onChange={handleChange}/>Onthoud mij</label>
-                            <a style={wwVergeten} href="#!">Wachtwoord vergeten?</a>
+                        <div className="form-outline input-group mb-4">
+                            <div className="input-group-prepend">
+                            <span className="input-group-text" id="basic-addon1">@</span>
+                            </div>
+                            <input type="mail" id="form2Example11" className="form-control" name="email" placeholder="email" onChange={(e) => handleChangeNaam(e.target.value)}/>
+                        </div>
+
+                        <div className="form-outline input-group mb-4">
+                            <div className="input-group-prepend">
+                            <span className="input-group-text" id="basic-addon1">@</span>
+                            </div>
+                            <input type="password" id="form2Example11" className="form-control" name="wachtwoord" placeholder="wachtwoord" onChange={(e) => handleChangeNaam(e.target.value)}/>
+                        </div>
+
+                        <div className="form-outline input-group mb-4">
+                            <div className="input-group-prepend">
+                            <span className="input-group-text" id="basic-addon1">@</span>
+                            </div>
+                            <input type="password" id="form2Example11" className="form-control" name="herhaal wachtwoord" placeholder="herhaal wachtwoord" onChange={(e) => handleChangeNaam(e.target.value)}/>
                         </div>
 
                         <div className="text-center pt-1 mb-4 ">
-                            <button className='btn btn-primary' style={loginKnop}type="button">Login</button>
+                            <input type="submit" className='btn btn-primary' style={loginKnop} value="registreer"/>
                         </div>
 
                         
 
                         <div className="d-flex align-items-center justify-content-center pb-4">
-                            <p className="mb-0 me-2">Nog geen Account?</p>
-                            <a href="Registreer"  style={{color: '#F39A05'}}>Registreer nu</a>
+                            <p className="mb-0 me-2">Al een account?</p>
+                            <a href="/login"  style={{color: '#F39A05'}}>Log in</a>
                             
                         </div>
                         </form>
@@ -105,4 +141,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default Registratie;
