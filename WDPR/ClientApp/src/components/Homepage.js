@@ -48,7 +48,7 @@ export default function Homepage() {
                                 Bij theater laak hebben wij een aantal zalen beschikbaar voor gasten.
                             </p>
                             <Link to="/reserveren">
-                                <button className="buttonB">RESERVEER NU</button>
+                                <button data-cy="reserveer-knop" className="buttonB">RESERVEER NU</button>
                             </Link>
                         </div>
                     </div>

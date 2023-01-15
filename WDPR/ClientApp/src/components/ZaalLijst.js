@@ -35,7 +35,7 @@ class ZaalLijst extends Component {
     };
 
     render() {
-        return <div>{this.generateButtons(this.state.buttons)}</div>;
+        return <div data-cy="zaal-lijst">{this.generateButtons(this.state.buttons)}</div>;
     }
 }
 

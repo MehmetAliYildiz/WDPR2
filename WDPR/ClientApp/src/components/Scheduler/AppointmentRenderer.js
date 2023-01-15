@@ -55,7 +55,7 @@ class AppointmentRenderer extends Component {
 
     render() {
         return (
-            <div className="appointments" ref={this.state.parentRef}>
+            <div className="appointments" data-cy="appointments" ref={this.state.parentRef}>
                 {this.state.elements}
             </div>
         );
