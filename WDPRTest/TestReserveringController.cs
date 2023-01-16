@@ -58,7 +58,53 @@ namespace WDPRTest
         [Fact]
         public void Post_Overlapping_ReturnBadRequest()
         {
+            // Arrange
+            var st1 = DateTime.Parse("2023/01/01 01:00:00");
+            var st2 = DateTime.Parse("2023/01/01 01:15:00").AddHours(-1); // Counteract controller addhours
+            var et1 = DateTime.Parse("2023/01/01 01:30:00");
+            var et2 = DateTime.Parse("2023/01/01 01:45:00").AddHours(-1); // Counteract controller addhours
+            List<Reservering> reserveringen = new List<Reservering>()
+            {
+                new Reservering(0)
+                {
+                    StartTijd = st1,
+                    EindTijd = et1
+                }
+            };
+            var controller = CreateControllerWithMock(reserveringen);
 
+            var nieuweReservering = new Reservering(1)
+            {
+                StartTijd = st2,
+                EindTijd = et2
+            };
+
+            // Act
+            var result = controller.Post(nieuweReservering);
+
+            // Assert
+            Assert.IsType<BadRequestObjectResult>(result);
+        }
+
+        [Fact]
+        public void Post_BadTime_ReturnBadRequest()
+        {
+            // Arrange
+            var st = DateTime.Parse("2023/01/01 02:00:00");
+            var et = DateTime.Parse("2023/01/01 01:00:00");
+            var controller = CreateControllerWithMock(new List<Reservering>());
+
+            var nieuweReservering = new Reservering(1)
+            {
+                StartTijd = st,
+                EindTijd = et
+            };
+
+            // Act
+            var result = controller.Post(nieuweReservering);
+
+            // Assert
+            Assert.IsType<BadRequestObjectResult>(result);
         }
     }
 }
