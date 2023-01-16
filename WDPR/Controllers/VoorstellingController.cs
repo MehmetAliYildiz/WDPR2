@@ -72,11 +72,10 @@ namespace WDPR.Controllers
             return NoContent();
         }
 
-        // POST: api/Voorstelling
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Voorstelling>> PostVoorstelling(Voorstelling voorstelling)
         {
+            voorstelling.ZaalId = null;
             _context.Voorstelling.Add(voorstelling);
             await _context.SaveChangesAsync();
 
@@ -98,6 +97,39 @@ namespace WDPR.Controllers
 
             return NoContent();
         }
+        
+        [HttpPut("voegZaalToe")]
+        public IActionResult voegZaalToe(int voorstellingId, int zaalId)
+        {
+            var voorstelling = _context.Voorstelling.Find(voorstellingId);
+            if (voorstelling == null)
+            {
+                return NotFound();
+            }
+
+            var zaal = _context.Zaal.Find(zaalId);
+            if (zaal == null)
+            {
+                return NotFound();
+            }
+
+            var existingVoorstelling = _context.Voorstelling.Where(x =>
+            x.ZaalId == zaalId &&
+            ((x.StartTime >= voorstelling.StartTime && x.StartTime < voorstelling.EndTime) ||
+            (x.EndTime > voorstelling.StartTime && x.EndTime <= voorstelling.EndTime) ||
+            (x.StartTime <= voorstelling.StartTime && x.EndTime >= voorstelling.EndTime))).ToList();
+            
+            if (existingVoorstelling.Count > 0)
+            {
+                return BadRequest("There is already a voorstelling at that time in this zaal");
+            }       
+
+            voorstelling.ZaalId = zaalId;
+            _context.SaveChanges();
+
+            return Ok();
+        }
+        
 
         private bool VoorstellingExists(int id)
         {

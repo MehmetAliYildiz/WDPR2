@@ -13,7 +13,6 @@ namespace WDPR.Models
         public Zaal(int id)
         {
             Id = id;
-            StaatReserveringenToe = false;
-        }
+    }
     }
 }
