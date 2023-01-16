@@ -115,9 +115,9 @@ namespace WDPR.Controllers
 
             var existingVoorstelling = _context.Voorstelling.Where(x =>
             x.ZaalId == zaalId &&
-            ((x.StartTime >= voorstelling.StartTime && x.StartTime < voorstelling.EndTime) ||
-            (x.EndTime > voorstelling.StartTime && x.EndTime <= voorstelling.EndTime) ||
-            (x.StartTime <= voorstelling.StartTime && x.EndTime >= voorstelling.EndTime))).ToList();
+            ((x.Datum >= voorstelling.Datum && x.Datum < voorstelling.EindDatum) ||
+            (x.EindDatum > voorstelling.Datum && x.EindDatum <= voorstelling.EindDatum) ||
+            (x.Datum <= voorstelling.Datum && x.EindDatum >= voorstelling.EindDatum))).ToList();
             
             if (existingVoorstelling.Count > 0)
             {
