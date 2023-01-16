@@ -31,7 +31,7 @@ namespace WDPR.Controllers
         }
 
         [HttpPost("post")]
-        public IActionResult Create([FromBody] Reservering nieuweReservering)
+        public IActionResult Post([FromBody] Reservering nieuweReservering)
         {
             if (nieuweReservering.StartTijd >= nieuweReservering.EindTijd)
             {
@@ -44,7 +44,7 @@ namespace WDPR.Controllers
             var overlappingEvents = _context.GetReserveringen()
                 .Where(r => (r.StartTijd > nieuweReservering.StartTijd && r.StartTijd < nieuweReservering.EindTijd)   // [---[##]==]
                          || (r.EindTijd > nieuweReservering.StartTijd && r.EindTijd < nieuweReservering.EindTijd)     // [==[##]---]
-                         || (r.StartTijd <= nieuweReservering.StartTijd && r.EindTijd >= nieuweReservering.EindTijd)) // [==[######]==] of [[####]]
+                         || (r.StartTijd <= nieuweReservering.StartTijd && r.EindTijd >= nieuweReservering.EindTijd)) // [==[######]==] of [######]
                 .ToList();
 
             if (overlappingEvents.Any())

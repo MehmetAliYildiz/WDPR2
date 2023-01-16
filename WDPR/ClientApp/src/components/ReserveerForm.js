@@ -231,7 +231,7 @@ class ReserveerForm extends Component
                     </Popup>
                 </div>
 
-                <button type="submit">Rent Room</button>
+                <button type="button" onClick={this.handleSubmit}>Rent Room</button>
                 <Footer></Footer>
             </div>
         );
