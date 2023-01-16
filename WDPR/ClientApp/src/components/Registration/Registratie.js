@@ -16,21 +16,33 @@ function Registratie() {
     }
 
     const [naam, setNaam] =useState("");
-    const [datum, setDatum] =useState("");
     const [email, setEmail] =useState("");
     const [wachtwoord, setWachtwoord] =useState("");
+    const [wachtwoord2, setWachtwoord2] =useState("");
     const [message, setMessage] =useState("");
     
 
     const handleChangeNaam = (value) => {
         setNaam(value);
     };
+
+    const handleChangeEmail = (value) => {
+        setEmail(value);
+    };
+
     const handleChangeWachtwoord = (value) => {
         setWachtwoord(value);
     };
 
-    const handleChangeDatum = (value) => {
-        setDatum(value);
+    const handleChangeWachtwoord2 = (value) => {
+        setWachtwoord2(value);
+        if(wachtwoord !== wachtwoord2)
+        {
+            setMessage('het wachtwoord komt niet overeen')
+        }
+        else {
+            setMessage(null);
+        }
     };
 
     let handleRegistratie = async (e) => {
@@ -43,13 +55,15 @@ function Registratie() {
                 body: JSON.stringify({
                     UserName: naam,
                     Password : wachtwoord,
+                    email : email,
+
                 }),
             });
 
             if (res.status === 200) {
                 // setNaam("");
                 // setWachtwoord("")
-                setMessage("gebruiker is ingelogd");
+                setMessage("gebruiker is aangemaakt");
             } else {
                 setMessage("error " + res.status);
             }
@@ -93,28 +107,21 @@ function Registratie() {
                             <div className="input-group-prepend">
                             <span className="input-group-text" id="basic-addon1">@</span>
                             </div>
-                            <input type="date" id="form2Example11" className="form-control" name="datum" placeholder="datum" onChange={(e) => handleChangeNaam(e.target.value)}/>
+                            <input type="mail" id="form2Example11" className="form-control" name="email" placeholder="email" onChange={(e) => handleChangeEmail(e.target.value)}/>
                         </div>
 
                         <div className="form-outline input-group mb-4">
                             <div className="input-group-prepend">
                             <span className="input-group-text" id="basic-addon1">@</span>
                             </div>
-                            <input type="mail" id="form2Example11" className="form-control" name="email" placeholder="email" onChange={(e) => handleChangeNaam(e.target.value)}/>
+                            <input type="password" id="form2Example11" className="form-control" name="wachtwoord" placeholder="wachtwoord" onChange={(e) => handleChangeWachtwoord(e.target.value)}/>
                         </div>
 
                         <div className="form-outline input-group mb-4">
                             <div className="input-group-prepend">
                             <span className="input-group-text" id="basic-addon1">@</span>
                             </div>
-                            <input type="password" id="form2Example11" className="form-control" name="wachtwoord" placeholder="wachtwoord" onChange={(e) => handleChangeNaam(e.target.value)}/>
-                        </div>
-
-                        <div className="form-outline input-group mb-4">
-                            <div className="input-group-prepend">
-                            <span className="input-group-text" id="basic-addon1">@</span>
-                            </div>
-                            <input type="password" id="form2Example11" className="form-control" name="herhaal wachtwoord" placeholder="herhaal wachtwoord" onChange={(e) => handleChangeNaam(e.target.value)}/>
+                            <input type="password" id="form2Example11" className="form-control" name="wachtwoord2" placeholder="herhaal wachtwoord" onChange={(e) => handleChangeWachtwoord2(e.target.value)}/>
                         </div>
 
                         <div className="text-center pt-1 mb-4 ">
@@ -125,11 +132,11 @@ function Registratie() {
 
                         <div className="d-flex align-items-center justify-content-center pb-4">
                             <p className="mb-0 me-2">Al een account?</p>
-                            <a href="/login"  style={{color: '#F39A05'}}>Log in</a>
+                            <a href="/inloggen"  style={{color: '#F39A05'}}>Log in</a>
                             
                         </div>
                         </form>
-                        
+                        <div className="message">{message ? <p>{message}</p> : null}</div>
                     </div>
                     </div>
                 </div>
