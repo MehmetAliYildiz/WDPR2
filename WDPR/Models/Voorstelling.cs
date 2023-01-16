@@ -12,7 +12,6 @@ public class Voorstelling
     public string Img { get; set; }
     public int? ZaalId { get; set; }
     public DateTime Datum { get; set; }
-    public DateTime StartTime { get; set; }
-    public DateTime EndTime { get; set; }
+    public DateTime EindDatum { get; set; }
 
 }
