@@ -9,6 +9,7 @@ public class Voorstelling
     public int Id { get; set; }
     public string Name { get; set; }
     public string Img { get; set; }
+    public string beschrijving {get; set;}
     public int? ZaalId { get; set; }
     public DateTime Datum { get; set; }
     public DateTime EindDatum { get; set; }

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Axios from "axios";
 import "./Voorstelling.css";
 import 'bootstrap/dist/css/bootstrap.css';
@@ -21,7 +20,7 @@ function Voorstelling() {
     return (
         <>
             {/*<NavBar></NavBar>*/}
-            <NavBar></NavBar>
+            {/*<NavBar></NavBar>*/}
             <div className="Voorstelling">
                 <div className="Zoekveld">
                     <p>Zoek Naar Voorstelling</p>
@@ -53,7 +52,7 @@ function Voorstelling() {
                                 </p>
                                 <p>{item.datum}</p>
                                 <p>{item.EindDatum}</p>
-                                <link to="/VoorstellingDetail"><button className="btn btn-primary" >Button</button></link>
+                                <button className="btn btn-primary" type="submit">Button</button>
                             </div>
                         </div>
                     </div>

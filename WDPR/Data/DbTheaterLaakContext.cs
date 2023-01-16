@@ -13,6 +13,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     public DbSet<Voorstelling> Voorstelling { get; set; }
     public DbSet<Reservering> Reserveringen { get; set; }
     public DbSet<Gebruiker> Gebruiker { get; set; }
+    public DbSet<Zaal> Zaal { get; set; }
 
     public void AddReservering(Reservering r)
     {
@@ -26,7 +27,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
-        builder.UseSqlite("Data Source=DbTheaterLaakContext4.db");
+        builder.UseSqlite("Data Source=DbTheaterLaakContext5.db");
 
     }
 

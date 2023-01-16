@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useHistory} from 'react-router-dom';
 import Voorstelling from "./components/Voorstelling";
 import './custom.css';
 import Tickets from "./components/Tickets"
@@ -12,6 +12,7 @@ import Navbar from './components/navFoot/navbar';
 import Footer from './components/navFoot/Footer';
 import Reserveren from './components/Reserveren';
 import ReserveerForm from './components/ReserveerForm';
+import VoorstellingDetail from "./components/VoorstellingDetail";
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
@@ -25,6 +26,7 @@ export default function App() {
       <Routes>
         <Route path='/' element={<Homepage />}></Route>
         <Route path='/Voorstelling' element={<Voorstelling />}></Route>
+        {/*<Route path='/VoorstellingDetail' element={<VoorstellingDetail />}></Route>*/}
         <Route path='/Tickets' element={<ZaalLijst />}></Route>
         <Route path='/doneren' element={<Doneer />}></Route>
         <Route path='/inloggen' element={<Inloggen />}></Route>
