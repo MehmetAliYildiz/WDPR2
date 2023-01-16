@@ -110,7 +110,12 @@ class Scheduler extends Component {
 
     fetchData = async () => {
         // Fetch alle reserveringen op de huidige dag
-        const res = fetch('https://localhost:7260/reservering/' + this.state.date.getFullYear() + '-' + (this.state.date.getMonth() + 1) + '-' + this.state.date.getDate());
+        const res = await fetch('https://localhost:7260/reservering/' + this.state.date.getFullYear() + '-' + (this.state.date.getMonth() + 1) + '-' + this.state.date.getDate());
+        if (!res.ok) {
+            throw Error(res.statusText);
+            return;
+        }
+
         const data = await res.json();
 
         console.log(this.state.date.getFullYear() + '-' + (this.state.date.getMonth() + 1) + '-' + this.state.date.getDate());
@@ -153,7 +158,7 @@ class Scheduler extends Component {
 
 
         return (
-            <div className="scheduler">
+            <div data-cy="scheduler" className="scheduler">
                 <header>
                     <div className="flatpickr-outer-div">
                         <label htmlFor="datePicker">Datum:&nbsp;</label>
@@ -170,7 +175,7 @@ class Scheduler extends Component {
                 <div className="scheduler-body">
                     <div id="scheduler-back" className="scheduler-back" onMouseMove={handleMouseMove} style={{ position: "relative" }}>
                         <AppointmentRenderer appointments={this.state.appointments} ref={ref} scheduler={this} />
-                        <table className="scheduler-content">
+                        <table data-cy="scheduler-content" className="scheduler-content">
                             <tbody>
                                 <tr>
                                     <th style={{ display: "none" }}>
@@ -195,7 +200,7 @@ class Scheduler extends Component {
                     popupFocusFlag={this.state.popupFocusFlag}
                     setPopupFocusFlag={this.setPopupFocusFlag}
                 >
-                    <form onSubmit={this.handleAppointmentSubmit}>
+                    <form data-cy="appointment-form" onSubmit={this.handleAppointmentSubmit}>
                         <div>
                             <label>
                                 Afspraaknaam
@@ -244,7 +249,7 @@ class Scheduler extends Component {
                                 </tbody>
                             </table>
                         </div>
-                        <button onClick={this.handleAppointmentSubmit} onBlur={this.handleBlur}>
+                        <button type="button" data-cy="create-appointment-button" onClick={this.handleAppointmentSubmit} onBlur={this.handleBlur}>
                             Klaar
                         </button>
                     </form>

@@ -42,7 +42,7 @@ class ReserveerForm extends Component
             return;
         }
 
-        const res = fetch(`https://localhost:7260/Zaal/${zaalId}`); 
+        const res = await fetch(`https://localhost:7260/Zaal/${zaalId}`); 
         const data = await res.json();
         if (data.length === 0) {
             console.log(`No zaal with ID ${zaalId} found`);
