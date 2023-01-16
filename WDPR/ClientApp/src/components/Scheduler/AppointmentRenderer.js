@@ -13,6 +13,7 @@ class AppointmentRenderer extends Component {
             scheduler: props.scheduler,
             parentRef: React.createRef(),
             appointments: props.appointments,
+            remoteAppointments: props.remoteAppointments,
             elements: [],
             date: props.date
         }
@@ -25,6 +26,20 @@ class AppointmentRenderer extends Component {
             let el = [];
             let references = [];
             for (let i = 0; i < this.props.appointments.length; i++) {
+                let ref = React.createRef();
+                el.push(
+                    <Appointment
+                        key={"appointment-" + this.props.appointments[i].id}
+                        appointment={this.props.appointments[i]}
+                        allAppointments={this.props.appointments} ref={ref}
+                        parentDivRef={this.state.parentRef}
+                        renderer={this}
+                        scheduler={this.state.scheduler}
+                        elementIndex={i} />
+                );
+                references.push(ref);
+            }
+            for (let i = 0; i < this.props.remoteAppointments.length; i++) {
                 let ref = React.createRef();
                 el.push(
                     <Appointment

@@ -14,6 +14,7 @@ class Scheduler extends Component {
             date: props.date,
             appointmentPopup: false,
             popupFocusFlag: false,
+            remoteAppointments: [],
             appointments: [],
             selectedAppointment: {
                 startTime: new Date(),
@@ -58,7 +59,7 @@ class Scheduler extends Component {
 
     handleDateChange() {
         console.log("new date: " + this.state.date);
-        this.setState({ appointments: [] }, this.fetchData);
+        this.setState({ remoteAppointments: [] }, this.fetchData);
     }
 
     handleAppointmentHourChange = (event, date) => {
@@ -120,7 +121,7 @@ class Scheduler extends Component {
 
         console.log(this.state.date.getFullYear() + '-' + (this.state.date.getMonth() + 1) + '-' + this.state.date.getDate());
 
-        this.state.appointments = data.map(r => ({
+        this.state.remoteAppointments = data.map(r => ({
             startTime: new Date(r.startTijd),
             endTime: new Date(r.eindTijd),
             duration: (new Date(r.eindTijd).getHours() * 60 + new Date(r.eindTijd).getMinutes())
@@ -128,9 +129,7 @@ class Scheduler extends Component {
             name: r.naam
         }));
 
-        this.setState({ appointments: this.state.appointments });
-
-        console.log(this.state.appointments.length);
+        this.setState({ remoteAppointments: this.state.remoteAppointments });
     }
 
     createAppointment = (startDate, endDate) => {
@@ -174,7 +173,7 @@ class Scheduler extends Component {
                 </header>
                 <div className="scheduler-body">
                     <div id="scheduler-back" className="scheduler-back" onMouseMove={handleMouseMove} style={{ position: "relative" }}>
-                        <AppointmentRenderer appointments={this.state.appointments} ref={ref} scheduler={this} />
+                        <AppointmentRenderer appointments={this.state.appointments} remoteAppointments={this.state.remoteAppointments} ref={ref} scheduler={this} />
                         <table data-cy="scheduler-content" className="scheduler-content">
                             <tbody>
                                 <tr>
