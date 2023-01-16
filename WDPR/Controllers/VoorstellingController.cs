@@ -15,7 +15,10 @@ namespace WDPR.Controllers
     {
         private readonly DbTheaterLaakContext _context;
 
-         
+        public VoorstellingController(DbTheaterLaakContext context)
+        {
+            _context = context;
+        }
 
         // GET: api/Voorstelling
         [HttpGet]

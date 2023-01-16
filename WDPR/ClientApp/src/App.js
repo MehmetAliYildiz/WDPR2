@@ -8,8 +8,7 @@ import Doneer from './components/DonatiePagina/Doneer';
 import Login from './components/Login/Login';
 import Reserveren from './components/Reserveren'
 import ReserveerForm from './components/ReserveerForm'
-import StoelenTesten from './components/StoelenReserveren/StoelenTesten';
-
+import StoelBoekenTest from './components/StoelBoekenPagina/StoelBoekenTest';
 < link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
@@ -28,6 +27,7 @@ export default function App() {
         <Route path='/inloggen' element={<Login />}></Route>
         <Route path='/reserveren' element={<Reserveren />}></Route>
         <Route path='/reserveren/zaal' element={<ReserveerForm />}></Route>
+        <Route path='/stoelboeken' element={<StoelBoekenTest />}></Route>
       </Routes>
     </>
   );

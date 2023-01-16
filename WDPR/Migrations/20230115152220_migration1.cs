@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WDPR.Migrations
 {
-    public partial class FirstMigration : Migration
+    public partial class migration1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,18 +49,6 @@ namespace WDPR.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Band",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Band", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Gebruiker",
                 columns: table => new
                 {
@@ -73,6 +61,20 @@ namespace WDPR.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Gebruiker", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Voorstelling",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Img = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Voorstelling", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -198,48 +200,21 @@ namespace WDPR.Migrations
                 name: "Stoel",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false),
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     Status = table.Column<string>(type: "TEXT", nullable: false),
                     Row = table.Column<int>(type: "INTEGER", nullable: false),
-                    Number = table.Column<int>(type: "INTEGER", nullable: false),
-                    Rang = table.Column<string>(type: "TEXT", nullable: false)
+                    Rang = table.Column<int>(type: "INTEGER", nullable: false),
+                    ZaalId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Stoel", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Stoel_Zaal_Id",
-                        column: x => x.Id,
-                        principalTable: "Zaal",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Voorstelling",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    ZaalId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Img = table.Column<string>(type: "TEXT", nullable: false),
-                    BandId = table.Column<int>(type: "INTEGER", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Voorstelling", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Voorstelling_Band_BandId",
-                        column: x => x.BandId,
-                        principalTable: "Band",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Voorstelling_Zaal_ZaalId",
+                        name: "FK_Stoel_Zaal_ZaalId",
                         column: x => x.ZaalId,
                         principalTable: "Zaal",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -280,13 +255,8 @@ namespace WDPR.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Voorstelling_BandId",
-                table: "Voorstelling",
-                column: "BandId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Voorstelling_ZaalId",
-                table: "Voorstelling",
+                name: "IX_Stoel_ZaalId",
+                table: "Stoel",
                 column: "ZaalId");
         }
 
@@ -321,9 +291,6 @@ namespace WDPR.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Band");
 
             migrationBuilder.DropTable(
                 name: "Zaal");

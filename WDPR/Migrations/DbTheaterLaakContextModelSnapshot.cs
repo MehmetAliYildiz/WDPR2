@@ -208,17 +208,6 @@ namespace WDPR.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("WDPR.Models.Band", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Band");
-                });
-
             modelBuilder.Entity("WDPR.Models.Gebruiker", b =>
                 {
                     b.Property<int>("id")
@@ -248,9 +237,6 @@ namespace WDPR.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Number")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("Rang")
                         .HasColumnType("INTEGER");
 
@@ -277,9 +263,6 @@ namespace WDPR.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("BandId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Img")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -288,14 +271,7 @@ namespace WDPR.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("ZaalId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("BandId");
-
-                    b.HasIndex("ZaalId");
 
                     b.ToTable("Voorstelling");
                 });
@@ -370,23 +346,6 @@ namespace WDPR.Migrations
                     b.HasOne("WDPR.Models.Zaal", null)
                         .WithMany("Stoelen")
                         .HasForeignKey("ZaalId");
-                });
-
-            modelBuilder.Entity("WDPR.Models.Voorstelling", b =>
-                {
-                    b.HasOne("WDPR.Models.Band", "Band")
-                        .WithMany()
-                        .HasForeignKey("BandId");
-
-                    b.HasOne("WDPR.Models.Zaal", "Zaal")
-                        .WithMany()
-                        .HasForeignKey("ZaalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Band");
-
-                    b.Navigation("Zaal");
                 });
 
             modelBuilder.Entity("WDPR.Models.Zaal", b =>
