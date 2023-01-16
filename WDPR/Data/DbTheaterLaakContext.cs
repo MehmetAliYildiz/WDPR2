@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using WDPR.Models;
 using WDPR.Data;
-using Xunit.Sdk;
 
 public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 {
