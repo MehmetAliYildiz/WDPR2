@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Axios from "axios";
 import "./Voorstelling.css";
 import 'bootstrap/dist/css/bootstrap.css';
@@ -37,7 +36,6 @@ function Voorstelling() {
                         return value
                     }
                 }).sort((a,b) => a.datum > b.datum ? 1 : -1).map(item => (
-                    //<div className="row row-cols-1 row-cols-md-2 g-4">
                     <div className="VoorstellingKaart">
 
                         <div className="col">
@@ -52,14 +50,12 @@ function Voorstelling() {
                                     {item.beschrijving}
                                 </p>
                                 <p>{item.datum}</p>
-                                <p>{item.EindDatum}</p>
-                                <link to="/VoorstellingDetail"><button className="btn btn-primary" >Button</button></link>
+                                <a href={`voorstelling/geselecteerd?itemId=${item.id}`}>Button</a>
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
-            {/*<Footer></Footer>*/}
             <Footer></Footer>
         </>
     );

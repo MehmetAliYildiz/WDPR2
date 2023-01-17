@@ -1,8 +1,7 @@
 import React from 'react';
-import { Routes, Route, useHistory} from 'react-router-dom';
+import { Routes, Route} from 'react-router-dom';
 import Voorstelling from "./components/Voorstelling";
 import './custom.css';
-import Tickets from "./components/Tickets"
 import Homepage from './components/Homepage';
 import Doneer from './components/Doneer';
 import Inloggen from './components/Login/Login';
@@ -26,7 +25,6 @@ export default function App() {
       <Routes>
         <Route path='/' element={<Homepage />}></Route>
         <Route path='/Voorstelling' element={<Voorstelling />}></Route>
-        {/*<Route path='/VoorstellingDetail' element={<VoorstellingDetail />}></Route>*/}
         <Route path='/Tickets' element={<ZaalLijst />}></Route>
         <Route path='/doneren' element={<Doneer />}></Route>
         <Route path='/inloggen' element={<Inloggen />}></Route>
@@ -35,6 +33,7 @@ export default function App() {
         <Route path='/footer' element={<Footer />}></Route>
         <Route path='/reserveren' element={<Reserveren />}></Route>
         <Route path='/reserveren/zaal' element={<ReserveerForm />}></Route>
+        <Route path='/voorstelling/geselecteerd' element={<VoorstellingDetail />}></Route>
       </Routes>
     </>
   );

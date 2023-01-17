@@ -1,66 +1,45 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Axios from "axios";
-import "./Voorstelling.css";
-import 'bootstrap/dist/css/bootstrap.css';
+import Navigatie from "./navFoot/navbar";
 import Footer from "./navFoot/Footer";
-import NavBar from "./navFoot/navbar";
-function Voorstelling() {
+import Voorstelling from "./Voorstelling";
 
-    const [post, setPost] = useState([]);
-    const [searchNaam, setSearchNaam] = useState("");
+function VoorstellingDetail(prop) {
+    
+    const [voorstelling, setVoorstelling] = useState([]);
+    const [zaal, setZaal] = useState([]);
 
     useEffect(() => {
-        Axios.get("https://localhost:7260/api/Voorstelling").then((res) => {
-            setPost(res.data);
+        const queryParameters = new URLSearchParams(window.location.search);
+        const voorstellingId = queryParameters.get("itemId");
+        
+        Axios.get(`https://localhost:7260/api/Voorstelling/${voorstellingId}`).then((res) => {
+            setVoorstelling(res.data);
             console.log(res.data);
         });
-        //api("Voorstelling")
     }, []);
 
+    useEffect(() => { 
+        
+        Axios.get(`https://localhost:7260/api/Zaal/${zaal.ZaalId}`).then((res) => {
+            setZaal(res.data);
+            console.log(res.data);
+        });
+    }, []);
+        
+    
     return (
-        <>
-            {/*<NavBar></NavBar>*/}
-            {/*<NavBar></NavBar>*/}
-            <div className="Voorstelling">
-                <div className="Zoekveld">
-                    <p>Zoek Naar Voorstelling</p>
-                    <input className="input"
-                           type={"text"}
-                           placeholder={"Zoeken"}
-                           onChange={(e) => setSearchNaam(e.target.value)}/>
-                </div>
-                {post.filter((value) => {
-                    if (searchNaam === "") {
-                        return value;
-                    } else if (value.name.toLowerCase().includes(searchNaam.toLowerCase())) {
-                        return value
-                    }
-                }).sort((a,b) => a.datum > b.datum ? 1 : -1).map(item => (
-                    //<div className="row row-cols-1 row-cols-md-2 g-4">
-                    <div className="VoorstellingKaart">
-
-                        <div className="col">
-                            <div className="card">
-                                <h5 className="card-title" key={item.Id}>{item.name}</h5>
-                                <img src={item.img} className="card-img-top" alt="..." />
-                            </div>
-                        </div>
-                        <div className="col">
-                            <div className="card-body">
-                                <p className="card-text">
-                                    {item.beschrijving}
-                                </p>
-                                <p>{item.datum}</p>
-                                <p>{item.EindDatum}</p>
-                                <button className="btn btn-primary" type="submit">Button</button>
-                            </div>
-                        </div>
-                    </div>
-                ))}
-            </div>
-            {/*<Footer></Footer>*/}
-            <Footer></Footer>
-        </>
+    <>
+        < Navigatie />
+        <div>
+            <h1>{voorstelling.name}</h1>
+            <img src={voorstelling.img} alt="..." />
+            <p>{voorstelling.beschrijving}</p>
+            <p>{voorstelling.ZaalId}</p>
+        </div>
+        < Footer />
+    </>
+        
     );
 }
-export default Voorstelling;
+export default VoorstellingDetail;
