@@ -14,6 +14,7 @@ class Scheduler extends Component {
             date: props.date,
             appointmentPopup: false,
             popupFocusFlag: false,
+            remoteAppointments: [],
             appointments: [],
             selectedAppointment: {
                 startTime: new Date(),
@@ -58,7 +59,7 @@ class Scheduler extends Component {
 
     handleDateChange() {
         console.log("new date: " + this.state.date);
-        this.setState({ appointments: [] }, this.fetchData);
+        this.setState({ remoteAppointments: [] }, this.fetchData);
     }
 
     handleAppointmentHourChange = (event, date) => {
@@ -110,12 +111,17 @@ class Scheduler extends Component {
 
     fetchData = async () => {
         // Fetch alle reserveringen op de huidige dag
-        const res = fetch('https://localhost:7260/reservering/' + this.state.date.getFullYear() + '-' + (this.state.date.getMonth() + 1) + '-' + this.state.date.getDate());
+        const res = await fetch('https://localhost:7260/reservering/' + this.state.date.getFullYear() + '-' + (this.state.date.getMonth() + 1) + '-' + this.state.date.getDate());
+        if (!res.ok) {
+            throw Error(res.statusText);
+            return;
+        }
+
         const data = await res.json();
 
         console.log(this.state.date.getFullYear() + '-' + (this.state.date.getMonth() + 1) + '-' + this.state.date.getDate());
 
-        this.state.appointments = data.map(r => ({
+        this.state.remoteAppointments = data.map(r => ({
             startTime: new Date(r.startTijd),
             endTime: new Date(r.eindTijd),
             duration: (new Date(r.eindTijd).getHours() * 60 + new Date(r.eindTijd).getMinutes())
@@ -123,9 +129,7 @@ class Scheduler extends Component {
             name: r.naam
         }));
 
-        this.setState({ appointments: this.state.appointments });
-
-        console.log(this.state.appointments.length);
+        this.setState({ remoteAppointments: this.state.remoteAppointments });
     }
 
     createAppointment = (startDate, endDate) => {
@@ -153,7 +157,7 @@ class Scheduler extends Component {
 
 
         return (
-            <div className="scheduler">
+            <div data-cy="scheduler" className="scheduler">
                 <header>
                     <div className="flatpickr-outer-div">
                         <label htmlFor="datePicker">Datum:&nbsp;</label>
@@ -169,8 +173,8 @@ class Scheduler extends Component {
                 </header>
                 <div className="scheduler-body">
                     <div id="scheduler-back" className="scheduler-back" onMouseMove={handleMouseMove} style={{ position: "relative" }}>
-                        <AppointmentRenderer appointments={this.state.appointments} ref={ref} scheduler={this} />
-                        <table className="scheduler-content">
+                        <AppointmentRenderer appointments={this.state.appointments} remoteAppointments={this.state.remoteAppointments} ref={ref} scheduler={this} />
+                        <table data-cy="scheduler-content" className="scheduler-content">
                             <tbody>
                                 <tr>
                                     <th style={{ display: "none" }}>
@@ -195,7 +199,7 @@ class Scheduler extends Component {
                     popupFocusFlag={this.state.popupFocusFlag}
                     setPopupFocusFlag={this.setPopupFocusFlag}
                 >
-                    <form onSubmit={this.handleAppointmentSubmit}>
+                    <form data-cy="appointment-form" onSubmit={this.handleAppointmentSubmit}>
                         <div>
                             <label>
                                 Afspraaknaam
@@ -244,7 +248,7 @@ class Scheduler extends Component {
                                 </tbody>
                             </table>
                         </div>
-                        <button onClick={this.handleAppointmentSubmit} onBlur={this.handleBlur}>
+                        <button type="button" data-cy="create-appointment-button" onClick={this.handleAppointmentSubmit} onBlur={this.handleBlur}>
                             Klaar
                         </button>
                     </form>
