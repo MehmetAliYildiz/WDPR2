@@ -52,6 +52,7 @@ function Login() {
                 setAccessToken(accessToken);
                 setRefreshToken(refreshToken);
                 setMessage("gebruiker is ingelogd");
+                localStorage.setItem('gebruikersNaam', naam);
 
                 if(checked){
                     localStorage.setItem('refreshToken', refreshToken);
@@ -75,6 +76,8 @@ function Login() {
     if (storedRefreshToken) {
       setRefreshToken(storedRefreshToken);
       console.log('refreshtoken zit in localStorage')
+      navigate('/');
+
       setChecked(true);
     } else{
         console.log('geen refreshtoken in localStorage')
