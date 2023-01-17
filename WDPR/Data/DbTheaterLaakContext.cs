@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using WDPR.Models;
 using WDPR.Data;
@@ -45,4 +45,6 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     {
         return base.SaveChangesAsync();
     }
+
+    public DbSet<WDPR.Models.Band> Band { get; set; }
 }
