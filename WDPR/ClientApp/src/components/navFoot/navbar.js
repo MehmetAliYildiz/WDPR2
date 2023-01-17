@@ -39,7 +39,7 @@ function Navigatie() {
                   <a className="nav-link" href="/doneren">Doneren</a>
                 </li>
                 <li className="nav-item">
-                  <a className="btn koop" href="/winkelmand">Winkelmand</a>
+                  <a className="btn koop" href="/inloggen">Inloggen</a>
                 </li>
               </ul>
               </div>
