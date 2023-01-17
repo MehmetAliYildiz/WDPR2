@@ -1,11 +1,25 @@
-import React from "react";
+import {useEffect, useState} from "react";
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.js';
 import './Navbar.css'
 
 function Navigatie() {
-    return (
+    const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const gebruikersnaam = localStorage.getItem('gebruikersNaam')
 
+    useEffect(() => {
+      if(gebruikersnaam) {
+        setIsLoggedIn(true);
+      }
+    },[]);
+    
+      const handleLogout = () => {
+        localStorage.removeItem('gebruikersNaam');
+        navigate('/');
+      };
+    return (
         <>
         <nav className="navbar navbar-expand-lg site-navigation navKleur">
 
@@ -20,8 +34,6 @@ function Navigatie() {
               <div className="col-6">
                 
               </div>
-
-
 
             </div>
             <button className="navbar-toggler uitklapper" type="button" data-bs-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="navigatie schakelaar">
@@ -38,9 +50,30 @@ function Navigatie() {
                 <li className="nav-item">
                   <a className="nav-link" href="/doneren">Doneren</a>
                 </li>
+                
+                
+                {gebruikersnaam ? 
+                  
+                <><li className="nav-item">
+                    <div className="nav-link">Welcome {gebruikersnaam}</div>
+                  </li>
+                  <li className="nav-item">
+                    <a className="btn koop nav-link" onClick={handleLogout} >uitloggen</a>
+                  </li>
+                  <li className="nav-item">
+                      <a className="btn koop nav-link" href="/winkelmand">winkelmand</a>
+                  </li>
+                </>
+                
+                 : 
                 <li className="nav-item">
                   <a className="btn koop" href="/inloggen">Inloggen</a>
                 </li>
+                
+                }
+
+
+
               </ul>
               </div>
                 
