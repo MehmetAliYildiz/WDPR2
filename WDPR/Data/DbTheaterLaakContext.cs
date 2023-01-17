@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using WDPR.Models;
+using WDPR.Data;
 
-public class DbTheaterLaakContext : IdentityDbContext
+public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 {
     public DbTheaterLaakContext(DbContextOptions<DbTheaterLaakContext> options)
         : base(options)
@@ -10,13 +11,24 @@ public class DbTheaterLaakContext : IdentityDbContext
     }
 
     public DbSet<Voorstelling> Voorstelling { get; set; }
+    public DbSet<Reservering> Reserveringen { get; set; }
     public DbSet<Gebruiker> Gebruiker { get; set; }
     public DbSet<Zaal> Zaal { get; set; }
     public DbSet<Stoel> Stoel {get; set; }
 
+    public void AddReservering(Reservering r)
+    {
+        throw new NotImplementedException();
+    }
+
+    public IEnumerable<Reservering> GetReserveringen()
+    {
+        return Reserveringen;
+    }
+
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
-        builder.UseSqlite("Data Source=DbTheaterLaakContext2.db");
+        builder.UseSqlite("Data Source=DbTheaterLaakContext4.db");
 
     }
 
@@ -28,5 +40,13 @@ public class DbTheaterLaakContext : IdentityDbContext
             .HasMany(z => z.Stoelen);
     }
 
+    public override int SaveChanges()
+    {
+        return base.SaveChanges();
+    }
 
+    public Task<int> SaveChangesAsync()
+    {
+        return base.SaveChangesAsync();
+    }
 }

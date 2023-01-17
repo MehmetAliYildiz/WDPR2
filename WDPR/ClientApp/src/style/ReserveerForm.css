@@ -1,3 +1,7 @@
+body {
+    background-color: white;
+}
+
 .payment-options {
     overflow-y: auto;
     max-height: 30vh;

@@ -1,4 +1,3 @@
-
 using System.Runtime;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations;
@@ -13,5 +12,4 @@ public class Voorstelling
     public int? ZaalId { get; set; }
     public DateTime Datum { get; set; }
     public DateTime EindDatum { get; set; }
-
 }

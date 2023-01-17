@@ -1,0 +1,8 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:44469",
+"LaunchCommand": "npm start",
+"WorkingDirectory": "C:\\Users\\alexb\\Documents\\School\\Schooljaar 2022-2023\\VSProjects\\WebdevProjMehmet\\WDPR\\ClientApp\\",
+"MaxTimeoutInSeconds": "120"
+}
+}

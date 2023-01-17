@@ -3,8 +3,12 @@ body {
 }
 
 .Section1 {
+<<<<<<< HEAD:WDPR/ClientApp/src/components/HomePagina/HomePage.css
     background-image: url(".//HomeImages/HeroAfbeelding.png");
+=======
+>>>>>>> aedf1b09dd4aa8cc1e2cef09b067395fe28d1c20:WDPR/ClientApp/src/components/HomePage.css
     display: flex;
+    background-image: url("../../src/HomeImages/HeroAfbeelding.png");
     height: 540px;
     width: 100%;
     align-items: center;
@@ -16,7 +20,8 @@ body {
 .Section1 h1 {
     color: white;
     font-weight: 900;
-    width: 80%;
+    width: 100%;
+    font-size: 3vw;
 }
 
 .Logo {
@@ -25,7 +30,7 @@ body {
 }
 
 .LogoDiv {
-    width: 20rem;
+    width: 15rem;
     background-color: white;
     border-radius: 10px;
 
@@ -42,7 +47,7 @@ body {
     /* transform: translateY(150px); */
     width: 90%;
     height: 50px;
-    color: white;
+    color: black;
     background-color: #F39A05;
     border-radius: 10px;
     border: 0px;
@@ -55,8 +60,29 @@ body {
     color: #F39A05;
     border-radius: 5px;
     border: 0px;
+}
 
+.buttonB {
+    /* transform: translateY(150px); */
+    width: 90%;
+    height: 50px;
+    color: black;
+    background-color: #F39A05;
+    border-radius: 10px;
 
+    border: 0px;
+    font-weight: 900;
+    transition: all 100ms;
+}
+
+.buttonB:hover {
+    background-color: white;
+    color: #F39A05;
+    border-radius: 5px;
+
+    border: solid;
+    border-color: #F39A05;
+    border-block: none;
 }
 
 .Icoon {
@@ -88,6 +114,45 @@ body {
     margin-bottom: 3%;
 }
 
+.Section4 {
+    display: flex;
+    flex-wrap: wrap;
+
+    height: fit-content;
+    width: 100%;
+
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+    padding-left: 15%;
+    padding-right: 15%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    background-color: white; /*#1F0F0F;*/
+}
+
+.ContentAside {
+    background-color: white;
+    color: white;
+    max-width: 70vw;
+    width: calc(3000px - 200vw);
+    min-width: 35vw;
+    height: fit-content;
+    border-radius: 10px;
+    border: 10px;
+    border-style: solid;
+    border-color: #F39A05;
+}
+
+.ContentText {
+    width: 400px;
+    padding: 24px;
+}
+
+.ContentAside img {
+    width: 100%;
+}
+
 .V2 {
     transform: translateY(0px);
     width: 200px;
@@ -95,18 +160,56 @@ body {
 
 @media screen and (max-width: 500px) {
     .Section3 {
+<<<<<<< HEAD:WDPR/ClientApp/src/components/HomePagina/HomePage.css
         background-image: url(".//HomeImages/Achtergrond_image_laag.png");
         height: 700px;
+=======
+        background-image: url("../../src/HomeImages/Achtergrond_image_laag.png");
+        height: auto;
+>>>>>>> aedf1b09dd4aa8cc1e2cef09b067395fe28d1c20:WDPR/ClientApp/src/components/HomePage.css
         display: flex;
         /* align-items: center; */
         justify-content: space-between;
+        padding-left: 5%;
+        padding-right: 5%;
+        padding-top: 10%;
+        padding-bottom: 10%;
     }
 
     .Section3 p {
         color: white;
         font-weight: 500;
         width: 100%;
-        margin-top: 1%;
-        margin-bottom: 3%;
+        padding-bottom: 5%;
+
+    }
+
+    .V2 {
+        width: 60%;
+    }
+
+    .Section1 {
+        display: inline-block;
+        height: 300px;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .Section1 h1 {
+        color: white;
+        font-weight: 900;
+        width: 100%;
+        font-size: 6vw;
+        margin-top: 20px;
+    }
+
+    .LogoDiv {
+        width: 8rem;
+        background-color: white;
+        border-radius: 10px;
+        margin-top: 20px;
+
     }
 }

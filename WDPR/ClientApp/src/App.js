@@ -5,9 +5,11 @@ import './custom.css';
 import Tickets from "./components/Tickets"
 import Homepage from './components/HomePagina/Homepage';
 import Doneer from './components/DonatiePagina/Doneer';
-import Login from './components/Login/Login';
-import Reserveren from './components/Reserveren'
-import ReserveerForm from './components/ReserveerForm'
+import Inloggen from './components/Login/Login';
+import Reserveren from './components/Reserveren';
+import Registratie from './components/Registration/Registratie';
+import ZaalLijst from './components/ZaalLijst';
+import ReserveerForm from './components/ReserveerForm';
 import StoelBoekenTest from './components/StoelBoekenPagina/StoelBoekenTest';
 < link
   rel="stylesheet"
@@ -22,12 +24,15 @@ export default function App() {
       <Routes>
         <Route path='/' element={<Homepage />}></Route>
         <Route path='/Voorstelling' element={<Voorstelling />}></Route>
-        <Route path='/Tickets' element={<Tickets />}></Route>
+        <Route path='/Tickets' element={<ZaalLijst />}></Route>
         <Route path='/doneren' element={<Doneer />}></Route>
         <Route path='/inloggen' element={<Login />}></Route>
         <Route path='/reserveren' element={<Reserveren />}></Route>
+        <Route path='/registreer' element={<Registratie />}></Route>
         <Route path='/reserveren/zaal' element={<ReserveerForm />}></Route>
         <Route path='/stoelboeken' element={<StoelBoekenTest />}></Route>
+        <Route path='/nav' element={<Navbar />}></Route>
+
       </Routes>
     </>
   );

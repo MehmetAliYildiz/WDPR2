@@ -1,15 +1,13 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-
-using WDPR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using WDPR.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DbTheaterLaakContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DbTheaterLaakContext") ?? throw new InvalidOperationException("Connection string 'DbBoekingContext' not found.")));
+builder.Services.AddScoped<IDbTheaterLaakContext, DbTheaterLaakContext>();
 
 var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -18,11 +16,9 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("https://localhost:7260").AllowAnyMethod().AllowAnyHeader();
+                          policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                       });
 });
-
-// Add services to the container.
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<DbTheaterLaakContext>()
@@ -45,6 +41,15 @@ builder.Services.AddAuthentication(opt =>
     };
 });
 
+// Add services to the container.
+
+builder.Services.AddCors(o => o.AddPolicy(MyAllowSpecificOrigins, builder =>
+{
+    builder.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+}));
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
 
@@ -58,8 +63,6 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseAuthentication();
-app.UseAuthorization();
 app.UseStaticFiles();
 app.UseRouting();
 
