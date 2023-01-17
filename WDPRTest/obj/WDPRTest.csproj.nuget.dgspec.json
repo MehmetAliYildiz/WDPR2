@@ -1,35 +1,33 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\alexb\\Documents\\School\\Schooljaar 2022-2023\\VSProjects\\WebdevProjMehmet\\WDPRTest\\WDPRTest.csproj": {}
+    "C:\\Users\\31685\\Desktop\\WDPR2\\WDPRTest\\WDPRTest.csproj": {}
   },
   "projects": {
-    "C:\\Users\\alexb\\Documents\\School\\Schooljaar 2022-2023\\VSProjects\\WebdevProjMehmet\\WDPRTest\\WDPRTest.csproj": {
+    "C:\\Users\\31685\\Desktop\\WDPR2\\WDPRTest\\WDPRTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\alexb\\Documents\\School\\Schooljaar 2022-2023\\VSProjects\\WebdevProjMehmet\\WDPRTest\\WDPRTest.csproj",
+        "projectUniqueName": "C:\\Users\\31685\\Desktop\\WDPR2\\WDPRTest\\WDPRTest.csproj",
         "projectName": "WDPRTest",
-        "projectPath": "C:\\Users\\alexb\\Documents\\School\\Schooljaar 2022-2023\\VSProjects\\WebdevProjMehmet\\WDPRTest\\WDPRTest.csproj",
-        "packagesPath": "C:\\Users\\alexb\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\alexb\\Documents\\School\\Schooljaar 2022-2023\\VSProjects\\WebdevProjMehmet\\WDPRTest\\obj\\",
+        "projectPath": "C:\\Users\\31685\\Desktop\\WDPR2\\WDPRTest\\WDPRTest.csproj",
+        "packagesPath": "C:\\Users\\31685\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\31685\\Desktop\\WDPR2\\WDPRTest\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\alexb\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\31685\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\alexb\\Documents\\School\\Schooljaar 2022-2023\\VSProjects\\WebdevProjMehmet\\WDPR\\WDPR.csproj": {
-                "projectPath": "C:\\Users\\alexb\\Documents\\School\\Schooljaar 2022-2023\\VSProjects\\WebdevProjMehmet\\WDPR\\WDPR.csproj"
+              "C:\\Users\\31685\\Desktop\\WDPR2\\WDPR\\WDPR.csproj": {
+                "projectPath": "C:\\Users\\31685\\Desktop\\WDPR2\\WDPR\\WDPR.csproj"
               }
             }
           }
@@ -81,28 +79,26 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\alexb\\Documents\\School\\Schooljaar 2022-2023\\VSProjects\\WebdevProjMehmet\\WDPR\\WDPR.csproj": {
+    "C:\\Users\\31685\\Desktop\\WDPR2\\WDPR\\WDPR.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\alexb\\Documents\\School\\Schooljaar 2022-2023\\VSProjects\\WebdevProjMehmet\\WDPR\\WDPR.csproj",
+        "projectUniqueName": "C:\\Users\\31685\\Desktop\\WDPR2\\WDPR\\WDPR.csproj",
         "projectName": "WDPR",
-        "projectPath": "C:\\Users\\alexb\\Documents\\School\\Schooljaar 2022-2023\\VSProjects\\WebdevProjMehmet\\WDPR\\WDPR.csproj",
-        "packagesPath": "C:\\Users\\alexb\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\alexb\\Documents\\School\\Schooljaar 2022-2023\\VSProjects\\WebdevProjMehmet\\WDPR\\obj\\",
+        "projectPath": "C:\\Users\\31685\\Desktop\\WDPR2\\WDPR\\WDPR.csproj",
+        "packagesPath": "C:\\Users\\31685\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\31685\\Desktop\\WDPR2\\WDPR\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\alexb\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\31685\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -189,7 +185,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
