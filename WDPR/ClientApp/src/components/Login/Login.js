@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
+import { useNavigate } from 'react-router-dom';
 // import axios from "axios";
 
 function Login() {
@@ -14,9 +15,20 @@ function Login() {
         border: '0px'
     }
 
+    const navigate = useNavigate();
     const [naam, setNaam] =useState("");
     const [wachtwoord, setWachtwoord] =useState("");
     const [message, setMessage] =useState("");
+    const [refreshToken, setRefreshToken] = useState('');
+    const [checked, setChecked] = useState(false);
+    const [accessToken, setAccessToken] = useState('');
+
+    const handleChangeNaam = (value) => {
+        setNaam(value);
+    };
+    const handleChangeWachtwoord = (value) => {
+        setWachtwoord(value);
+    };
 
     let handleLogin = async (e) => {
         e.preventDefault();
@@ -31,11 +43,26 @@ function Login() {
                 }),
             });
 
-            if (res.status === 200) {
+            const json = await res.json();
+
+            if (res.ok) {
                 // setNaam("");
                 // setWachtwoord("")
+                const { accessToken, refreshToken } = json;
+                setAccessToken(accessToken);
+                setRefreshToken(refreshToken);
                 setMessage("gebruiker is ingelogd");
-            } else {
+                localStorage.setItem('gebruikersNaam', naam);
+
+                if(checked){
+                    localStorage.setItem('refreshToken', refreshToken);
+                } else{
+                    localStorage.removeItem('refreshToken');
+                }
+                
+                navigate('/');
+            
+            }else {
                 setMessage("error " + res.status);
             }
         } catch (err) {
@@ -43,13 +70,20 @@ function Login() {
         }
     }
     
+  useEffect(() => {
+    // Check for stored refresh token on mount
+    const storedRefreshToken = localStorage.getItem('refreshToken');
+    if (storedRefreshToken) {
+      setRefreshToken(storedRefreshToken);
+      console.log('refreshtoken zit in localStorage')
+      navigate('/');
 
-    const handleChangeNaam = (value) => {
-        setNaam(value);
-    };
-    const handleChangeWachtwoord = (value) => {
-        setWachtwoord(value);
-    };
+      setChecked(true);
+    } else{
+        console.log('geen refreshtoken in localStorage')
+    }
+  }, []);
+
 
     // const handleLogin = () => {
     //     const data = {
@@ -63,7 +97,7 @@ function Login() {
     //         alert(error);
     //     })
     // }
-    const [checked, setChecked] = React.useState(false);
+
 
     const handleChange = () => {
       setChecked(!checked);
