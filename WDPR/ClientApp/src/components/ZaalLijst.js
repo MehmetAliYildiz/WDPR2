@@ -22,10 +22,10 @@ class ZaalLijst extends Component {
             // Return a new button element for each zaal
             return (
                 <button
-                    key={`Zaal ${zaal.zaalId}`}
-                    onClick={this.props.onButtonClick.bind(this, zaal.zaalId)}
+                    key={`Zaal ${zaal.id}`}
+                    onClick={this.props.onButtonClick.bind(this, zaal.id)}
                 >
-                    Zaal {zaal.zaalId}
+                    Zaal {zaal.id}
                 </button>
             );
         });
