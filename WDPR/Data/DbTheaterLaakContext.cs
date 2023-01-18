@@ -12,16 +12,17 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     public DbSet<Voorstelling> Voorstelling { get; set; }
     public DbSet<Reservering> Reserveringen { get; set; }
+    public DbSet<Bestelling> Bestellingen { get; set; }
     public DbSet<Gebruiker> Gebruiker { get; set; }
 
     public void AddReservering(Reservering r)
     {
-        throw new NotImplementedException();
+        Reserveringen.Add(r);
     }
 
     public IEnumerable<Reservering> GetReserveringen()
     {
-        return Reserveringen;
+        return Reserveringen.Include(r => r.Bestelling);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
@@ -33,6 +34,9 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+
+        builder.Entity<Reservering>()
+            .HasOne(r => r.Bestelling);
     }
 
     public override int SaveChanges()

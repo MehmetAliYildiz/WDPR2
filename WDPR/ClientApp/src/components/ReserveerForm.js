@@ -2,6 +2,8 @@
 import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
+import { addToCartDetail } from './ShoppingCartUtil';
+import { appendZero } from './Scheduler/SchedulerUtil';
 import axios from 'axios';
 
 import Scheduler from './Scheduler/Scheduler';
@@ -108,20 +110,16 @@ class ReserveerForm extends Component
             naam: appointment.name,
             startTijd: appointment.startTime.toISOString(),
             eindTijd: appointment.endTime.toISOString(),
-            bestelling: {
-                id: 0,
-                bedrag: 0
-            },
-            zaalId: this.getZaalId()
+            bestelling: {},
+            zaalId: this.getZaalId(),
         };
         try {
             const response = axios.post(endpoint, data);
         } catch (err) {
             console.error(err);
         }
-        console.log(
-            `Renting room with id ${zaalId} from ${this.state.startDate} to ${this.state.endDate} and ${this.state.schedulerRef.current.tryGetAppointment() != null}`
-        );
+        localStorage.setItem("appointments", "[]");
+        addToCartDetail(`Reservering Zaal ${zaalId}`, `${appointment.startTime.toDateString()}, van ${appendZero(appointment.startTime.getHours())}:${appendZero(appointment.startTime.getMinutes())} tot ${appendZero(appointment.endTime.getHours())}:${appendZero(appointment.endTime.getMinutes())}`, (appointment.duration * 0.25).toFixed(2), appointment);
     };
 
     render() {
@@ -134,7 +132,7 @@ class ReserveerForm extends Component
                 <h1>
                     Plan een reservering voor zaal {this.getZaalId()}
                 </h1>
-                <Scheduler ref={this.state.schedulerRef} date={new Date(`${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate() + 1}`)} />
+                <Scheduler ref={this.state.schedulerRef} date={new Date(`${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate() + 1}`)}/>
                 <div key="paymentDiv">
                     <button type="button" onClick={() => this.setState({ paymentPopup: true })}>Click me!</button>
                     <Popup
