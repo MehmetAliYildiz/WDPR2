@@ -11,7 +11,8 @@ import Registratie from './components/Registration/Registratie';
 import ZaalLijst from './components/ZaalLijst';
 import ReserveerForm from './components/ReserveerForm';
 import StoelBoekenTest from './components/StoelBoekenPagina/StoelBoekenTest';
-< link
+import ShoppingCart from './components/ShoppingCart';
+<link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
   integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
@@ -32,7 +33,7 @@ export default function App() {
         <Route path='/reserveren/zaal' element={<ReserveerForm />}></Route>
         <Route path='/stoelboeken' element={<StoelBoekenTest />}></Route>
         <Route path='/nav' element={<Navbar />}></Route>
-
+        <Route path='/winkelmandje' element={<ShoppingCart />}></Route>
       </Routes>
     </>
   );
