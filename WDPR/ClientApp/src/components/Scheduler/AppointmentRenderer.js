@@ -14,6 +14,7 @@ class AppointmentRenderer extends Component {
             parentRef: React.createRef(),
             appointments: props.appointments,
             remoteAppointments: props.remoteAppointments,
+            allAppointments: props.appointments.concat(props.remoteAppointments),
             elements: [],
             date: props.date
         }
@@ -21,44 +22,55 @@ class AppointmentRenderer extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.appointments !== this.props.appointments) {
-            this.setState({ appointments: this.props.appointments });
+            this.updateAppointments();
+        }
+        if (prevProps.remoteAppointments !== this.props.remoteAppointments) {
+            this.setState({ remoteAppointments: this.props.remoteAppointments });
+            this.setState({ allAppointments: this.props.appointments.concat(this.props.remoteAppointments) });
 
-            let el = [];
-            let references = [];
-            for (let i = 0; i < this.props.appointments.length; i++) {
-                let ref = React.createRef();
-                el.push(
-                    <Appointment
-                        key={"appointment-" + this.props.appointments[i].id}
-                        appointment={this.props.appointments[i]}
-                        allAppointments={this.props.appointments} ref={ref}
-                        parentDivRef={this.state.parentRef}
-                        renderer={this}
-                        scheduler={this.state.scheduler}
-                        elementIndex={i} />
-                );
-                references.push(ref);
-            }
             for (let i = 0; i < this.props.remoteAppointments.length; i++) {
                 let ref = React.createRef();
-                el.push(
+                this.state.elements.push(
                     <Appointment
-                        key={"appointment-" + this.props.appointments[i].id}
-                        appointment={this.props.appointments[i]}
-                        allAppointments={this.props.appointments} ref={ref}
+                        key={"appointment-" + this.props.remoteAppointments[i].id}
+                        appointment={this.props.remoteAppointments[i]}
+                        allAppointments={this.state.allAppointments} ref={ref}
                         parentDivRef={this.state.parentRef}
                         renderer={this}
                         scheduler={this.state.scheduler}
                         elementIndex={i} />
                 );
-                references.push(ref);
+                this.state.refs.push(ref);
             }
-
             this.setState({
-                elements: el,
-                refs: references
+                elements: this.state.elements,
+                refs: this.state.refs
             });
         }
+    }
+
+    updateAppointments = () => {
+        this.setState({ appointments: this.props.appointments });
+        this.setState({ allAppointments: this.props.appointments.concat(this.props.remoteAppointments) });
+
+        for (let i = 0; i < this.props.appointments.length; i++) {
+            let ref = React.createRef();
+            this.state.elements.push(
+                <Appointment
+                    key={"appointment-" + this.props.appointments[i].id}
+                    appointment={this.props.appointments[i]}
+                    allAppointments={this.state.allAppointments} ref = { ref }
+                    parentDivRef={this.state.parentRef}
+                    renderer={this}
+                    scheduler={this.state.scheduler}
+                    elementIndex={i} />
+            );
+            this.state.refs.push(ref);
+        }
+        this.setState({
+            elements: this.state.elements,
+            refs: this.state.refs
+        });
     }
 
     handleMouseMove = (event) => {

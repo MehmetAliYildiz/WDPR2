@@ -16,6 +16,7 @@ class Scheduler extends Component {
             popupFocusFlag: false,
             remoteAppointments: [],
             appointments: [],
+            rendererRef: React.createRef(),
             selectedAppointment: {
                 startTime: new Date(),
                 endTime: new Date(),
@@ -32,6 +33,25 @@ class Scheduler extends Component {
 
     componentDidMount = async () => {
         this.fetchData();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.appointments != this.state.appointments) {
+            this.saveToLocalStorage();
+        }
+    }
+
+    saveToLocalStorage = () => {
+        if (this.state.appointments == null) return;
+        console.log("Updated: " + (this.state.appointments == null));
+        localStorage.setItem("appointments", JSON.stringify(this.state.appointments));
+    }
+
+    getZaalId = event => {
+        const queryParameters = new URLSearchParams(window.location.search)
+        const zaalId = queryParameters.get("zaalId")
+
+        return (zaalId);
     }
 
     tryGetAppointment = () => {
@@ -111,7 +131,7 @@ class Scheduler extends Component {
 
     fetchData = async () => {
         // Fetch alle reserveringen op de huidige dag
-        const res = await fetch('https://localhost:7260/reservering/' + this.state.date.getFullYear() + '-' + (this.state.date.getMonth() + 1) + '-' + this.state.date.getDate());
+        const res = await fetch(`https://localhost:7260/reservering/${this.getZaalId()}/${this.state.date.getFullYear()}-${this.state.date.getMonth() + 1}-${this.state.date.getDate()}`);
         if (!res.ok) {
             throw Error(res.statusText);
             return;
@@ -129,6 +149,22 @@ class Scheduler extends Component {
             name: r.naam
         }));
 
+        let appointmentsBasic = JSON.parse(localStorage.getItem("appointments"));
+        if (appointmentsBasic !== null) {
+            console.log("Length: " + appointmentsBasic.length);
+
+            for (let i = 0; i < appointmentsBasic.length; i++) {
+                this.state.appointments.push({
+                    id: appointmentsBasic[i].id,
+                    startTime: new Date(appointmentsBasic[i].startTime),
+                    endTime: new Date(appointmentsBasic[i].endTime),
+                    name: appointmentsBasic[i].name,
+                    allowModify: true
+                });
+            }
+        }
+
+        this.setState({ appointments: this.state.appointments }, this.state.rendererRef.current.updateAppointments());
         this.setState({ remoteAppointments: this.state.remoteAppointments });
     }
 
@@ -150,9 +186,8 @@ class Scheduler extends Component {
         let day = weekdayNames[this.state.date.getDay()]
         let month = monthNames[this.state.date.getMonth()]
         let dateString = `${day}, ${this.state.date.getDate()} ${month} ${this.state.date.getFullYear()}`;
-        let ref = React.createRef();
         const handleMouseMove = (event) => {
-            ref.current.handleMouseMove(event);
+            this.state.rendererRef.current.handleMouseMove(event);
         }
 
 
@@ -173,7 +208,7 @@ class Scheduler extends Component {
                 </header>
                 <div className="scheduler-body">
                     <div id="scheduler-back" className="scheduler-back" onMouseMove={handleMouseMove} style={{ position: "relative" }}>
-                        <AppointmentRenderer appointments={this.state.appointments} remoteAppointments={this.state.remoteAppointments} ref={ref} scheduler={this} />
+                        <AppointmentRenderer appointments={this.state.appointments} remoteAppointments={this.state.remoteAppointments} ref={this.state.rendererRef} scheduler={this} />
                         <table data-cy="scheduler-content" className="scheduler-content">
                             <tbody>
                                 <tr>

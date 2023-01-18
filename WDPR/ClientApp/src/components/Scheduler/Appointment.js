@@ -112,6 +112,13 @@ class Appointment extends Component {
 
     // Set starting height and position
     componentDidMount() {
+        if (this.state.appointment.allowModify) {
+            if (this.state.appointment.duration == null) {
+                let app = this.state.appointment;
+                this.state.appointment.duration = app.endTime.getHours() * 60 + app.endTime.getMinutes() - (app.startTime.getHours() * 60) - app.startTime.getMinutes()
+                this.setState({ appointment: this.state.appointment });
+            }
+        }
         let startPos = (calcMinutes(this.state.appointment.startTime) / this.getMinuteDenom());
         let startHeight = (this.state.appointment.duration / this.getMinuteDenom())
         this.state.transformState.savedPosition = {
@@ -137,6 +144,7 @@ class Appointment extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.allAppointments !== this.props.allAppointments) {
+            console.log("Test: " + this.props.allAppointments.length);
             this.state.allAppointments = this.props.allAppointments;
             this.setState({ allAppointments: this.state.allAppointments });
         }
@@ -284,6 +292,8 @@ class Appointment extends Component {
             transformState: this.state.transformState
         });
         document.removeEventListener('mouseup', this.handleMouseUp);
+
+        this.state.scheduler.saveToLocalStorage();
     }
 
     // Verwijder de huidige appointment
