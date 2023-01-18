@@ -45,6 +45,7 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\img" />
+    <Folder Include="ClientApp\src\HomeImages\" />
     <Folder Include="cypress\e2e\reservering\" />
     <Folder Include="Migrations\" />
   </ItemGroup>

@@ -3,12 +3,8 @@ body {
 }
 
 .Section1 {
-<<<<<<< HEAD:WDPR/ClientApp/src/components/HomePagina/HomePage.css
-    background-image: url(".//HomeImages/HeroAfbeelding.png");
-=======
->>>>>>> aedf1b09dd4aa8cc1e2cef09b067395fe28d1c20:WDPR/ClientApp/src/components/HomePage.css
     display: flex;
-    background-image: url("../../src/HomeImages/HeroAfbeelding.png");
+    background-image: url("./HomeImages/HeroAfbeelding.png");
     height: 540px;
     width: 100%;
     align-items: center;
@@ -17,12 +13,12 @@ body {
     padding-right: 15%;
 }
 
-.Section1 h1 {
-    color: white;
-    font-weight: 900;
-    width: 100%;
-    font-size: 3vw;
-}
+    .Section1 h1 {
+        color: white;
+        font-weight: 900;
+        width: 100%;
+        font-size: 3vw;
+    }
 
 .Logo {
     width: 100%;
@@ -33,14 +29,12 @@ body {
     width: 15rem;
     background-color: white;
     border-radius: 10px;
-
 }
 
 .Section2 {
     width: 100%;
     background-color: white;
     text-align: center;
-
 }
 
 .button {
@@ -55,12 +49,12 @@ body {
     transition: all 100ms;
 }
 
-.button:hover {
-    background-color: white;
-    color: #F39A05;
-    border-radius: 5px;
-    border: 0px;
-}
+    .button:hover {
+        background-color: white;
+        color: #F39A05;
+        border-radius: 5px;
+        border: 0px;
+    }
 
 .buttonB {
     /* transform: translateY(150px); */
@@ -69,21 +63,19 @@ body {
     color: black;
     background-color: #F39A05;
     border-radius: 10px;
-
     border: 0px;
     font-weight: 900;
     transition: all 100ms;
 }
 
-.buttonB:hover {
-    background-color: white;
-    color: #F39A05;
-    border-radius: 5px;
-
-    border: solid;
-    border-color: #F39A05;
-    border-block: none;
-}
+    .buttonB:hover {
+        background-color: white;
+        color: #F39A05;
+        border-radius: 5px;
+        border: solid;
+        border-color: #F39A05;
+        border-block: none;
+    }
 
 .Icoon {
     width: 100px;
@@ -92,7 +84,7 @@ body {
 }
 
 .Section3 {
-    background-image: url(".//HomeImages/Achtergrond_image_laag.png");
+    background-image: url("./HomeImages/Achtergrond_image_laag.png");
     height: 540px;
     display: flex;
     align-items: center;
@@ -101,26 +93,24 @@ body {
     padding-right: 15%;
 }
 
-.Section3 h2 {
-    color: #F39A05;
-    font-weight: 800;
-}
+    .Section3 h2 {
+        color: #F39A05;
+        font-weight: 800;
+    }
 
-.Section3 p {
-    color: white;
-    font-weight: 500;
-    width: 80%;
-    margin-top: 1%;
-    margin-bottom: 3%;
-}
+    .Section3 p {
+        color: white;
+        font-weight: 500;
+        width: 80%;
+        margin-top: 1%;
+        margin-bottom: 3%;
+    }
 
 .Section4 {
     display: flex;
     flex-wrap: wrap;
-
     height: fit-content;
     width: 100%;
-
     align-items: center;
     align-content: center;
     justify-content: space-between;
@@ -160,13 +150,8 @@ body {
 
 @media screen and (max-width: 500px) {
     .Section3 {
-<<<<<<< HEAD:WDPR/ClientApp/src/components/HomePagina/HomePage.css
-        background-image: url(".//HomeImages/Achtergrond_image_laag.png");
-        height: 700px;
-=======
-        background-image: url("../../src/HomeImages/Achtergrond_image_laag.png");
+        background-image: url("./HomeImages/Achtergrond_image_laag.png");
         height: auto;
->>>>>>> aedf1b09dd4aa8cc1e2cef09b067395fe28d1c20:WDPR/ClientApp/src/components/HomePage.css
         display: flex;
         /* align-items: center; */
         justify-content: space-between;
@@ -176,13 +161,12 @@ body {
         padding-bottom: 10%;
     }
 
-    .Section3 p {
-        color: white;
-        font-weight: 500;
-        width: 100%;
-        padding-bottom: 5%;
-
-    }
+        .Section3 p {
+            color: white;
+            font-weight: 500;
+            width: 100%;
+            padding-bottom: 5%;
+        }
 
     .V2 {
         width: 60%;
@@ -197,19 +181,18 @@ body {
         text-align: center;
     }
 
-    .Section1 h1 {
-        color: white;
-        font-weight: 900;
-        width: 100%;
-        font-size: 6vw;
-        margin-top: 20px;
-    }
+        .Section1 h1 {
+            color: white;
+            font-weight: 900;
+            width: 100%;
+            font-size: 6vw;
+            margin-top: 20px;
+        }
 
     .LogoDiv {
         width: 8rem;
         background-color: white;
         border-radius: 10px;
         margin-top: 20px;
-
     }
 }

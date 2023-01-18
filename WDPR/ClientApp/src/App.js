@@ -27,12 +27,11 @@ export default function App() {
         <Route path='/Voorstelling' element={<Voorstelling />}></Route>
         <Route path='/Tickets' element={<ZaalLijst />}></Route>
         <Route path='/doneren' element={<Doneer />}></Route>
-        <Route path='/inloggen' element={<Login />}></Route>
+        <Route path='/inloggen' element={<Inloggen />}></Route>
         <Route path='/reserveren' element={<Reserveren />}></Route>
         <Route path='/registreer' element={<Registratie />}></Route>
         <Route path='/reserveren/zaal' element={<ReserveerForm />}></Route>
         <Route path='/stoelboeken' element={<StoelBoekenTest />}></Route>
-        <Route path='/nav' element={<Navbar />}></Route>
         <Route path='/winkelmandje' element={<ShoppingCart />}></Route>
       </Routes>
     </>
