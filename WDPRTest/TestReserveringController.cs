@@ -24,6 +24,7 @@ namespace WDPRTest
             {
                 new Reservering(0)
                 {
+                    ZaalId = 0,
                     StartTijd = st,
                     EindTijd  = et
                 }
@@ -32,7 +33,7 @@ namespace WDPRTest
             var controller = CreateControllerWithMock(list);
 
             // Act
-            var result = controller.GetAll(date.Replace('/', '-'));
+            var result = controller.GetAll(0, date.Replace('/', '-'));
             var output = ((OkObjectResult)result).Value;
 
             // Assert
@@ -48,7 +49,7 @@ namespace WDPRTest
             var controller = CreateControllerWithMock(new List<Reservering>());
 
             // Act
-            var result = controller.GetAll(date);
+            var result = controller.GetAll(0, date);
             var output = ((ObjectResult)result).Value;
 
             // Assert
@@ -67,6 +68,7 @@ namespace WDPRTest
             {
                 new Reservering(0)
                 {
+                    ZaalId = 0,
                     StartTijd = st1,
                     EindTijd = et1
                 }
@@ -75,6 +77,7 @@ namespace WDPRTest
 
             var nieuweReservering = new Reservering(1)
             {
+                ZaalId = 0,
                 StartTijd = st2,
                 EindTijd = et2
             };
