@@ -3,6 +3,10 @@ body {
 }
 
 .Section1 {
+<<<<<<< HEAD:WDPR/ClientApp/src/components/HomePagina/HomePage.css
+    background-image: url(".//HomeImages/HeroAfbeelding.png");
+=======
+>>>>>>> aedf1b09dd4aa8cc1e2cef09b067395fe28d1c20:WDPR/ClientApp/src/components/HomePage.css
     display: flex;
     background-image: url("../../src/HomeImages/HeroAfbeelding.png");
     height: 540px;
@@ -88,7 +92,7 @@ body {
 }
 
 .Section3 {
-    background-image: url("../../src/HomeImages/Achtergrond_image_laag.png");
+    background-image: url(".//HomeImages/Achtergrond_image_laag.png");
     height: 540px;
     display: flex;
     align-items: center;
@@ -156,8 +160,13 @@ body {
 
 @media screen and (max-width: 500px) {
     .Section3 {
+<<<<<<< HEAD:WDPR/ClientApp/src/components/HomePagina/HomePage.css
+        background-image: url(".//HomeImages/Achtergrond_image_laag.png");
+        height: 700px;
+=======
         background-image: url("../../src/HomeImages/Achtergrond_image_laag.png");
         height: auto;
+>>>>>>> aedf1b09dd4aa8cc1e2cef09b067395fe28d1c20:WDPR/ClientApp/src/components/HomePage.css
         display: flex;
         /* align-items: center; */
         justify-content: space-between;

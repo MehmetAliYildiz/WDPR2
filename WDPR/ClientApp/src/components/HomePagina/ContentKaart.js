@@ -17,5 +17,4 @@ export default function ContentKaart(props) {
             </div>
         </div >
     )
-
 }

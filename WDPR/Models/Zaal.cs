@@ -1,18 +1,26 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿
+using System.ComponentModel.DataAnnotations;
 
 namespace WDPR.Models
 {
     public class Zaal
     {
-        public int ZaalId { get; set; }
+        [Key]
+        public int Id { get; set; }
         public bool StaatReserveringenToe { get; set; }
-        public IEnumerable<Stoel> Stoelen { get; set; }
+        // public IEnumerable<Stoel> Stoelen { get; set; }
 
-        public Zaal(int zaalId)
+        // public Zaal(int zaalId)
+        // {
+        //     Id = zaalId;
+        //     StaatReserveringenToe = false;
+        //     Stoelen = new List<Stoel>();
+        // }
+         public List<Stoel> Stoelen { get; set; }
+
+        public Zaal(int id)
         {
-            ZaalId = zaalId;
-            StaatReserveringenToe = false;
-            Stoelen = new List<Stoel>();
-        }
+            Id = id;
+    }
     }
 }

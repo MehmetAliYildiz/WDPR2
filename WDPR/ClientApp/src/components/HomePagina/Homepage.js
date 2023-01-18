@@ -1,10 +1,17 @@
 import React from "react";
+<<<<<<< HEAD:WDPR/ClientApp/src/components/HomePagina/Homepage.js
+import Logo from ".//HomeImages/Logo_theater_laak_V2.png";
+import Donate_icoon from ".//HomeImages/Donate_icoon.png";
+import Login_icoon from ".//HomeImages/Login_icoon.png";
+import Tickets_icoon from ".//HomeImages/Ticket_Icoon.png";
+=======
 import Logo from "../../src/HomeImages/Logo_theater_laak_V2.png";
 import Donate_icoon from "../../src/HomeImages/Donate_icoon.png";
 import Login_icoon from "../../src/HomeImages/Login_icoon.png";
 import Tickets_icoon from "../../src/HomeImages/Ticket_Icoon.png";
 import Zaal1 from "../../src/HomeImages/Zaal_1.jpg";
 import { Link } from 'react-router-dom';
+>>>>>>> aedf1b09dd4aa8cc1e2cef09b067395fe28d1c20:WDPR/ClientApp/src/components/Homepage.js
 import ContentKaart from "./ContentKaart";
 import Footer from "./navFoot/Footer";
 import NavBar from "./navFoot/navbar";

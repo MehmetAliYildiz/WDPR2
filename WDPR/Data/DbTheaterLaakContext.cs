@@ -14,7 +14,8 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     public DbSet<Reservering> Reserveringen { get; set; }
     public DbSet<Bestelling> Bestellingen { get; set; }
     public DbSet<Gebruiker> Gebruiker { get; set; }
-    public DbSet<Zaal> Zaal {get; set;}
+    public DbSet<Zaal> Zaal { get; set; }
+    public DbSet<Stoel> Stoel {get; set; }
 
     public void AddReservering(Reservering r)
     {
@@ -36,6 +37,8 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     {
         base.OnModelCreating(builder);
 
+        builder.Entity<Zaal>()
+            .HasMany(z => z.Stoelen);
         builder.Entity<Reservering>()
             .HasOne(r => r.Bestelling);
     }
