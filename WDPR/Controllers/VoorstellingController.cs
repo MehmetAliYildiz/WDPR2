@@ -106,7 +106,6 @@ namespace WDPR.Controllers
             {
                 return NotFound();
             }
-
             var zaal = _context.Zaal.Find(zaalId);
             if (zaal == null)
             {
