@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import "./Voorstelling.css";
 import 'bootstrap/dist/css/bootstrap.css';
-import StoelBoeken from "../StoelBoekenPagina/StoelBoeken";
+import Footer from "../navFoot/Footer";
+import NavBar from "../navFoot/navbar"
 function Voorstelling() {
 
     const [post, setPost] = useState([]);
@@ -19,7 +20,7 @@ function Voorstelling() {
     return (
         <>
             {/*<NavBar></NavBar>*/}
-            {/* <NavBar></NavBar> */}
+            <NavBar></NavBar>
             <div className="Voorstelling">
                 <div className="Zoekveld">
                     <p>Zoek Naar Voorstelling</p>
@@ -35,7 +36,6 @@ function Voorstelling() {
                         return value
                     }
                 }).sort((a,b) => a.datum > b.datum ? 1 : -1).map(item => (
-                    //<div className="row row-cols-1 row-cols-md-2 g-4">
                     <div className="VoorstellingKaart">
 
                         <div className="col">
@@ -50,17 +50,13 @@ function Voorstelling() {
                                     {item.beschrijving}
                                 </p>
                                 <p>{item.datum}</p>
-                                <button onClick={<StoelBoeken />
-                                }>
-                                    Bestel Tickets
-                                </button>
-
+                                <a href={`voorstelling/geselecteerd?itemId=${item.id}`}>Button</a>
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
-            {/* <Footer></Footer> */}
+            <Footer></Footer>
         </>
     );
 }
