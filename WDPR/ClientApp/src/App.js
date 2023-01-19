@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Voorstelling from "./components/VoorstellingPagina/Voorstelling";
 import './custom.css';
-import Tickets from "./components/Tickets"
+// import Tickets from "./components/Tickets"
 import Homepage from './components/HomePagina/Homepage';
 import Doneer from './components/DonatiePagina/Doneer';
 import Inloggen from './components/Login/Login';
@@ -12,6 +12,7 @@ import ZaalLijst from './components/ZaalLijst';
 import ReserveerForm from './components/ReserveerForm';
 import StoelBoekenTest from './components/StoelBoekenPagina/StoelBoekenTest';
 import ShoppingCart from './components/ShoppingCart';
+import VoorstellingDetail from './components/VoorstellingDetail/VoorstellingDetail';
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
@@ -33,6 +34,7 @@ export default function App() {
         <Route path='/reserveren/zaal' element={<ReserveerForm />}></Route>
         <Route path='/stoelboeken' element={<StoelBoekenTest />}></Route>
         <Route path='/winkelmandje' element={<ShoppingCart />}></Route>
+        <Route path='/voorstelling/geselecteerd' element={<VoorstellingDetail />}></Route>
       </Routes>
     </>
   );

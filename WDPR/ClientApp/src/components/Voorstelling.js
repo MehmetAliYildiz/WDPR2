@@ -50,8 +50,6 @@ function Voorstelling() {
                                 <p className="card-text">
                                     {item.beschrijving}
                                 </p>
-                                <p>{item.datum}</p>
-
                             </div>
                         </div>
                     </div>
