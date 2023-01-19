@@ -75,7 +75,6 @@ namespace WDPR.Controllers
         [HttpPost]
         public async Task<ActionResult<Voorstelling>> PostVoorstelling(Voorstelling voorstelling)
         {
-            voorstelling.ZaalId = null;
             _context.Voorstelling.Add(voorstelling);
             await _context.SaveChangesAsync();
 
@@ -98,35 +97,13 @@ namespace WDPR.Controllers
             return NoContent();
         }
         
-        [HttpPut("voegZaalToe")]
-        public IActionResult voegZaalToe(int voorstellingId, int zaalId)
+         [HttpDelete]
+        public async Task<IActionResult> DeleteAlleVoorstellingen()
         {
-            var voorstelling = _context.Voorstelling.Find(voorstellingId);
-            if (voorstelling == null)
-            {
-                return NotFound();
-            }
-            var zaal = _context.Zaal.Find(zaalId);
-            if (zaal == null)
-            {
-                return NotFound();
-            }
-
-            var existingVoorstelling = _context.Voorstelling.Where(x =>
-            x.ZaalId == zaalId &&
-            ((x.Datum >= voorstelling.Datum && x.Datum < voorstelling.EindDatum) ||
-            (x.EindDatum > voorstelling.Datum && x.EindDatum <= voorstelling.EindDatum) ||
-            (x.Datum <= voorstelling.Datum && x.EindDatum >= voorstelling.EindDatum))).ToList();
-            
-            if (existingVoorstelling.Count > 0)
-            {
-                return BadRequest("There is already a voorstelling at that time in this zaal");
-            }       
-
-            voorstelling.ZaalId = zaalId;
-            _context.SaveChanges();
-
-            return Ok();
+            var voorstellingen = await _context.Voorstelling.ToListAsync();
+            _context.Voorstelling.RemoveRange(voorstellingen);
+            await _context.SaveChangesAsync();
+            return NoContent();
         }
         
 

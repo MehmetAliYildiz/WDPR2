@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WDPR.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace WDPR.Controllers{
 
@@ -37,12 +38,20 @@ namespace WDPR.Controllers{
             }
             return _context.Zaal;
         }
-
-        [HttpGet("{id}")]
-        public IEnumerable<Zaal> GetSpecific([FromRoute] int id)
+        
+        [HttpGet("zaal/{id}")]
+        public async Task<ActionResult<Zaal>> GetZaalById(int id)
         {
-            return _context.Zaal.Where(z => z.Id == id);
+            var zaal = await _context.Zaal.FindAsync(id);
+
+            if (zaal == null)
+            {
+                return NotFound();
+            }
+
+            return zaal;
         }
+
 
         [HttpPost]
         public IActionResult PostZaal([FromBody] ZaalMetStoelnummers zms)
