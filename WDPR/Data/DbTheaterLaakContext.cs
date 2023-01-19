@@ -16,6 +16,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     public DbSet<Gebruiker> Gebruiker { get; set; }
     public DbSet<Zaal> Zaal { get; set; }
     public DbSet<Stoel> Stoel {get; set; }
+    public DbSet<Agenda> Agenda { get; set; }
 
     public void AddReservering(Reservering r)
     {
@@ -25,6 +26,11 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     public IEnumerable<Reservering> GetReserveringen()
     {
         return Reserveringen.Include(r => r.Bestelling);
+    }
+
+    public IEnumerable<Zaal> GetZaal()
+    {
+        return Zaal.Include(z => z.Stoelen);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)

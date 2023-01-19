@@ -40,16 +40,15 @@ namespace WDPR.Controllers{
         }
         
         [HttpGet("zaal/{id}")]
-        public async Task<ActionResult<Zaal>> GetZaalById(int id)
+        public IActionResult GetZaalById(int id)
         {
-            var zaal = await _context.Zaal.FindAsync(id);
-
-            if (zaal == null)
+            var zaal = _context.GetZaal().Where(z => z.Id == id);
+            if (zaal.Count() < 1)
             {
                 return NotFound();
             }
 
-            return zaal;
+            return Ok(zaal.First());
         }
 
 
