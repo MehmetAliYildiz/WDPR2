@@ -38,13 +38,7 @@ namespace WDPR.Controllers{
             }
             return _context.Zaal;
         }
-
-        // [HttpGet("{id}")]
-        // public IEnumerable<Zaal> GetSpecific([FromRoute] int id)
-        // {
-        //     var data = new List<Zaal> { new Zaal(0) { StaatReserveringenToe = true }, new Zaal(1) { StaatReserveringenToe = true }, new Zaal(2) { StaatReserveringenToe = true } };
-        //     return data.Where(z => z.Id == id);
-        // }
+        
         [HttpGet("zaal/{id}")]
         public async Task<ActionResult<Zaal>> GetZaalById(int id)
         {

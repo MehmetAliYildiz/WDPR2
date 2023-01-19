@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { getCart, removeFromCart } from './ShoppingCartUtil';
+import { getCart, removeFromCart, getCartTotal } from './ShoppingCartUtil';
 
 export default class ShoppingCart extends Component {
     constructor(props) {
@@ -44,6 +44,7 @@ export default class ShoppingCart extends Component {
         return (
             <div>
                 {cartList}
+                <h2>Totale kosten: €{getCartTotal()}</h2>
                 <a href="https://google.com/">
                     <button>
                         Klik hier om te betalen
