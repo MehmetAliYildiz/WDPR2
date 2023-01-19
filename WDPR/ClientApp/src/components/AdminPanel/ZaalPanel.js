@@ -8,7 +8,8 @@ export default class ZaalPanel extends EndpointPanel {
     constructor(props) {
         super(props);
         this.state = {
-            formData: {}
+            formData: {},
+            postStatus: ""
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -21,10 +22,7 @@ export default class ZaalPanel extends EndpointPanel {
         }));
     }
 
-    handleSubmit = () => {
-        console.log(this.state.formData);
-        this.test();
-
+    handlePostSubmit = async () => {
         const data = {
             id: 0,
             stoelen: [],
@@ -33,17 +31,19 @@ export default class ZaalPanel extends EndpointPanel {
             derdeRangs: this.state.formData["zaal-derderangs"] || 0
         }
 
-        console.log(data);
-        this.postToEndpoint("Zaal", data);
+        const status = await this.postToEndpoint("Zaal", data);
+        this.setState({
+            postStatus: JSON.stringify(status)
+        });
     }
 
     render() {
         return (
             <div>
                 <form onSubmit={this.handleSubmit} onChange={this.handleChange}>
-                    <label>
+                    <h3>
                         Nieuwe zaal:
-                    </label><br />
+                    </h3>
                     <label>
                         Eersterangs stoelen:
                         <IntegerField
@@ -62,10 +62,11 @@ export default class ZaalPanel extends EndpointPanel {
                             type="number"
                             id="zaal-derderangs" />
                     </label><br />
-                    <button type="button" onClick={this.handleSubmit}>
+                    <button type="button" onClick={this.handlePostSubmit}>
                         Submit
                     </button>
                 </form>
+                <textarea value={this.state.postStatus} readOnly />
             </div>
         );
     }

@@ -5,7 +5,7 @@ export default class AdminPanel extends Component {
     render() {
         return (
             <div>
-                <p>hello</p>
+                <h1>Admin Panel</h1>
                 <ZaalPanel />
             </div>
         );

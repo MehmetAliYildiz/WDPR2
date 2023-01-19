@@ -3,16 +3,12 @@ import axios from 'axios';
 
 export default class EndpointPanel extends Component {
 
-    postToEndpoint(url, body) {
+    async postToEndpoint(url, body) {
         const endpoint = 'https://localhost:7260/' + url;
-        let response;
-        try {
-            response = axios.post(endpoint, body);
-        } catch (err) {
-            console.error(err);
-        }
+        let res = await axios.post(endpoint, body)
 
-        return response;
+        console.log(res.status);
+        return res;
     }
 
     test() {
