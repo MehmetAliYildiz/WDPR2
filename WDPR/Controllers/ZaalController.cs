@@ -41,8 +41,7 @@ namespace WDPR.Controllers{
         [HttpGet("{id}")]
         public IEnumerable<Zaal> GetSpecific([FromRoute] int id)
         {
-            var data = new List<Zaal> { new Zaal(0) { StaatReserveringenToe = true }, new Zaal(1) { StaatReserveringenToe = true }, new Zaal(2) { StaatReserveringenToe = true } };
-            return data.Where(z => z.Id == id);
+            return _context.Zaal.Where(z => z.Id == id);
         }
 
         [HttpPost]
