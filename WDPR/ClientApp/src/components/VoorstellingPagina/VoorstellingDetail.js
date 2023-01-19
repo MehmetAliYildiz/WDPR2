@@ -2,6 +2,7 @@ import { useState, useEffect, Component } from "react";
 import Axios from "axios";
 import Navigatie from "../navFoot/navbar";
 import Footer from "../navFoot/Footer";
+import "./VoorstellingDetail.css"
 
 class VoorstellingDetail extends Component {
     constructor(props) {
@@ -34,22 +35,27 @@ class VoorstellingDetail extends Component {
 
     render() {
         const agendaItems = this.state.agendas.map(agenda => {
+            const startDatumTijd = new Date(agenda.startDatumTijd).toLocaleDateString();
+            const eindDatumTijd = new Date(agenda.eindDatumTijd).toLocaleDateString();
             return (
                 <section>
                     <p>{agenda.id}</p>
-                    <p>{agenda.startDatumTijd}</p>
-                    <p>{agenda.eindDatumTijd}</p>
+                    <p>{startDatumTijd}</p>
+                    <p>{eindDatumTijd}</p>
+                    <a href={`voorstelling/boekstoel?zaalid=${agenda.zaalId}`}>Boek nu</a>
                 </section>
             );
         });
         return (
         <>
             <Navigatie/>
-            <div>
+            <div className="voorstellingInfoWrapper">
                 <h1>{this.state.voorstelling.name}</h1>
-                <img src={this.state.voorstelling.img} alt="..." />
+                <p>Bekijk hier de informatie over {this.state.voorstelling.name} en boek je kaartje op de gewenste dag en tijd</p>
+                <img className="voorstellingPlaatje" src={this.state.voorstelling.img} alt="..." />
                 <p>{this.state.voorstelling.beschrijving}</p>
-                <div>{agendaItems}</div>
+                <p>Hieronder staan alle mogelijke opties om {this.state.voorstelling.name} te bezoeken:</p>
+                <div className="agendaItem">{agendaItems}</div>
             </div>
             <Footer/>
         </>
