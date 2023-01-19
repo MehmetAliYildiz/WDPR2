@@ -13,7 +13,7 @@ import ReserveerForm from './components/ReserveerForm';
 import StoelBoekenTest from './components/StoelBoekenPagina/StoelBoekenTest';
 import ShoppingCart from './components/ShoppingCart';
 import AdminPanel from './components/AdminPanel/AdminPanel';
-import VoorstellingDetail from './components/VoorstellingDetail/VoorstellingDetail';
+import VoorstellingDetail from './components/VoorstellingPagina/VoorstellingDetail';
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
