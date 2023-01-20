@@ -28,7 +28,7 @@ namespace WDPR.Controllers
                 return BadRequest("\"" + datum + "\" was not recognized as a valid date");
             }
 
-            return Ok(_context.GetReserveringen().Where(r => r.StartTijd.Date == DateTime.Parse(datum).Date && r.ZaalId == id));
+            return Ok(_context.GetReserveringen().Where(r => r.StartTijd.Date == DateTime.Parse(datum).Date && r.VrijeRuimteId == id));
         }
 
         [HttpPost("post")]
@@ -49,7 +49,7 @@ namespace WDPR.Controllers
             };
 
             var overlappingEvents = _context.GetReserveringen()
-                .Where(r => r.ZaalId == nieuweReservering.ZaalId && 
+                .Where(r => r.VrijeRuimteId == nieuweReservering.VrijeRuimteId && 
                            ((r.StartTijd > nieuweReservering.StartTijd && r.StartTijd < nieuweReservering.EindTijd)   // [---[##]==]
                             || (r.EindTijd > nieuweReservering.StartTijd && r.EindTijd < nieuweReservering.EindTijd)     // [==[##]---]
                             || (r.StartTijd <= nieuweReservering.StartTijd && r.EindTijd >= nieuweReservering.EindTijd))) // [==[######]==] of [######]

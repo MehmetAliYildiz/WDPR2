@@ -111,7 +111,7 @@ class ReserveerForm extends Component
             startTijd: appointment.startTime.toISOString(),
             eindTijd: appointment.endTime.toISOString(),
             bestelling: {},
-            zaalId: this.getZaalId(),
+            vrijeRuimteId: this.getZaalId(),
         };
         try {
             const response = axios.post(endpoint, data);

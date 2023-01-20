@@ -6,7 +6,7 @@ namespace WDPR.Models
     {
         [Key]
         public int Id { get; set; }
-        public int ZaalId { get; set; }
+        public int VrijeRuimteId { get; set; }
         public string Naam { get; set; }
         public DateTime StartTijd { get; set; }
         public DateTime EindTijd { get; set; }

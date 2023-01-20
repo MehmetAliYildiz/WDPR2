@@ -32,5 +32,14 @@ namespace WDPR.Controllers
 
             return Ok(vrijeRuimte.First());
         }
+
+        [HttpPost]
+        public IActionResult PostVrijeRuimte([FromBody] VrijeRuimte nieuweRuimte)
+        {
+            _context.VrijeRuimtes.Add(nieuweRuimte);
+            _context.SaveChangesAsync();
+            Console.WriteLine(_context.VrijeRuimtes.Count());
+            return Ok();
+        }
     }
 }
