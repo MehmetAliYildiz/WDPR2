@@ -13,6 +13,7 @@ import Footer from './components/navFoot/Footer';
 import Reserveren from './components/Reserveren';
 import ReserveerForm from './components/ReserveerForm';
 import ShoppingCart from './components/ShoppingCart';
+import ArtiestForm from "./components/Artiest/ArtiestForm";
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
@@ -35,6 +36,7 @@ export default function App() {
         <Route path='/reserveren' element={<Reserveren />}></Route>
         <Route path='/reserveren/zaal' element={<ReserveerForm />}></Route>
         <Route path='/winkelmandje' element={<ShoppingCart />}></Route>
+        <Route path='/artiest' element={<ArtiestForm/>}></Route>
       </Routes>
     </>
   );

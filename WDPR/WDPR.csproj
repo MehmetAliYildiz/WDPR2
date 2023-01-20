@@ -45,7 +45,6 @@
   <ItemGroup>
     <Folder Include="ClientApp\img" />
     <Folder Include="cypress\e2e\reservering\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

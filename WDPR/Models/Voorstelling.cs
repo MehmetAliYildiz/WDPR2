@@ -14,4 +14,6 @@ public class Voorstelling
     public string Img { get; set; }
     public DateTime Datum { get; set; }
     public DateTime EindDatum { get; set; }
+    public Artiest? artiest { get; set; }
+    public Band? band { get; set; }
 }
