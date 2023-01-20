@@ -2,9 +2,10 @@ using System.ComponentModel.DataAnnotations;
 
 public class GebruikerLogin
 {
-    [Required(ErrorMessage = "Username is required")]
+    [Required(ErrorMessage = "Gebruikersnaam mist!")]
     public string? UserName { get; init; }
 
-    [Required(ErrorMessage = "Password is required")]
+    [Required(ErrorMessage = "wachtwoord is niet ingevoerd!")]
     public string? Password { get; init; }
+    public string? Role {get;}
 }

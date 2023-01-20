@@ -7,7 +7,8 @@ using Microsoft.IdentityModel.Tokens;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AccountController : ControllerBase
+
+    public class AccountController : ControllerBase
 {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly SignInManager<IdentityUser> _signInManager;

@@ -20,7 +20,9 @@ builder.Services.AddCors(options =>
                       });
 });
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(opt => {
+    opt.User.RequireUniqueEmail = true;
+})
                 .AddEntityFrameworkStores<DbTheaterLaakContext>()
                 .AddDefaultTokenProviders();
 builder.Services.AddAuthentication(opt =>
