@@ -18,6 +18,10 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     public DbSet<VrijeRuimte> VrijeRuimtes { get; set; }
     public DbSet<Stoel> Stoel {get; set; }
     public DbSet<Agenda> Agenda { get; set; }
+    public DbSet<Band> Band {get; set;}
+    public DbSet<Artiest> Artiest {get; set;}
+    public DbSet<ArtiestBand> ArtiestBand {get; set;}
+
 
     public void AddReservering(Reservering r)
     {
@@ -53,6 +57,8 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
             .HasMany(z => z.Stoelen);
         builder.Entity<Reservering>()
             .HasOne(r => r.Bestelling);
+        builder.Entity<ArtiestBand>()
+        .HasKey(ba => new { ba.BandId, ba.ArtiestId });
     }
 
     public override int SaveChanges()

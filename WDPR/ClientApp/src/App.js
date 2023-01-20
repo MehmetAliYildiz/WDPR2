@@ -14,6 +14,7 @@ import StoelBoekenTest from './components/StoelBoekenPagina/StoelBoekenTest';
 import ShoppingCart from './components/ShoppingCart';
 import AdminPanel from './components/AdminPanel/AdminPanel';
 import VoorstellingDetail from './components/VoorstellingDetail/VoorstellingDetail';
+import ExcelUploaden from './components/AdminPanel/CSVToevoegen/ExcelUploaden';
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
@@ -37,6 +38,7 @@ export default function App() {
         <Route path='/winkelmandje' element={<ShoppingCart />}></Route>
         <Route path='/admin' element={<AdminPanel />}></Route>
         <Route path='/voorstelling/geselecteerd' element={<VoorstellingDetail />}></Route>
+        <Route path='/admin/exceltoevoegen' element={<ExcelUploaden/>}></Route>
       </Routes>
     </>
   );

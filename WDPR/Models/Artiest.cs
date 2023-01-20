@@ -1,6 +1,6 @@
-﻿namespace WDPR.Models
+namespace WDPR.Models
 {
-    public class Band
+    public class Artiest
     {
         public int Id { get; set; }
         public string Naam { get; set; }
