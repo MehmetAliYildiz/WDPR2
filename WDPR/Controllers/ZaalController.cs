@@ -21,7 +21,6 @@ namespace WDPR.Controllers{
 
     public class ZaalController : ControllerBase
     {
- 
         private readonly DbTheaterLaakContext _context;
 
         public ZaalController(DbTheaterLaakContext context)

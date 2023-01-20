@@ -6,6 +6,7 @@ namespace WDPR.Data
     {
         IEnumerable<Reservering> GetReserveringen();
         IEnumerable<Zaal> GetZaal();
+        IEnumerable<VrijeRuimte> GetVrijeRuimtes();
         void AddReservering(Reservering r);
 
         int SaveChanges();
