@@ -27,42 +27,76 @@ const ExcelUpload = () => {
         });
     }
 
-    const postDataToBackend = (data) => {
-        data.forEach(row => {
-            console.log(data)
-            if (row.Type === 'Artiest') {
-                const artiest = {
-                    naam: row.Naam,
+    // const GeformatteerdDatum = (date) => {
+    //     const GeformatteerdeDatum = new Date(date.replace(/(\d+)\/(\d+)\/(\d+)/, '$3-$2-$1'));
+    //     return GeformatteerdeDatum
+    // }
+
+    const createVoorstelling = async (voorstelling) => {
+        try {
+            const response = await axios.post(`https://localhost:7260/api/voorstelling`, voorstelling);
+            return response.data.id;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+    const postDataToBackend = async (data) => {
+        data.forEach(async (row) => {
+            if (row.Type === 'Voorstelling') {
+
+                if (row.VoorstellingId) {
+                    console.log(data)
+
+                    console.log(row.VoorstellingId)
+                    const agenda = {
+                        voorstellingId: row.VoorstellingId,
+                        zaalId: row.ZaalId,
+                        startDatumTijd: row.StartDatumTijd,
+                        eindDatumTijd: row.EindDatumTijd
+                    }
+                    // axios.post(`https://localhost:7260/api/agenda`, agenda)
+                    //     .then(response => console.log(response))
+                    //     .catch(error => console.log(error));
+                } else {
+                    console.log(data)
+                    const voorstelling = {
+                        name: row.Naam,
+                        beschrijving: row.Beschrijving,
+                        img: row.Img
+                    }
+                    const voorstellingId = await createVoorstelling(voorstelling);
+
+                    const agenda = {
+                        voorstellingId: voorstellingId,
+                        zaalId: row.ZaalId,
+                        startDatumTijd: row.StartDatumTijd,
+                        eindDatumTijd: row.EindDatumTijd
+                    }
+                    axios.post(`https://localhost:7260/api/agenda`, agenda)
+                        .then(response => console.log(response))
+                        .catch(error => console.log(error));
                 }
-                axios.post(`https://localhost:7260/api/artiest`, artiest)
-                    .then(response => console.log(response))
-                    .catch(error => console.log(error));
-            } else if (row.Type === 'Band') {
-                const band = {
-                    naam: row.Naam,
-                }
-                axios.post(`https://localhost:7260/api/band`, band)
-                    .then(response => console.log(response))
-                    .catch(error => console.log(error));
-            } else if (row.Type === 'Voorstelling') {
-                const voorstelling = {
-                    Name: row.NameVoorstelling,
-                    beschrijving: row.Beschrijving,
-                    img : row.Img
-                }
-                axios.post(`https://localhost:7260/api/voorstelling`, voorstelling)
-                    .then(response => console.log(response))
-                    .catch(error => console.log(error));
+
             }
         });
     }
 
 
+
     return (
         <>
-        <h1>Upload planning</h1>
-            <p>Upload hieronder een bestand met artiesten</p>
-            <input placeholder='Upload Artiesten Bestand' type="file" accept=".xlsx" onChange={handleFileChange} />
+            <h1>Upload planning</h1>
+            <br></br>
+            <h2>Artiesten</h2>
+            <p>Upload hieronder een bestand met artiesten. Doe dit in het volgende formaat: De eerste kolom heeft een 'Type' en de tweede kolom heeft een 'Naam'. Vervolgens kunnen op elke rij artiesten worden geplaatst.</p>
+            <input type="file" accept=".xlsx" onChange={handleFileChange} />
+            <br></br>
+            <br></br>
+            <h2>Voorstellingen</h2>
+            <p>Upload hieronder een bestand met voorstellingen en agenda items. De voorstellingen eerst.</p>
+            <input type="file" accept=".xlsx" onChange={handleFileChange} />
         </>
     );
 }
