@@ -9,6 +9,7 @@ namespace WDPR.Data
         IEnumerable<Kaartje> GetKaartjes();
         IEnumerable<Stoel> GetStoelen();
         IEnumerable<StoelKaartje> GetStoelKaartjes();
+        IEnumerable<VrijeRuimte> GetVrijeRuimtes();
         Task<Agenda> FindAgenda(int id);
         Task<Bestelling> FindBestelling(int id);
         Task<Stoel> FindStoel(int id);

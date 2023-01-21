@@ -9,7 +9,7 @@ class ZaalLijst extends Component {
     }
 
     componentDidMount = async () => {
-        const res = await fetch("https://localhost:7260/Zaal");
+        const res = await fetch("https://localhost:7260/VrijeRuimte");
         console.log(res.body);
         const data = await res.json();
         this.setState({ buttons: data });
