@@ -1,6 +1,5 @@
 using System.Runtime;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations;
 
 namespace WDPR.Models;
 public class Voorstelling
