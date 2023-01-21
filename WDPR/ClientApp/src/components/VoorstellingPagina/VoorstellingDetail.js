@@ -42,7 +42,7 @@ class VoorstellingDetail extends Component {
                     <p>{agenda.id}</p>
                     <p>{startDatumTijd}</p>
                     <p>{eindDatumTijd}</p>
-                    <a href={`voorstelling/boekstoel?zaalid=${agenda.zaalId}`}>Boek nu</a>
+                    <a href={`voorstelling/boekstoel?zaalId=${agenda.zaalId}&agendaId=${agenda.id}`}>Boek nu</a>
                 </section>
             );
         });
