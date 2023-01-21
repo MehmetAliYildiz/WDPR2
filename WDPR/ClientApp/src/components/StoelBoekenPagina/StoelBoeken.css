@@ -6,6 +6,13 @@
     max-width: 600px;
 }
 
+.stoel-select {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+}
+
 .zaal-grid-stoel {
     display: block;
     text-align: center;

@@ -11,6 +11,7 @@ export default class StoelBoeken extends Component {
         this.state = {
             stoelen: [],
             geselecteerd: null,
+            maxBereikt: false,
             connection: React.createRef()
         }
     }
@@ -73,7 +74,7 @@ export default class StoelBoeken extends Component {
     getColor = (id) => {
         switch (this.state.stoelen[id].status) {
             case "Vrij":
-                return "white";
+                return this.state.maxBereikt ? "grey" : "white";
             case "Geselecteerd":
                 return "green";
             case "Bezet":
@@ -84,8 +85,16 @@ export default class StoelBoeken extends Component {
     }
 
     toggleStatus = (id) => {
+        if (this.state.maxBereikt && this.state.stoelen[id].status == "Vrij") return;
         this.state.stoelen[id].status = this.state.stoelen[id].status == "Vrij" ? "Geselecteerd" : "Vrij";
         this.setState({ stoelen: this.state.stoelen });
+
+        let geselecteerdeCount = 0;
+        for (let i = 0; i < this.state.stoelen.length; i++) {
+            if (this.state.stoelen[i].status == "Geselecteerd") geselecteerdeCount++;
+        }
+
+        this.setState({ maxBereikt: geselecteerdeCount >= 25 });
     }
 
     handleSubmit = () => {
@@ -125,7 +134,7 @@ export default class StoelBoeken extends Component {
                 if (this.state.stoelen[stoelIndex].row != rows[rowIndex]) continue;
 
                 stoelen.push(
-                    <button key={"stoel-" + this.state.stoelen[stoelIndex].id} disabled={this.state.stoelen[stoelIndex].status == "Bezet"} style={{ backgroundColor: this.getColor(stoelIndex) }} onClick={() => this.toggleStatus(stoelIndex)}>
+                    <button key={"stoel-" + this.state.stoelen[stoelIndex].id} disabled={this.state.stoelen[stoelIndex].status == "Bezet" || (this.state.stoelen[stoelIndex].status === "Vrij" && this.state.maxBereikt)} style={{ backgroundColor: this.getColor(stoelIndex) }} onClick={() => this.toggleStatus(stoelIndex)}>
                         {this.state.stoelen[stoelIndex].id}
                     </button>
                 );
@@ -139,7 +148,7 @@ export default class StoelBoeken extends Component {
         }
 
         return (
-            <div>
+            <div className="stoel-select">
                 {rowDivs}
 
                 <button type="button" onClick={this.handleSubmit}>

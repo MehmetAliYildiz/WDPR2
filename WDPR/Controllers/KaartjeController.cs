@@ -35,6 +35,10 @@ namespace WDPR.Controllers
             {
                 return BadRequest("Een van de stoelen was niet gevonden");
             }
+            if (kaartjeWithId.StoelIds.Count() >= 25)
+            {
+                return BadRequest("Maximaal 25 stoelen kunnen tegelijk geboekt worden");
+            }
             //if (!_context.GetBestellingen().Where(b => b.Id == kaartjeWithId.BestellingId).Any())
             //{
             //    return BadRequest("Bestelling met ID '" + kaartjeWithId.BestellingId + "' niet gevonden");
@@ -48,7 +52,7 @@ namespace WDPR.Controllers
                 {
                     Betaald = false,
                     PlaatsTijd = DateTime.Now,
-                    Bedrag = (20D * kaartjeWithId.StoelIds.Count())
+                    Bedrag = 20D * kaartjeWithId.StoelIds.Count()
                 },
                 StoelKaartjes = new Collection<StoelKaartje>()
             };
