@@ -1,56 +1,41 @@
+import React, { useState } from 'react';
 import axios from 'axios';
-import React, { Component } from "react";
 
-class PaymentForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            html: '',
-            amount: ''
-        };
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+const PaymentForm = () => {
+    const [account, setAccount] = useState('');
+    const [success, setSuccess] = useState(false);
+    const [amount, setAmount] = useState(0);
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        const isSuccess = account === "NL55ABNA5660751954" || (account === "NL02INGB8635612388" && Math.random() > 0.5);
+        setSuccess(isSuccess);
+        if(isSuccess)
+            axios.post('/pay', {account: account, amount: amount}).then(response => console.log(response))
     }
 
-    handleChange(event) {
-        this.setState({ amount: event.target.value });
-    }
-
-    handleSubmit(event) {
-        event.preventDefault();
-
-        const data = {
-            answer: 42,
-            amount: this.state.amount,
-            reference: 'Transaction001',
-            url: 'https://localhost:44469/pay'
-        };
-
-        axios.post('https://fakepay.azurewebsites.net/', data)
-            .then(response => {
-                this.setState({ html: response.data });
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
-
-    render() {
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                    Amount:
-                    <input type="text" value={this.state.amount} onChange={this.handleChange} />
-                </label>
-                <input type="submit" value="Submit" />
-                <div dangerouslySetInnerHTML={{ __html: this.state.html }} />
+    return (
+        <>
+            U moet <input type="number" value={amount} onChange={e => setAmount(e.target.value)}/> euro betalen.
+            <br/>
+            Het account NL55ABNA5660751954 heeft oneindig veel geld.
+            <br/>
+            Het account NL02INGB8635612388 heeft in 50% van de gevallen genoeg geld.
+            <br/>
+            Alle andere accounts hebben niet genoeg geld.
+            <br/>
+            <form method="post" action={`/pay/${amount}`} onSubmit={handleSubmit}>
+                Bankrekeningnummer: <input name="account" id="account" value={account} onChange={e => setAccount(e.target.value)}></input>
+                <input type="hidden" id="success" name="success" value={success}></input>
+                <input type="hidden" name="reference" value="undefined"></input>
+                <button type="submit">Betaal!</button>
             </form>
-        );
-    }
+            {success ? <p>Success</p> : <p>Failure</p>}
+        </>
+    )
 }
 
 export default PaymentForm;
-
 
 //import React, { useState } from 'react';
 // import axios from 'axios';
@@ -116,35 +101,6 @@ export default PaymentForm;
 //         </div>
 //     );
 // };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // import React, { useState } from 'react';
