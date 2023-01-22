@@ -32,7 +32,7 @@ namespace WDPR.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Agenda>> PostAgenda(Agenda agenda)
+        public async Task<ActionResult<Agenda>> PostAgenda([FromBody]Agenda agenda)
         {
             var bestaatVoorstelling = await _context.Voorstelling
             .Where(v => v.Id == agenda.VoorstellingId)
@@ -69,6 +69,8 @@ namespace WDPR.Controllers
             {
                 return BadRequest("Deze voorstelling wordt op deze tijd al gehouden in een andere zaal.");
             }
+
+            agenda.Kaartjes = new List<Kaartje>();
 
             _context.Agenda.Add(agenda);
             await _context.SaveChangesAsync();

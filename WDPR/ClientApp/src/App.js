@@ -11,7 +11,7 @@ import ZaalLijst from './components/ZaalLijst';
 import ReserveerForm from './components/ReserveerForm';
 import ShoppingCart from './components/ShoppingCart';
 import AdminPanel from './components/AdminPanel/AdminPanel';
-import VoorstellingDetail from './components/VoorstellingDetail/VoorstellingDetail';
+import VoorstellingDetail from './components/VoorstellingPagina/VoorstellingDetail';
 import ExcelUploaden from './components/AdminPanel/CSVToevoegen/ExcelUploaden';
 import StoelBoeken2 from './components/StoelBoekenPagina/StoelBoeken2';
 import SocketTest from './components/SocketTest';
