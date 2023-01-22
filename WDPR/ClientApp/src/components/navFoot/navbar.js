@@ -3,25 +3,48 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.js';
 import './Navbar.css'
+import jwt_decode from 'jwt-decode';
 
 function Navigatie() {
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const gebruikersnaam = localStorage.getItem('gebruikersNaam')
+    const opgeslagen = localStorage.getItem('opgeslagen')
+
+
 
     useEffect(() => {
-      
+      if(opgeslagen) {
+        if(!gebruikersnaam) {
+          gebruikersnaam = localStorage.setItem('gebruikersNaam', opgeslagen)
+          const decoded = jwt_decode(opgeslagen);
+          // gebruikernaam uit de jwt token gehaald en nu plaatsen in localstorage
+          const mail = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
+          localStorage.setItem('gebruikersNaam',mail );
+        }
+      }
       if(gebruikersnaam) {
         setIsLoggedIn(true);
+      } else{
+        setIsLoggedIn(false);
       }
     },[]);
     
-      const handleLogout = () => {
-        const storedRefreshToken = localStorage.getItem('refreshToken');
-        localStorage.clear();
-        localStorage.setItem('refreshToken', storedRefreshToken);
+    const handleLogout = () => {
+      if(opgeslagen){
+        alert('if heeft er voor gekozen om herinnert te worden, verwijder uw cookies om opnieuw in te loggen');
         navigate('/');
-      };
+      }
+      else{
+        localStorage.clear();
+        setIsLoggedIn(false);
+        navigate('/');
+      }
+      
+
+      // alert('U bent uigelogd!');
+      
+    };
     return (
         <>
         <nav className="navbar navbar-expand-lg site-navigation navKleur">
@@ -55,7 +78,7 @@ function Navigatie() {
                 </li>
                 
                 
-                {gebruikersnaam ? 
+                {isLoggedIn ? 
                   
                 <><li className="nav-item">
                     <div className="nav-link">Welcome {gebruikersnaam}</div>

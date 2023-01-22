@@ -38,7 +38,7 @@ function DonationsPage({ token }) {
 
   const handleDonationsFetch = async () => {
     try {
-      const response = await fetch('/donaties', {
+      const response = await fetch('https://ikdoneer.azurewebsites.net/api/donaties', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
