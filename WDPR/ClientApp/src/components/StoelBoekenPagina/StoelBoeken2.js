@@ -3,6 +3,7 @@ import { useState, useEffect, Component } from 'react';
 import React from 'react';
 import { HubConnectionBuilder, HttpTransportType } from "@microsoft/signalr";
 import axios from 'axios';
+import shortid from 'shortid';
 
 export default class StoelBoeken extends Component {
     constructor(props) {
@@ -12,7 +13,8 @@ export default class StoelBoeken extends Component {
             stoelen: [],
             geselecteerd: null,
             maxBereikt: false,
-            connection: React.createRef()
+            connection: React.createRef(),
+            tempId: ""
         }
     }
 
@@ -98,7 +100,10 @@ export default class StoelBoeken extends Component {
     }
 
     handleSubmit = () => {
+        console.log("submit");
         const geselecteerdeStoelen = [];
+        const temp = shortid.generate();
+        this.setState({ tempId: temp });
         for (let index = 0; index < this.state.stoelen.length; index++) {
             if (this.state.stoelen[index].status !== "Geselecteerd") continue;
             geselecteerdeStoelen.push(this.state.stoelen[index].id);
@@ -107,7 +112,8 @@ export default class StoelBoeken extends Component {
         const endpoint = 'https://localhost:7260/Kaartje';
         const data = {
             agendaId: this.getAgendaId(),
-            stoelIds: geselecteerdeStoelen
+            stoelIds: geselecteerdeStoelen,
+            code: temp
         };
         try {
             axios.post(endpoint, data);
@@ -154,6 +160,7 @@ export default class StoelBoeken extends Component {
                 <button type="button" onClick={this.handleSubmit}>
                     Submit
                 </button>
+                {this.state.tempId}
             </div>
         );
     }

@@ -1,5 +1,4 @@
-﻿import io from 'socket.io-client';
-import { HubConnectionBuilder, HttpTransportType } from "@microsoft/signalr";
+﻿import { HubConnectionBuilder, HttpTransportType } from "@microsoft/signalr";
 import { useState, useRef, useEffect } from 'react';
 
 function SocketTest() {

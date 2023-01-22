@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BCrypt.Net;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.FileProviders;
 using System.Collections.ObjectModel;
 using WDPR.Data;
 using WDPR.Models;
@@ -43,7 +43,6 @@ namespace WDPR.Controllers
             //{
             //    return BadRequest("Bestelling met ID '" + kaartjeWithId.BestellingId + "' niet gevonden");
             //}
-
             Kaartje kaartje = new Kaartje()
             {
                 Id = _context.GetKaartjes().Max(k => k.Id) + 1,
@@ -54,7 +53,9 @@ namespace WDPR.Controllers
                     PlaatsTijd = DateTime.Now,
                     Bedrag = 20D * kaartjeWithId.StoelIds.Count()
                 },
-                StoelKaartjes = new Collection<StoelKaartje>()
+                StoelKaartjes = new Collection<StoelKaartje>(),
+                Hash = BCrypt.Net.BCrypt.HashPassword(kaartjeWithId.Code),
+                HashUsed = false
             };
 
             _context.AddKaartje(kaartje);
@@ -78,5 +79,26 @@ namespace WDPR.Controllers
 
             return Ok(kaartje.Id);
         }
-    }
+
+        [HttpGet("verify/{code}")]
+        public IActionResult VerifyCode([FromRoute] string code)
+        {
+            foreach (Kaartje k in _context.GetKaartjes())
+            {
+                if (k.Hash == null || k.Hash == "") continue;
+                if (BCrypt.Net.BCrypt.Verify(code, k.Hash))
+                {
+                    if (k.HashUsed) return Ok(false);
+                    else
+                    {
+                        k.HashUsed = true;
+                        _context.SaveChangesAsync();
+                        return Ok(true);
+                    }
+                }
+            }
+
+            return NotFound();
+        }
+    }   
 }
