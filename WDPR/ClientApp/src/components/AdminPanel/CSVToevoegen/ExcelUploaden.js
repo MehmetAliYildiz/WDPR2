@@ -9,7 +9,7 @@ const ExcelUpload = () => {
         const file = e.target.files[0];
         setFile(file);
         const data = await parseExcelData(file);
-        postDataToBackend(data);
+        postDataNaarBackend(data);
     }
 
     const parseExcelData = (file) => {
@@ -27,11 +27,6 @@ const ExcelUpload = () => {
         });
     }
 
-    // const GeformatteerdDatum = (date) => {
-    //     const GeformatteerdeDatum = new Date(date.replace(/(\d+)\/(\d+)\/(\d+)/, '$3-$2-$1'));
-    //     return GeformatteerdeDatum
-    // }
-
     const createVoorstelling = async (voorstelling) => {
         try {
             const response = await axios.post(`https://localhost:7260/api/voorstelling`, voorstelling);
@@ -41,26 +36,21 @@ const ExcelUpload = () => {
         }
     }
 
-
-    const postDataToBackend = async (data) => {
+    const postDataNaarBackend = async (data) => {
         data.forEach(async (row) => {
             if (row.Type === 'Voorstelling') {
 
                 if (row.VoorstellingId) {
-                    console.log(data)
-
-                    console.log(row.VoorstellingId)
                     const agenda = {
                         voorstellingId: row.VoorstellingId,
                         zaalId: row.ZaalId,
                         startDatumTijd: row.StartDatumTijd,
                         eindDatumTijd: row.EindDatumTijd
                     }
-                    // axios.post(`https://localhost:7260/api/agenda`, agenda)
-                    //     .then(response => console.log(response))
-                    //     .catch(error => console.log(error));
+                    axios.post(`https://localhost:7260/api/agenda`, agenda)
+                        .then(response => console.log(response))
+                        .catch(error => console.log(error));
                 } else {
-                    console.log(data)
                     const voorstelling = {
                         name: row.Naam,
                         beschrijving: row.Beschrijving,
@@ -83,8 +73,6 @@ const ExcelUpload = () => {
         });
     }
 
-
-
     return (
         <>
             <h1>Upload planning</h1>
@@ -95,7 +83,7 @@ const ExcelUpload = () => {
             <br></br>
             <br></br>
             <h2>Voorstellingen</h2>
-            <p>Upload hieronder een bestand met voorstellingen en agenda items. De voorstellingen eerst.</p>
+            <p>Upload hieronder een bestand met voorstellingen en agenda items. Zorg ervoor dat als de voorstelling al aangemaakt is, je de juiste voorstellingId meegeeft om er een agenda item van te maken.</p>
             <input type="file" accept=".xlsx" onChange={handleFileChange} />
         </>
     );
