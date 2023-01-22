@@ -10,13 +10,16 @@ function Navigatie() {
     const gebruikersnaam = localStorage.getItem('gebruikersNaam')
 
     useEffect(() => {
+      
       if(gebruikersnaam) {
         setIsLoggedIn(true);
       }
     },[]);
     
       const handleLogout = () => {
-        localStorage.removeItem('gebruikersNaam');
+        const storedRefreshToken = localStorage.getItem('refreshToken');
+        localStorage.clear();
+        localStorage.setItem('refreshToken', storedRefreshToken);
         navigate('/');
       };
     return (
