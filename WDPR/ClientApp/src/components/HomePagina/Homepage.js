@@ -25,14 +25,13 @@ export default function Homepage() {
                 </section>
                 <section className="Section2">
                     <ContentKaart header="Doneren" icoon={Donate_icoon} actie="DONEER" paragraph="Steun Theater Laak om onze voorstellingen betaalbaar te houden voor iedereen!" link="/doneren" />
-                    <ContentKaart header="Tickets" icoon={Tickets_icoon} actie="TICKETS" paragraph="Koop hier je tickets voor je favoriete voorstelling bij Theater Laak" link="/tickets" />
+                    <ContentKaart header="Voorstellingen" icoon={Tickets_icoon} actie="VOORSTELLINGEN" paragraph="Bekijk hier de voorstellingen die nu draaien" link="/voorstelling" />
                     <ContentKaart header="Inloggen" icoon={Login_icoon} actie="INLOGGEN" paragraph="Login bij je account" link="/inloggen" />
                 </section>
                 <section className="Section3">
                     <div>
                         <h2>Over Theater Laak</h2>
                         <p>Theater Laak is een theater in het Haagse Stadsdeel Laak. Met dank aan onze donateurs weten wij al jaren betaalbare theatervoorstellingen te verzorgen voor al onze gasten. Van muziekoptredens tot theatervoorstellingen, alles wordt verzorgd bij Theater Laak. Lijkt het je leuk om een van onze voorstellingen te bezoeken? Neem dan een kijkje bij onze voorstellingen en koop je ticket zolang die beschikbaar is want op is op!</p>
-                        <button className="button V2">OVER ONS</button>
                     </div>
                 </section>
                 <section className="Section4">
