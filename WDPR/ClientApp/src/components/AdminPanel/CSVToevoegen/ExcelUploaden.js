@@ -44,6 +44,7 @@ const ExcelUpload = () => {
                     const agenda = {
                         voorstellingId: row.VoorstellingId,
                         zaalId: row.ZaalId,
+                        kaartjes: [],
                         startDatumTijd: row.StartDatumTijd,
                         eindDatumTijd: row.EindDatumTijd
                     }
@@ -61,6 +62,7 @@ const ExcelUpload = () => {
                     const agenda = {
                         voorstellingId: voorstellingId,
                         zaalId: row.ZaalId,
+                        kaartjes: [],
                         startDatumTijd: row.StartDatumTijd,
                         eindDatumTijd: row.EindDatumTijd
                     }
