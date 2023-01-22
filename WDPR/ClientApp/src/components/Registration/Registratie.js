@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {FaRegCalendar} from 'react-icons/fa';
+import {IoPersonAdd} from 'react-icons/io5';
 import axios from "axios";
 
 function Registratie() {
@@ -90,8 +91,7 @@ function Registratie() {
 
                         <div className="text-center">
                         <h1>Registreer</h1>
-                        <img src={"img/Logo_theater_laak_V2 (1).png"}
-                    style={{width: '185px'}} alt="Theater Laak logo"/>
+                        <IoPersonAdd color="#F39A05 " size={'185px'}/>
                         </div>
 
                         <form onSubmit={handleRegistratie}>
