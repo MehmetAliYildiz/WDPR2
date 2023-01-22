@@ -53,6 +53,8 @@ builder.Services.AddCors(o => o.AddPolicy(MyAllowSpecificOrigins, builder =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -67,6 +69,11 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseCors(MyAllowSpecificOrigins);
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHub<BoekingUpdateHub>("/myhub");
+});
 
 app.UseSwagger();
 app.UseSwaggerUI();
