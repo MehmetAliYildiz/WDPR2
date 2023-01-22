@@ -61,3 +61,10 @@ export function getCart() {
     return JSON.parse(localStorage.getItem("shoppingCart"));
 }
 
+export function getCartTotal() {
+    const cart = JSON.parse(localStorage.getItem("shoppingCart"));
+    if (cart == null) return 0.0;
+
+    return cart.reduce((partialSum, item) => partialSum + parseFloat(item.cachedPrice), 0).toFixed(2); // lambda om de som van alle kosten te berekenen
+}
+

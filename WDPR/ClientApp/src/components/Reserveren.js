@@ -16,7 +16,7 @@ function Reserveren() {
 
     const handleButtonClick = (zaalId) => {
         navigate(`/reserveren/zaal?zaalId=${zaalId}`);
-        console.log(`Button with zaalId ${zaalId} clicked`);
+        console.log(`Button with id ${zaalId} clicked`);
     };
 
     return (
