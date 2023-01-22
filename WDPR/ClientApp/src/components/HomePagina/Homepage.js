@@ -25,7 +25,7 @@ export default function Homepage() {
                 </section>
                 <section className="Section2">
                     <ContentKaart header="Doneren" icoon={Donate_icoon} actie="DONEER" paragraph="Steun Theater Laak om onze voorstellingen betaalbaar te houden voor iedereen!" link="/doneren" />
-                    <ContentKaart header="Voorstellingen" icoon={Tickets_icoon} actie="VOORSTELLINGEN" paragraph="Bekijk hier de voorstellingen die nu draaien" link="/voorstelling" />
+                    <ContentKaart header="Voorstellingen" icoon={Tickets_icoon} actie="VOORSTELLINGEN" paragraph="Bekijk hier de voorstellingen die op dit moment draaien" link="/voorstelling" />
                     <ContentKaart header="Inloggen" icoon={Login_icoon} actie="INLOGGEN" paragraph="Login bij je account" link="/inloggen" />
                 </section>
                 <section className="Section3">
@@ -53,7 +53,7 @@ export default function Homepage() {
                     </div>
                 </section>
             </body>
-            <Footer/>
+            <Footer />
         </>
     )
 }
