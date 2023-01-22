@@ -9,7 +9,7 @@ class ZaalLijst extends Component {
     }
 
     componentDidMount = async () => {
-        const res = await fetch("https://localhost:7260/Zaal");
+        const res = await fetch("https://localhost:7260/VrijeRuimte");
         console.log(res.body);
         const data = await res.json();
         this.setState({ buttons: data });
@@ -22,10 +22,10 @@ class ZaalLijst extends Component {
             // Return a new button element for each zaal
             return (
                 <button
-                    key={`Zaal ${zaal.zaalId}`}
-                    onClick={this.props.onButtonClick.bind(this, zaal.zaalId)}
+                    key={`Zaal ${zaal.id}`}
+                    onClick={this.props.onButtonClick.bind(this, zaal.id)}
                 >
-                    Zaal {zaal.zaalId}
+                    Zaal {zaal.id}
                 </button>
             );
         });

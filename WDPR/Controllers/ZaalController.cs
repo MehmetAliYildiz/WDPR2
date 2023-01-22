@@ -1,18 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WDPR.Models;
+using Microsoft.EntityFrameworkCore;
+using WDPR.Data;
+using Microsoft.AspNetCore.SignalR;
 
 namespace WDPR.Controllers{
 
     public class ZaalMetStoelnummers : Zaal
     {
-
-        public int? eersteRangs { get; set; }
-        public int? tweedeRangs { get; set; }
-        public int? derdeRangs { get; set; }
-
-        public ZaalMetStoelnummers(int id) : base(id)
-        {
-        }
+        public List<List<int>> Rijen { get; set; }
+        public ZaalMetStoelnummers(int id) : base(id) {}
     }
 
     [ApiController]
@@ -20,7 +17,6 @@ namespace WDPR.Controllers{
 
     public class ZaalController : ControllerBase
     {
- 
         private readonly DbTheaterLaakContext _context;
 
         public ZaalController(DbTheaterLaakContext context)
@@ -37,12 +33,17 @@ namespace WDPR.Controllers{
             }
             return _context.Zaal;
         }
-
-        [HttpGet("{id}")]
-        public IEnumerable<Zaal> GetSpecific([FromRoute] int id)
+        
+        [HttpGet("zaal/{id}")]
+        public IActionResult GetZaalById(int id)
         {
-            var data = new List<Zaal> { new Zaal(0) { StaatReserveringenToe = true }, new Zaal(1) { StaatReserveringenToe = true }, new Zaal(2) { StaatReserveringenToe = true } };
-            return data.Where(z => z.Id == id);
+            var zaal = _context.GetZaal().Where(z => z.Id == id);
+            if (zaal.Count() < 1)
+            {
+                return NotFound();
+            }
+
+            return Ok(zaal.First());
         }
 
         [HttpPost]
@@ -53,25 +54,21 @@ namespace WDPR.Controllers{
             _context.Zaal.Add(nieuweZaal);
             _context.SaveChangesAsync();
 
-            for (int i = 0; i < zms.eersteRangs + zms.tweedeRangs + zms.derdeRangs; i++)
+            int i = 0;
+            foreach (List<int> rij in zms.Rijen)
             {
-                int rang = 0;
-                if (i < zms.eersteRangs)
+                foreach (int rang in rij)
                 {
-                    rang = 1;
-                } else if (i < zms.eersteRangs + zms.tweedeRangs)
-                {
-                    rang = 2;
-                } else
-                {
-                    rang = 3;
+                    Stoel nieuweStoel = new Stoel()
+                    {
+                        Status = "Vrij",
+                        Row = i,
+                        Rang = rang
+                    };
+                    nieuweZaal.Stoelen.Add(nieuweStoel);
                 }
-                Stoel nieuweStoel = new Stoel(){
-                    Status = "Vrij",
-                    Row = 0,
-                    Rang = rang
-                };
-                nieuweZaal.Stoelen.Add(nieuweStoel);
+
+                i++;
             }
 
             _context.SaveChangesAsync();
