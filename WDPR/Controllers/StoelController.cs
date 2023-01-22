@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WDPR.Models;
 
 namespace WDPR.Controllers{
@@ -23,6 +24,13 @@ namespace WDPR.Controllers{
             return CreatedAtAction("GetStoel", new { id = stoel.Id }, stoel);
         }
 
+
+         [HttpGet]
+         public async Task<ActionResult<IEnumerable<Stoel>>> GetStoel()
+         {
+             return await _context.Stoel.ToListAsync();
+         }
+         
         [HttpGet("{zaalId}/{agendaId}")]
         public IActionResult GetStoelenMetBeschikbaarheid(int zaalId, int agendaId)
         {

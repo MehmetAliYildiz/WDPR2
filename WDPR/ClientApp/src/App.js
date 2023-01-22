@@ -11,9 +11,12 @@ import ZaalLijst from './components/ZaalLijst';
 import ReserveerForm from './components/ReserveerForm';
 import ShoppingCart from './components/ShoppingCart';
 import AdminPanel from './components/AdminPanel/AdminPanel';
+import PaymentForm from "./components/FakePayPagina/PaymentForm";
 import VoorstellingDetail from './components/VoorstellingPagina/VoorstellingDetail';
+import ExcelUploaden from './components/AdminPanel/CSVToevoegen/ExcelUploaden';
 import StoelBoeken2 from './components/StoelBoekenPagina/StoelBoeken2';
 import SocketTest from './components/SocketTest';
+
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
@@ -22,6 +25,7 @@ import SocketTest from './components/SocketTest';
 />
 
 export default function App() {
+
     return (
         <>
             <Routes>
@@ -38,8 +42,9 @@ export default function App() {
                 <Route path='/voorstelling/geselecteerd' element={<VoorstellingDetail />}></Route>
                 <Route path='/voorstelling/boekstoel' element={<StoelBoeken2 />}></Route>
                 <Route path='/sockettest' element={<SocketTest />}></Route>
+                <Route path='/admin/exceltoevoegen' element={<ExcelUploaden/>}></Route>
+                <Route path={'/pay'} element={<PaymentForm />}></Route>
             </Routes>
         </>
   );
 }
-

@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using WDPR.Models;
 using WDPR.Data;
@@ -20,6 +20,8 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     public DbSet<VrijeRuimte> VrijeRuimtes { get; set; }
     public DbSet<Stoel> Stoel {get; set; }
     public DbSet<Agenda> Agenda { get; set; }
+    // public DbSet<Band> Band {get; set;}
+    public DbSet<Artiest> Artiest {get; set;}
     public DbSet<Kaartje> Kaartjes { get; set; }
     public DbSet<StoelKaartje> StoelKaartjes { get; set; }
 
