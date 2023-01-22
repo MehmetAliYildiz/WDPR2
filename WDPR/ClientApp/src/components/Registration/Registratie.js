@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {FaRegCalendar} from 'react-icons/fa';
 import {IoPersonAdd} from 'react-icons/io5';
-import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 function Registratie() {
     const wwVergeten = {
@@ -15,7 +15,7 @@ function Registratie() {
         width: '100%',
         border: '0px'
     }
-
+    const navigate = useNavigate();
     const [naam, setNaam] =useState("");
     const [email, setEmail] =useState("");
     const [wachtwoord, setWachtwoord] =useState("");
@@ -37,13 +37,13 @@ function Registratie() {
 
     const handleChangeWachtwoord2 = (value) => {
         setWachtwoord2(value);
-        if(wachtwoord !== wachtwoord2)
-        {
-            setMessage('het wachtwoord komt niet overeen')
-        }
-        else {
-            setMessage(null);
-        }
+        // if(wachtwoord !== wachtwoord2)
+        // {
+        //     setMessage('het wachtwoord komt niet overeen')
+        // }
+        // else {
+        //     setMessage(null);
+        // }
     };
 
     let handleRegistratie = async (e) => {
@@ -61,10 +61,12 @@ function Registratie() {
                 }),
             });
 
-            if (res.status === 200) {
+            if (res.status === 201) {
                 // setNaam("");
                 // setWachtwoord("")
                 setMessage("gebruiker is aangemaakt");
+                alert('gebruiker is aangemaakt');
+                navigate('/inloggen');
             } else {
                 setMessage("error " + res.status);
             }

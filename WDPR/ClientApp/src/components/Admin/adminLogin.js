@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
+import {MdAdminPanelSettings, MdAddModerator} from 'react-icons/md';
+
 // import axios from "axios";
 
-function Login() {
+function AdminLogin() {
     const wwVergeten = {
         color: '#8B0001',
         float: 'right'
@@ -17,15 +18,15 @@ function Login() {
     }
 
     const navigate = useNavigate();
-    const [email, setEmail] =useState("");
+    const [naam, setNaam] =useState("");
     const [wachtwoord, setWachtwoord] =useState("");
     const [message, setMessage] =useState("");
     const [refreshToken, setRefreshToken] = useState('');
     const [checked, setChecked] = useState(false);
     const [accessToken, setAccessToken] = useState('');
 
-    const handleChangeMail = (value) => {
-        setEmail(value);
+    const handleChangeNaam = (value) => {
+        setNaam(value);
     };
     const handleChangeWachtwoord = (value) => {
         setWachtwoord(value);
@@ -39,42 +40,32 @@ function Login() {
                 method: "POST",
                 mode:"cors",
                 body: JSON.stringify({
-                    Email: email,
+                    UserName: naam,
                     Password : wachtwoord,
-                })
-            })
+                }),
+            });
 
-
-            // const json = await res.json();
+            const json = await res.json();
 
             if (res.ok) {
-                res.json().then(data => {
-                    // jwt token in localstorage opslaan
-                    localStorage.setItem('jwtToken', data.token);
-                    // decode jwt token om gebruikersnaam er uit te krijgen
-                    if(checked){
-                        localStorage.setItem('opgeslagen', data.token);
-                    } else{
-                        localStorage.removeItem('opgeslagen');
-                    }
-                    const decoded = jwt_decode(data.token);
-                    // gebruikernaam uit de jwt token gehaald en nu plaatsen in localstorage
-                    const mail = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
-                    localStorage.setItem('gebruikersNaam', mail);
-                    console.log(mail);
-                });
                 // setNaam("");
                 // setWachtwoord("")
-                // const { accessToken, refreshToken } = json;
-                // setAccessToken(accessToken);
-                // setRefreshToken(refreshToken);
+                const { accessToken, refreshToken } = json;
+                setAccessToken(accessToken);
+                setRefreshToken(refreshToken);
                 setMessage("gebruiker is ingelogd");
+                localStorage.setItem('gebruikersNaam', naam);
 
+                if(checked){
+                    localStorage.setItem('adminRefreshToken', refreshToken);
+                } else{
+                    localStorage.removeItem('adminRefreshToken');
+                }
                 
-                navigate('/');
+                navigate('/adminpaneel');
             
             }else {
-                setMessage("error " + res.statusText);
+                setMessage("error " + res.status);
             }
         } catch (err) {
             console.log(err);
@@ -83,31 +74,17 @@ function Login() {
     
   useEffect(() => {
     // Check for stored refresh token on mount
-    const storedRefreshToken = localStorage.getItem('opgeslagen');
+    const storedRefreshToken = localStorage.getItem('adminRefreshToken');
     if (storedRefreshToken) {
       setRefreshToken(storedRefreshToken);
       console.log('refreshtoken zit in localStorage')
       navigate('/');
 
+      setChecked(true);
     } else{
         console.log('geen refreshtoken in localStorage')
     }
   }, []);
-
-
-    // const handleLogin = () => {
-    //     const data = {
-    //         Naam : naam,
-    //         Wachtwoord : wachtwoord
-    //     };
-    //     const url = 'http://localhost:5014/api/login';
-    //     axios.post(url,data).then((result) => {
-    //         alert(result.data);
-    //     }).catch((error)=> {
-    //         alert(error);
-    //     })
-    // }
-
 
     const handleChange = () => {
       setChecked(!checked);
@@ -119,7 +96,7 @@ function Login() {
                 <div className="card rounded-3" style={{padding: '0px'}} >
                 <div className="row g-0">
                     
-                    <div className="col-lg-6 d-flex  justify-content-md-center" style={{backgroundColor: '#F39A05'}}>
+                    <div className="col-lg-6 d-flex  justify-content-md-center" style={{backgroundColor: '#8B0001 '}}>
                     <img src={"img/Logo_theater_laak_V2 (1).png"}
                     style={{width: '400px'}} alt="Theater Laak logo"/>
                     </div>
@@ -128,16 +105,16 @@ function Login() {
                     <div className="card-body p-md-5 mx-md-4">
 
                         <div className="text-center">
-                        <h1>Login</h1>
-                        <img src={"img/Logo_theater_laak_V2 (1).png"}
-                        style={{width: '185px'}} alt="Theater Laak logo"/>
+                        <h1>Admin Login</h1>
+                        <MdAdminPanelSettings color="#8B0001" size={'185px'}/>
+
                         </div>
 
                         <form>
 
                         <div className="form-outline mb-4">
-                            <label className="form-label" htmlFor="form2Example11">Email</label>
-                            <input type="email" id="form2Example11" className="form-control" placeholder="email adres" onChange={(e) => handleChangeMail(e.target.value)}/>
+                            <label className="form-label" htmlFor="form2Example11">Gebruikersnaam</label>
+                            <input type="email" id="form2Example11" className="form-control" placeholder="email adres" onChange={(e) => handleChangeNaam(e.target.value)}/>
                         </div>
 
                         <div className="form-outline mb-4">
@@ -173,4 +150,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default AdminLogin;
