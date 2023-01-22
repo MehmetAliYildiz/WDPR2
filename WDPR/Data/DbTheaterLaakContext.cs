@@ -55,6 +55,11 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
         return Kaartjes;
     }
 
+    public IEnumerable<Bestelling> GetBestellingen()
+    {
+        return Bestellingen;
+    }
+
     public IEnumerable<Stoel> GetStoelen()
     {
         return Stoel;

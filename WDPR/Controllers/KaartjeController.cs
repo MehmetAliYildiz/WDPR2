@@ -43,6 +43,8 @@ namespace WDPR.Controllers
             //{
             //    return BadRequest("Bestelling met ID '" + kaartjeWithId.BestellingId + "' niet gevonden");
             //}
+
+            var request = HttpContext.Request;
             Kaartje kaartje = new Kaartje()
             {
                 Id = _context.GetKaartjes().Max(k => k.Id) + 1,
@@ -51,10 +53,10 @@ namespace WDPR.Controllers
                 {
                     Betaald = false,
                     PlaatsTijd = DateTime.Now,
-                    Bedrag = 20D * kaartjeWithId.StoelIds.Count()
+                    Bedrag = 20D * kaartjeWithId.StoelIds.Count(),
+                    IP = request.Headers["X-Forwarded-For"].FirstOrDefault() ?? request.HttpContext.Connection.RemoteIpAddress.ToString()
                 },
                 StoelKaartjes = new Collection<StoelKaartje>(),
-                Hash = BCrypt.Net.BCrypt.HashPassword(kaartjeWithId.Code),
                 HashUsed = false
             };
 

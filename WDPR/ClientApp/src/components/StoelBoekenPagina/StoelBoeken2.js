@@ -102,6 +102,8 @@ export default class StoelBoeken extends Component {
     handleSubmit = () => {
         console.log("submit");
         const geselecteerdeStoelen = [];
+        const alphabet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@$';
+        shortid.characters(alphabet);
         const temp = shortid.generate();
         this.setState({ tempId: temp });
         for (let index = 0; index < this.state.stoelen.length; index++) {

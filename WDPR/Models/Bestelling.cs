@@ -6,7 +6,12 @@
         
         public double Bedrag { get; set; }
 
+        public string? IP { get; set; }
+        public Gebruiker? Gebruiker { get; set; }
+
         public bool Betaald { get; set; }
+
+        public string? BetaalCode { get; set; }
 
         public DateTime PlaatsTijd { get; set; }
     }
