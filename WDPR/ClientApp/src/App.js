@@ -13,6 +13,8 @@ import ReserveerForm from './components/ReserveerForm';
 import StoelBoekenTest from './components/StoelBoekenPagina/StoelBoekenTest';
 import ShoppingCart from './components/ShoppingCart';
 import AdminLogin from './components/Admin/adminLogin';
+import DoneerOphalen from './components/DonatiePagina/DoneerOphalen';
+ 
 <><link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
@@ -34,6 +36,7 @@ export default function App() {
         <Route path='/stoelboeken' element={<StoelBoekenTest />}></Route>
         <Route path='/winkelmandje' element={<ShoppingCart />}></Route>
         <Route path='/adminInlog' element={<AdminLogin />}></Route>
+        <Route path='/doneerOphalen' element={<DoneerOphalen />}></Route>
       </Routes>
     </>
   );

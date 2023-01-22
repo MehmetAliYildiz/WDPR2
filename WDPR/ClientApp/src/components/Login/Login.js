@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
 // import axios from "axios";
 
 function Login() {
@@ -16,15 +17,15 @@ function Login() {
     }
 
     const navigate = useNavigate();
-    const [naam, setNaam] =useState("");
+    const [email, setEmail] =useState("");
     const [wachtwoord, setWachtwoord] =useState("");
     const [message, setMessage] =useState("");
     const [refreshToken, setRefreshToken] = useState('');
     const [checked, setChecked] = useState(false);
     const [accessToken, setAccessToken] = useState('');
 
-    const handleChangeNaam = (value) => {
-        setNaam(value);
+    const handleChangeMail = (value) => {
+        setEmail(value);
     };
     const handleChangeWachtwoord = (value) => {
         setWachtwoord(value);
@@ -38,21 +39,32 @@ function Login() {
                 method: "POST",
                 mode:"cors",
                 body: JSON.stringify({
-                    UserName: naam,
+                    Email: email,
                     Password : wachtwoord,
-                }),
-            });
+                })
+            })
 
-            const json = await res.json();
+
+            // const json = await res.json();
 
             if (res.ok) {
+                res.json().then(data => {
+                    // jwt token in localstorage opslaan
+                    localStorage.setItem('jwtToken', data.token);
+                    // decode jwt token om gebruikersnaam er uit te krijgen
+                    const decoded = jwt_decode(data.token);
+                    // gebruikernaam uit de jwt token gehaald en nu plaatsen in localstorage
+                    const mail = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
+                    localStorage.setItem('gebruikersNaam', mail);
+                    console.log(mail);
+                });
                 // setNaam("");
                 // setWachtwoord("")
-                const { accessToken, refreshToken } = json;
-                setAccessToken(accessToken);
-                setRefreshToken(refreshToken);
+                // const { accessToken, refreshToken } = json;
+                // setAccessToken(accessToken);
+                // setRefreshToken(refreshToken);
                 setMessage("gebruiker is ingelogd");
-                localStorage.setItem('gebruikersNaam', naam);
+                
 
                 if(checked){
                     localStorage.setItem('refreshToken', refreshToken);
@@ -63,7 +75,7 @@ function Login() {
                 navigate('/');
             
             }else {
-                setMessage("error " + res.status);
+                setMessage("error " + res.statusText);
             }
         } catch (err) {
             console.log(err);
@@ -78,7 +90,6 @@ function Login() {
       console.log('refreshtoken zit in localStorage')
       navigate('/');
 
-      setChecked(true);
     } else{
         console.log('geen refreshtoken in localStorage')
     }
@@ -127,7 +138,7 @@ function Login() {
 
                         <div className="form-outline mb-4">
                             <label className="form-label" htmlFor="form2Example11">Email</label>
-                            <input type="email" id="form2Example11" className="form-control" placeholder="email adres" onChange={(e) => handleChangeNaam(e.target.value)}/>
+                            <input type="email" id="form2Example11" className="form-control" placeholder="email adres" onChange={(e) => handleChangeMail(e.target.value)}/>
                         </div>
 
                         <div className="form-outline mb-4">
