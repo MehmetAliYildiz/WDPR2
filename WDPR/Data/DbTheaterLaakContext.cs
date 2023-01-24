@@ -241,4 +241,6 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     {
         return base.SaveChangesAsync();
     }
+
+    public DbSet<WDPR.Models.ImageModel> ImageModel { get; set; }
 }

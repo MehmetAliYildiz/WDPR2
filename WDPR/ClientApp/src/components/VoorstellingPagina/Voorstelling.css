@@ -24,6 +24,9 @@
     color: black;
 }
 
+.input {
+}
+
 card-title {
     justify-content: center;
     color: black;
@@ -39,6 +42,15 @@ card-title {
     font-weight: 900;
     text-align: left;
     margin: 20px;
+}
+
+.title {
+    text-align: center;
+}
+
+.img {
+    width: 100px;
+    height: 100px;
 }
 
 .card-img-top {

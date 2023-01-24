@@ -16,6 +16,7 @@ import VoorstellingDetail from './components/VoorstellingPagina/VoorstellingDeta
 import ExcelUploaden from './components/AdminPanel/CSVToevoegen/ExcelUploaden';
 import StoelBoeken2 from './components/StoelBoekenPagina/StoelBoeken2';
 import SocketTest from './components/SocketTest';
+import VoorstellingPost from "./components/VoorstellingPagina/VoorstellingPost";
 
 <link>
   rel="stylesheet"
@@ -42,6 +43,7 @@ export default function App() {
                 <Route path='/voorstelling/geselecteerd' element={<VoorstellingDetail />}></Route>
                 <Route path='/voorstelling/boekstoel' element={<StoelBoeken2 />}></Route>
                 <Route path='/sockettest' element={<SocketTest />}></Route>
+                <Route path={'/voorstelling/post'} element={<VoorstellingPost />}></Route>
                 <Route path='/admin/exceltoevoegen' element={<ExcelUploaden/>}></Route>
                 <Route path={'/pay'} element={<PaymentForm />}></Route>
             </Routes>
