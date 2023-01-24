@@ -54,6 +54,14 @@ public async Task<IActionResult> Login([FromBody] GebruikerLogin gebruikerLogin)
     public async Task<ActionResult<IEnumerable<GebruikerMetWachwoord>>> Registreer([FromBody] GebruikerMetWachwoord gebruikerMetWachwoord)
     {
         var resultaat = await _userManager.CreateAsync(gebruikerMetWachwoord, gebruikerMetWachwoord.Password);
-        return !resultaat.Succeeded ? new BadRequestObjectResult(resultaat) : StatusCode(201);
+        if (!resultaat.Succeeded)
+    {
+        return new BadRequestObjectResult(resultaat);
+    }
+    else
+    {
+        await _userManager.AddToRoleAsync(gebruikerMetWachwoord, "bezoeker");
+        return StatusCode(201);
+    }
     }
 }
