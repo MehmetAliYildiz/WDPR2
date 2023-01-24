@@ -1,9 +1,7 @@
 namespace WDPR.Models
 {
-    public class Artiest
+    public class Artiest : Gebruiker
     {
-        public int Id { get; set; }
-        public string Naam { get; set; }
-
+        public ICollection<ArtiestBand> ArtiestBands { get; set; }
     }
 }

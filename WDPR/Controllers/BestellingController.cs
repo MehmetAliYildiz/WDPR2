@@ -25,18 +25,18 @@ namespace WDPR.Controllers
                 var values = new
                 {
                     amount = bestellingen.Sum(b => b.Bedrag),
-                    redirectUrl = "https://77.172.8.98:44469/paymentcomplete",
+                    redirectUrl = "https://77.172.8.98:62033/paymentcomplete",
                     feedbackUrl = "https://77.172.8.98:7260/bestelling/voltooid"
                 };
 
                 var json = JsonSerializer.Serialize(values);
                 Console.WriteLine(json);
-                //var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var content = new StringContent(json, Encoding.UTF8, "text/plain");
 
-                //var response = await client.PostAsync("https://example.com/api/values", content);
-                //var responseString = await response.Content.ReadAsStringAsync();
+                var response = await client.PostAsync("http://allyourgoods-transport-webapp-staging.azurewebsites.net/api/process", content);
+                var responseString = await response.Content.ReadAsStringAsync();
 
-                //Console.WriteLine(responseString);
+                Console.WriteLine(responseString);
 
                 //bestellingen.ToList().ForEach(b => b.BetaalCode = <>);
                 //_context.SaveChangesAsync();
@@ -45,15 +45,17 @@ namespace WDPR.Controllers
             }
         }
 
-        [HttpGet("voltooid")]
+        [HttpPost("voltooid")]
         public IActionResult Voltooid([FromBody] string code)
         {
-            var bestellingen = _context.GetBestellingen().Where(b => b.BetaalCode == code);
-            bestellingen.ToList().ForEach(b => {
-                b.Betaald = true;
-                b.BetaalCode = null;
-            });
-            _context.SaveChangesAsync();
+            //var bestellingen = _context.GetBestellingen().Where(b => b.BetaalCode == code);
+            //bestellingen.ToList().ForEach(b => {
+            //    b.Betaald = true;
+            //    b.BetaalCode = null;
+            //});
+            //_context.SaveChangesAsync();
+            Console.WriteLine(code);
+            Console.WriteLine("Received post");
 
             return Ok();
         }

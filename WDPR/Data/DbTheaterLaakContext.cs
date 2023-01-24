@@ -8,26 +8,33 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 {
     public DbTheaterLaakContext(DbContextOptions<DbTheaterLaakContext> options)
-        : base(options)
-    {
-    }
+        : base(options) {}
 
-    public DbSet<Voorstelling> Voorstelling { get; set; }
-    public DbSet<Reservering> Reserveringen { get; set; }
-    public DbSet<Bestelling> Bestellingen { get; set; }
+    #region DbSets
+    private DbSet<Voorstelling> Voorstelling { get; set; }
+    private DbSet<Reservering> Reserveringen { get; set; }
+    private DbSet<Bestelling> Bestellingen { get; set; }
     public DbSet<Gebruiker> Gebruiker { get; set; }
-    public DbSet<Zaal> Zaal { get; set; }
-    public DbSet<VrijeRuimte> VrijeRuimtes { get; set; }
-    public DbSet<Stoel> Stoel {get; set; }
+    private DbSet<Zaal> Zaal { get; set; }
+    private DbSet<VrijeRuimte> VrijeRuimtes { get; set; }
+    private DbSet<Stoel> Stoel {get; set; }
     public DbSet<Agenda> Agenda { get; set; }
-    // public DbSet<Band> Band {get; set;}
-    public DbSet<Artiest> Artiest {get; set;}
-    public DbSet<Kaartje> Kaartjes { get; set; }
-    public DbSet<StoelKaartje> StoelKaartjes { get; set; }
+    private DbSet<Band> Band {get; set;}
+    private DbSet<Artiest> Artiest {get; set;}
+    private DbSet<ArtiestBand> ArtiestBand {get; set;}
+    private DbSet<Kaartje> Kaartjes { get; set; }
+    private DbSet<StoelKaartje> StoelKaartjes { get; set; }
+    #endregion
 
+    #region AddObject
     public void AddReservering(Reservering r)
     {
         Reserveringen.Add(r);
+    }
+
+    public void AddVoorstelling(Voorstelling v)
+    {
+        Voorstelling.Add(v);
     }
 
     public void AddKaartje(Kaartje k)
@@ -35,14 +42,73 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
         Kaartjes.Add(k);
     }
 
+    public void AddStoel(Stoel s)
+    {
+        Stoel.Add(s);
+    }
+
     public void AddStoelKaartje(StoelKaartje k)
     {
         StoelKaartjes.Add(k);
     }
 
+    public void AddZaal(Zaal z)
+    {
+        Zaal.Add(z);
+    }
+
+    public void AddBand(Band b)
+    {
+        Band.Add(b);
+    }
+
+    public void AddArtiest(Artiest a)
+    {
+        Artiest.Add(a);
+    }
+
+    public void AddArtiestBand(ArtiestBand ab)
+    {
+        ArtiestBand.Add(ab);
+    }
+
+    public void AddVrijeRuimte(VrijeRuimte v)
+    {
+        VrijeRuimtes.Add(v);
+    }
+    #endregion
+
+    #region RemoveObject
+    public void RemoveVoorstelling(int id)
+    {
+        Voorstelling.Where(v => v.Id == id).ForEachAsync(v => Voorstelling.Remove(v));
+    }
+
+    public void RemoveVoorstellingRange(IEnumerable<Voorstelling> v)
+    {
+        Voorstelling.RemoveRange(v);
+    }
+
+    public void RemoveBand(int id)
+    {
+        Band.Where(b => b.Id == id).ForEachAsync(b => Band.Remove(b));
+    }
+
+    public void RemoveArtiest(int id)
+    {
+        Artiest.Where(a => a.Id == id).ForEachAsync(a => Artiest.Remove(a));
+    }
+    #endregion
+
+    #region GetLists
     public IEnumerable<Reservering> GetReserveringen()
     {
         return Reserveringen.Include(r => r.Bestelling);
+    }
+
+    public IEnumerable<Voorstelling> GetVoorstellingen()
+    {
+        return Voorstelling;
     }
 
     public IEnumerable<Zaal> GetZaal()
@@ -70,6 +136,38 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
         return StoelKaartjes.Include(sk => sk.Stoel).Include(sk => sk.Kaartje);
     }
 
+    public IEnumerable<Band> GetBands()
+    {
+        return Band;
+    }
+
+    public IEnumerable<Artiest> GetArtiesten()
+    {
+        return Artiest;
+    }
+
+    public IEnumerable<VrijeRuimte> GetVrijeRuimtes()
+    {
+        return VrijeRuimtes;
+    }
+    #endregion
+
+    #region FindObject
+    public async Task<Voorstelling> FindVoorstelling(int id)
+    {
+        return await Voorstelling.FindAsync(id);
+    }
+
+    public async Task<Band> FindBand(int id)
+    {
+        return await Band.FindAsync(id);
+    }
+
+    public async Task<Artiest> FindArtiest(int id)
+    {
+        return await Artiest.FindAsync(id);
+    }
+
     public async Task<Agenda> FindAgenda(int id)
     {
         return await Agenda.FindAsync(id);
@@ -89,11 +187,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     {
         return await Stoel.FindAsync(id);
     }
-    
-    public IEnumerable<VrijeRuimte> GetVrijeRuimtes()
-    {
-        return VrijeRuimtes;
-    }
+    #endregion
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
@@ -124,6 +218,18 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
             .HasOne(sk => sk.Kaartje)
             .WithMany(s => s.StoelKaartjes)
             .HasForeignKey(sc => sc.KaartjeId);
+
+
+        builder.Entity<ArtiestBand>()
+            .HasOne(ab => ab.Artiest)
+            .WithMany(a => a.ArtiestBands)
+            .HasForeignKey(ab => ab.ArtiestId);
+
+        builder.Entity<ArtiestBand>().HasKey(ab => new { ab.ArtiestId, ab.BandId });
+        builder.Entity<ArtiestBand>()
+            .HasOne(ab => ab.Band)
+            .WithMany(b => b.ArtiestBands)
+            .HasForeignKey(ab => ab.BandId);
     }
 
     public override int SaveChanges()

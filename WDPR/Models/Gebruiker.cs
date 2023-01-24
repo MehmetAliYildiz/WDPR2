@@ -6,8 +6,8 @@ namespace WDPR.Models;
 public class Gebruiker
 {
     [Key]
-    public int id { get; set;}
-    public string naam { get; set; }
-    public string wachtwoord { get; set; }
-    public string email { get; set; }
+    public int Id { get; set;}
+    public string Naam { get; set; }
+    public string Wachtwoord { get; set; }
+    public string Email { get; set; }
 }

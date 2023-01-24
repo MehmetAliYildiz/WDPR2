@@ -34,18 +34,18 @@ namespace WDPR.Controllers
         [HttpPost]
         public async Task<ActionResult<Agenda>> PostAgenda([FromBody]Agenda agenda)
         {
-            var bestaatVoorstelling = await _context.Voorstelling
+            var bestaatVoorstelling = _context.GetVoorstellingen()
             .Where(v => v.Id == agenda.VoorstellingId)
-            .FirstOrDefaultAsync();
+            .FirstOrDefault();
 
             if (bestaatVoorstelling == null)
             {
                 return BadRequest("De voorstelling die je probeert toe te voegen bestaat niet. Check het Id dat je meegeeft opnieuw of voeg eerst de desbetreffende voorstelling toe.");
             }
 
-            var bestaatZaal = await _context.Zaal
+            var bestaatZaal = _context.GetZaal()
             .Where(z => z.Id == agenda.ZaalId)
-            .FirstOrDefaultAsync();
+            .FirstOrDefault();
 
             if (bestaatZaal == null)
             {

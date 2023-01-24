@@ -27,11 +27,7 @@ namespace WDPR.Controllers{
         [HttpGet]
         public IEnumerable<Zaal> GetZaal()
         {
-            foreach(Stoel s in _context.Stoel)
-            {
-                Console.WriteLine(s.Id);
-            }
-            return _context.Zaal;
+            return _context.GetZaal();
         }
         
         [HttpGet("zaal/{id}")]
@@ -51,7 +47,7 @@ namespace WDPR.Controllers{
         {
             Zaal nieuweZaal = new Zaal(zms.Id);
             nieuweZaal.Stoelen = new List<Stoel>();
-            _context.Zaal.Add(nieuweZaal);
+            _context.AddZaal(nieuweZaal);
             _context.SaveChangesAsync();
 
             int i = 0;

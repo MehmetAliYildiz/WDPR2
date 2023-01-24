@@ -46,7 +46,7 @@ namespace WDPR.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGebruiker(int id, Gebruiker gebruiker)
         {
-            if (id != gebruiker.id)
+            if (id != gebruiker.Id)
             {
                 return BadRequest();
             }
@@ -80,7 +80,7 @@ namespace WDPR.Controllers
             _context.Gebruiker.Add(gebruiker);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetGebruiker", new { id = gebruiker.id }, gebruiker);
+            return CreatedAtAction("GetGebruiker", new { id = gebruiker.Id }, gebruiker);
         }
 
         // DELETE: api/Gebruiker/5
@@ -101,7 +101,7 @@ namespace WDPR.Controllers
 
         private bool GebruikerExists(int id)
         {
-            return _context.Gebruiker.Any(e => e.id == id);
+            return _context.Gebruiker.Any(e => e.Id == id);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace WDPR.Controllers{
         [HttpPost]
          public async Task<ActionResult<Zaal>> PostStoel(Stoel stoel)
         {
-            _context.Stoel.Add(stoel);
+            _context.AddStoel(stoel);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetStoel", new { id = stoel.Id }, stoel);
@@ -26,9 +26,9 @@ namespace WDPR.Controllers{
 
 
          [HttpGet]
-         public async Task<ActionResult<IEnumerable<Stoel>>> GetStoel()
+         public ActionResult<IEnumerable<Stoel>> GetStoel()
          {
-             return await _context.Stoel.ToListAsync();
+             return Ok(_context.GetStoelen());
          }
          
         [HttpGet("{zaalId}/{agendaId}")]

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WDPR.Data;
 using WDPR.Models;
 
 namespace WDPR.Controllers
@@ -13,25 +14,25 @@ namespace WDPR.Controllers
     [ApiController]
     public class VoorstellingController : ControllerBase
     {
-        private readonly DbTheaterLaakContext _context;
+        private readonly IDbTheaterLaakContext _context;
 
-        public VoorstellingController(DbTheaterLaakContext context)
+        public VoorstellingController(IDbTheaterLaakContext context)
         {
             _context = context;
         }
 
         // GET: api/Voorstelling
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Voorstelling>>> GetVoorstelling()
+        public ActionResult<IEnumerable<Voorstelling>> GetVoorstelling()
         {
-            return await _context.Voorstelling.ToListAsync();
+            return _context.GetVoorstellingen().ToList();
         }
 
         // GET: api/Voorstelling/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Voorstelling>> GetVoorstelling(int id)
         {
-            var voorstelling = await _context.Voorstelling.FindAsync(id);
+            var voorstelling = await _context.FindVoorstelling(id);
 
             if (voorstelling == null)
             {
@@ -43,39 +44,39 @@ namespace WDPR.Controllers
 
         // PUT: api/Voorstelling/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutVoorstelling(int id, Voorstelling voorstelling)
-        {
-            if (id != voorstelling.Id)
-            {
-                return BadRequest();
-            }
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutVoorstelling(int id, Voorstelling voorstelling)
+        //{
+        //    if (id != voorstelling.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(voorstelling).State = EntityState.Modified;
+        //    _context.Entry(voorstelling).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!VoorstellingExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!VoorstellingExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         [HttpPost]
         public async Task<ActionResult<Voorstelling>> PostVoorstelling(Voorstelling voorstelling)
         {
-            _context.Voorstelling.Add(voorstelling);
+            _context.AddVoorstelling(voorstelling);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetVoorstelling", new { id = voorstelling.Id }, voorstelling);
@@ -85,13 +86,13 @@ namespace WDPR.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteVoorstelling(int id)
         {
-            var voorstelling = await _context.Voorstelling.FindAsync(id);
+            var voorstelling = await _context.FindVoorstelling(id);
             if (voorstelling == null)
             {
                 return NotFound();
             }
 
-            _context.Voorstelling.Remove(voorstelling);
+            _context.RemoveVoorstelling(id);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -100,8 +101,8 @@ namespace WDPR.Controllers
          [HttpDelete]
         public async Task<IActionResult> DeleteAlleVoorstellingen()
         {
-            var voorstellingen = await _context.Voorstelling.ToListAsync();
-            _context.Voorstelling.RemoveRange(voorstellingen);
+            var voorstellingen = _context.GetVoorstellingen();
+            _context.RemoveVoorstellingRange(voorstellingen);
             await _context.SaveChangesAsync();
             return NoContent();
         }
@@ -109,7 +110,7 @@ namespace WDPR.Controllers
 
         private bool VoorstellingExists(int id)
         {
-            return _context.Voorstelling.Any(e => e.Id == id);
+            return _context.GetVoorstellingen().Any(e => e.Id == id);
         }
     }
 }
