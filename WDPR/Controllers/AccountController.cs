@@ -53,7 +53,7 @@ public async Task<IActionResult> Login([FromBody] GebruikerLogin gebruikerLogin)
 
     [HttpPost]
     [Route("registreer")]
-    public async Task<ActionResult<IEnumerable<GebruikerMetWachwoord>>> Registreer([FromBody] GebruikerMetWachwoord gebruikerMetWachwoord)
+    public async Task<ActionResult<IEnumerable<Gebruiker>>> Registreer([FromBody] GebruikerMetWachwoord gebruikerMetWachwoord)
     {
         var resultaat = await _userManager.CreateAsync(gebruikerMetWachwoord, gebruikerMetWachwoord.Wachtwoord);
         if (!resultaat.Succeeded)

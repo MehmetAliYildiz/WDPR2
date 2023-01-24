@@ -1,11 +1,18 @@
 {
   "dependencies": {
+    "@microsoft/signalr": "^7.0.2",
     "bootstrap": "^5.2.3",
+    "cheerio": "^1.0.0-rc.12",
     "cypress": "^12.3.0",
     "flatpickr": "^4.6.13",
+    "query-string": "^8.1.0",
+    "react-bootstrap": "^2.7.0",
     "react-flatpickr": "^3.10.13",
     "react-icons": "^4.7.1",
-    "react-router-dom": "^6.6.0"
+    "react-router-dom": "^6.6.0",
+    "shortid": "^2.2.16",
+    "socket.io-client": "^4.5.4",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "node-sass": "^8.0.0"

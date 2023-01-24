@@ -37,7 +37,7 @@ namespace WDPR.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Band>> PostBand(BandDTO bandDTO)
+        public async Task<CreatedAtActionResult> PostBand(BandDTO bandDTO)
         {
             var band = new Band
             {
