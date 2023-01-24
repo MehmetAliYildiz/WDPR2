@@ -21,10 +21,10 @@ namespace WDPR.Controllers
         {
             using (var client = new HttpClient())
             {
-                var bestellingen = _context.GetBestellingen().Where(b => b.IP == ip);
+                //var bestellingen = _context.GetBestellingen().Where(b => b.IP == ip);
                 var values = new
                 {
-                    amount = bestellingen.Sum(b => b.Bedrag),
+                    amount = 40.0,//bestellingen.Sum(b => b.Bedrag),
                     redirectUrl = "https://77.172.8.98:62033/paymentcomplete",
                     feedbackUrl = "https://77.172.8.98:7260/bestelling/voltooid"
                 };

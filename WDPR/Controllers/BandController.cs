@@ -81,7 +81,7 @@ namespace WDPR.Controllers
         //}
 
         [HttpPut("{bandId}/artist/{artiestId}")]
-        public async Task<IActionResult> AddArtistToBand(int bandId, int artiestId)
+        public async Task<IActionResult> AddArtistToBand(int bandId, string artiestId)
         {
             var band = await _context.FindBand(bandId);
             if (band == null)
@@ -89,7 +89,7 @@ namespace WDPR.Controllers
                 return NotFound();
             }
 
-            var artiest = await _context.FindBand(artiestId);
+            var artiest = await _context.FindBand(bandId);
             if (artiest == null)
             {
                 return NotFound();

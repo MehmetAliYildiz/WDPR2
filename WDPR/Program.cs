@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using WDPR.Data;
+using WDPR.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DbTheaterLaakContext>(options =>
@@ -20,11 +21,12 @@ builder.Services.AddCors(options =>
                       });
 });
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(opt => {
+builder.Services.AddIdentity<Gebruiker, IdentityRole>(opt => {
     opt.User.RequireUniqueEmail = true;
 })
                 .AddEntityFrameworkStores<DbTheaterLaakContext>()
                 .AddDefaultTokenProviders();
+
 builder.Services.AddAuthentication(opt =>
 {
     opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

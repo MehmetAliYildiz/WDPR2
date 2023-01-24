@@ -4,6 +4,8 @@ import React from 'react';
 import { HubConnectionBuilder, HttpTransportType } from "@microsoft/signalr";
 import axios from 'axios';
 import shortid from 'shortid';
+import jwt_decode from 'jwt-decode';
+import { v4 as uuidv4 } from 'uuid';
 
 export default class StoelBoeken extends Component {
     constructor(props) {
@@ -100,28 +102,43 @@ export default class StoelBoeken extends Component {
     }
 
     handleSubmit = () => {
-        console.log("submit");
+        let gebruikersNaam = sessionStorage.getItem('gebruikersNaam');
+        let bezoekerId;
+        if (!gebruikersNaam) {
+            bezoekerId = localStorage.getItem('bezoekerId');
+            if (!bezoekerId) {
+                bezoekerId = uuidv4();
+                localStorage.setItem('bezoekerId', bezoekerId);
+            }
+        }
+
         const geselecteerdeStoelen = [];
-        const alphabet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@$';
-        shortid.characters(alphabet);
-        const temp = shortid.generate();
-        this.setState({ tempId: temp });
+        const kaartjesCode = this.generateKaartjesCode();
+        this.setState({ tempId: kaartjesCode });
+
         for (let index = 0; index < this.state.stoelen.length; index++) {
             if (this.state.stoelen[index].status !== "Geselecteerd") continue;
             geselecteerdeStoelen.push(this.state.stoelen[index].id);
         }
 
-        const endpoint = 'https://localhost:7260/Kaartje';
+        const endpoint = 'https://localhost:7260/Kaartje' + (gebruikersNaam ? '/gebruiker' : '/bezoeker');
         const data = {
             agendaId: this.getAgendaId(),
             stoelIds: geselecteerdeStoelen,
-            code: temp
+            code: kaartjesCode,
+            gebruiker: gebruikersNaam ? gebruikersNaam : bezoekerId
         };
         try {
             axios.post(endpoint, data);
         } catch (err) {
             console.error(err);
         }
+    }
+
+    generateKaartjesCode() {
+        const alphabet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@$';
+        shortid.characters(alphabet);
+        return shortid.generate();
     }
 
     render() {
