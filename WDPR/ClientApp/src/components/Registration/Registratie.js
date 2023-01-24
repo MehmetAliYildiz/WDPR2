@@ -54,10 +54,9 @@ function Registratie() {
                 method: "POST",
                 mode:"cors",
                 body: JSON.stringify({
-                    UserName: naam,
-                    Password : wachtwoord,
+                    userName: naam,
+                    wachtwoord: wachtwoord,
                     email : email,
-
                 }),
             });
 

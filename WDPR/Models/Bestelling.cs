@@ -6,7 +6,7 @@
         
         public double Bedrag { get; set; }
 
-        public string? IP { get; set; }
+        public string? BezoekerId { get; set; }
         public Gebruiker? Gebruiker { get; set; }
 
         public bool Betaald { get; set; }

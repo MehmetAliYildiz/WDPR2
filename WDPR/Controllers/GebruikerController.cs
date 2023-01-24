@@ -44,7 +44,7 @@ namespace WDPR.Controllers
         // PUT: api/Gebruiker/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutGebruiker(int id, Gebruiker gebruiker)
+        public async Task<IActionResult> PutGebruiker(string id, Gebruiker gebruiker)
         {
             if (id != gebruiker.Id)
             {
@@ -99,7 +99,7 @@ namespace WDPR.Controllers
             return NoContent();
         }
 
-        private bool GebruikerExists(int id)
+        private bool GebruikerExists(string id)
         {
             return _context.Gebruiker.Any(e => e.Id == id);
         }

@@ -94,7 +94,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
         Band.Where(b => b.Id == id).ForEachAsync(b => Band.Remove(b));
     }
 
-    public void RemoveArtiest(int id)
+    public void RemoveArtiest(string id)
     {
         Artiest.Where(a => a.Id == id).ForEachAsync(a => Artiest.Remove(a));
     }
@@ -114,6 +114,11 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     public IEnumerable<Zaal> GetZaal()
     {
         return Zaal.Include(z => z.Stoelen);
+    }
+
+    public IEnumerable<Agenda> GetAgendas()
+    {
+        return Agenda;
     }
 
     public IEnumerable<Kaartje> GetKaartjes()
@@ -158,12 +163,17 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
         return await Voorstelling.FindAsync(id);
     }
 
+    public async Task<Gebruiker> FindGebruikerByEmail(string email)
+    {
+        return await Gebruiker.Where(g => g.Email == email).FirstOrDefaultAsync();
+    }
+
     public async Task<Band> FindBand(int id)
     {
         return await Band.FindAsync(id);
     }
 
-    public async Task<Artiest> FindArtiest(int id)
+    public async Task<Artiest> FindArtiest(string id)
     {
         return await Artiest.FindAsync(id);
     }

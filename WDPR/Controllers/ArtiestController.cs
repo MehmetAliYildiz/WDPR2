@@ -1,4 +1,6 @@
 using Azure.Storage.Blobs.Models;
+using BCrypt.Net;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WDPR.Data;
@@ -11,10 +13,12 @@ namespace WDPR.Controllers {
     public class ArtiestController : ControllerBase
     {
         private readonly IDbTheaterLaakContext _context;
+        private readonly UserManager<Artiest> _userManager;
 
-        public ArtiestController(IDbTheaterLaakContext context)
+        public ArtiestController(IDbTheaterLaakContext context, UserManager<Artiest> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -24,7 +28,7 @@ namespace WDPR.Controllers {
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Artiest>> GetArtiest(int id)
+        public async Task<ActionResult<Artiest>> GetArtiest(string id)
         {
             var artiest = await _context.FindArtiest(id);
 
@@ -41,21 +45,19 @@ namespace WDPR.Controllers {
         {
             var artiest = new Artiest()
             {
-                Id = artiestDTO.Id,
-                Naam = artiestDTO.Naam,
-                Wachtwoord = artiestDTO.Wachtwoord,
+                UserName = artiestDTO.UserName,
                 Email = artiestDTO.Email,
                 ArtiestBands = new List<ArtiestBand>()
             };
 
-            _context.AddArtiest(artiest);
+            var result = _userManager.CreateAsync(artiest, artiestDTO.Wachtwoord);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetArtiest", new { id = artiest.Id }, artiest);
+            return CreatedAtAction("GetArtiest", result);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Artiest>> DeleteArtiest(int id)
+        public async Task<ActionResult<Artiest>> DeleteArtiest(string id)
         {
             var artiest = await _context.FindArtiest(id);
             if (artiest == null)
@@ -70,5 +72,7 @@ namespace WDPR.Controllers {
         }
     }
 
-    public class ArtiestDTO : Gebruiker { }
+    public class ArtiestDTO : Gebruiker {
+        public string Wachtwoord { get; set; }
+    }
 }

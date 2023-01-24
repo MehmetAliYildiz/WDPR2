@@ -11,11 +11,4 @@ namespace WDPR.Models
         public ICollection<StoelKaartje> StoelKaartjes { get; set; }
         public Bestelling Bestelling { get; set; }
     }
-
-    public class KaartjeWithId
-    {
-        public int AgendaId { get; set; }
-        public string Code { get; set; }
-        public List<int> StoelIds { get; set; }
-    }
 }

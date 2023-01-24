@@ -4,18 +4,19 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using WDPR.Data;
 using WDPR.Models;
 
 [Route("api/[controller]")]
 [ApiController]
 
-    public class AccountController : ControllerBase
+public class AccountController : ControllerBase
 {
-    private readonly UserManager<IdentityUser> _userManager;
-    private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly UserManager<Gebruiker> _userManager;
+    private readonly SignInManager<Gebruiker> _signInManager;
     private readonly DbTheaterLaakContext _context;
 
-    public AccountController(UserManager<IdentityUser> userManager, DbTheaterLaakContext context, SignInManager<IdentityUser> SignInManager )
+    public AccountController(UserManager<Gebruiker> userManager, DbTheaterLaakContext context, SignInManager<Gebruiker> SignInManager )
     {
         _userManager = userManager;
         _context = context;
@@ -25,7 +26,7 @@ using WDPR.Models;
 [HttpPost("login")]
 public async Task<IActionResult> Login([FromBody] GebruikerLogin gebruikerLogin)
 {
-    var _user = await _userManager.FindByEmailAsync(gebruikerLogin.Email);
+    var _user = await _context.FindGebruikerByEmail(gebruikerLogin.Email);
     if (_user != null)
         if (await _userManager.CheckPasswordAsync(_user, gebruikerLogin.Password))
         {
@@ -54,7 +55,20 @@ public async Task<IActionResult> Login([FromBody] GebruikerLogin gebruikerLogin)
     [Route("registreer")]
     public async Task<ActionResult<IEnumerable<Gebruiker>>> Registreer([FromBody] GebruikerMetWachwoord gebruikerMetWachwoord)
     {
-        var resultaat = await _userManager.CreateAsync(gebruikerMetWachwoord, gebruikerMetWachwoord.Password);
-        return !resultaat.Succeeded ? new BadRequestObjectResult(resultaat) : StatusCode(201);
+        var resultaat = await _userManager.CreateAsync(gebruikerMetWachwoord, gebruikerMetWachwoord.Wachtwoord);
+        if (!resultaat.Succeeded)
+        {
+            return new BadRequestObjectResult(resultaat);
+        }
+        else
+        {
+            await _userManager.AddToRoleAsync(gebruikerMetWachwoord, "bezoeker");
+            return StatusCode(201);
+        }
     }
+}
+
+public class GebruikerMetWachwoord : Gebruiker
+{
+    public string Wachtwoord { get; init; }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using WDPR.Data;
+using WDPR.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DbTheaterLaakContext>(options =>
@@ -20,11 +21,12 @@ builder.Services.AddCors(options =>
                       });
 });
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(opt => {
+builder.Services.AddIdentity<Gebruiker, IdentityRole>(opt => {
     opt.User.RequireUniqueEmail = true;
 })
                 .AddEntityFrameworkStores<DbTheaterLaakContext>()
                 .AddDefaultTokenProviders();
+
 builder.Services.AddAuthentication(opt =>
 {
     opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -59,6 +61,19 @@ builder.Services.AddSignalR();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    if (!await roleManager.RoleExistsAsync("admin"))
+    {
+    await roleManager.CreateAsync(new IdentityRole("admin"));
+    }
+    if (!await roleManager.RoleExistsAsync("bezoeker"))
+    {
+    await roleManager.CreateAsync(new IdentityRole("bezoeker"));
+    }
+}
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -84,6 +99,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
-app.MapFallbackToFile("index.html");;
+app.MapFallbackToFile("index.html");
 
 app.Run();
