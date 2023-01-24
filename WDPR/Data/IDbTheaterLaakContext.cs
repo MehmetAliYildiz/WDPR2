@@ -12,6 +12,7 @@ namespace WDPR.Data
         IEnumerable<VrijeRuimte> GetVrijeRuimtes();
         IEnumerable<Bestelling> GetBestellingen();
         IEnumerable<Band> GetBands();
+        IEnumerable<Agenda> GetAgendas();
         IEnumerable<Artiest> GetArtiesten();
         IEnumerable<Voorstelling> GetVoorstellingen();
         Task<Voorstelling> FindVoorstelling(int id);
@@ -20,7 +21,8 @@ namespace WDPR.Data
         Task<Bestelling> FindBestelling(int id);
         Task<Stoel> FindStoel(int id);
         Kaartje FindKaartje(int id);
-        Task<Artiest> FindArtiest(int id);
+        Task<Artiest> FindArtiest(string id);
+        Task<Gebruiker> FindGebruikerByEmail(string email);
         void AddReservering(Reservering r);
         void AddBand(Band b);
         void AddArtiest(Artiest a);
@@ -32,7 +34,7 @@ namespace WDPR.Data
         void AddVrijeRuimte(VrijeRuimte v);
         void AddVoorstelling(Voorstelling v);
         void RemoveBand(int id);
-        void RemoveArtiest(int id);
+        void RemoveArtiest(string id);
         void RemoveVoorstelling(int id);
         void RemoveVoorstellingRange(IEnumerable<Voorstelling> v);
 
