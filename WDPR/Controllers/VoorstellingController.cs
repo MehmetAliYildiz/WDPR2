@@ -96,8 +96,8 @@ namespace WDPR.Controllers
 
             return NoContent();
         }
-        
-         [HttpDelete]
+
+        [HttpDelete]
         public async Task<IActionResult> DeleteAlleVoorstellingen()
         {
             var voorstellingen = await _context.Voorstelling.ToListAsync();
