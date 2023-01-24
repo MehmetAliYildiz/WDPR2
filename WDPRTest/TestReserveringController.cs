@@ -24,7 +24,7 @@ namespace WDPRTest
             {
                 new Reservering(0)
                 {
-                    ZaalId = 0,
+                    VrijeRuimteId = 0,
                     StartTijd = st,
                     EindTijd  = et
                 }
@@ -68,7 +68,7 @@ namespace WDPRTest
             {
                 new Reservering(0)
                 {
-                    ZaalId = 0,
+                    VrijeRuimteId = 0,
                     StartTijd = st1,
                     EindTijd = et1
                 }
@@ -77,7 +77,7 @@ namespace WDPRTest
 
             var nieuweReservering = new Reservering(1)
             {
-                ZaalId = 0,
+                VrijeRuimteId = 0,
                 StartTijd = st2,
                 EindTijd = et2
             };
