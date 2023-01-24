@@ -1,4 +1,5 @@
-﻿using WDPR.Models;
+﻿using WDPR.Controllers;
+using WDPR.Models;
 
 namespace WDPR.Data
 {

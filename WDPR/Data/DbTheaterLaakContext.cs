@@ -191,7 +191,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
-        builder.UseSqlite("Data Source=DbTheaterLaakContext4.db");
+        builder.UseSqlite("Data Source=DbTheaterLaakContext5.db");
 
     }
 

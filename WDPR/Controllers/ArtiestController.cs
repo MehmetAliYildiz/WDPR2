@@ -37,7 +37,7 @@ namespace WDPR.Controllers {
         }
 
         [HttpPost]
-        public async Task<ActionResult<Artiest>> PostArtiest(ArtiestDTO artiestDTO)
+        public async Task<CreatedAtActionResult> PostArtiest(ArtiestDTO artiestDTO)
         {
             var artiest = new Artiest()
             {

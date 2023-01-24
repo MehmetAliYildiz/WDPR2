@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WDPR.Migrations
 {
     [DbContext(typeof(DbTheaterLaakContext))]
-    [Migration("20230123090444_1")]
+    [Migration("20230124182711_1")]
     partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -233,7 +233,22 @@ namespace WDPR.Migrations
                     b.ToTable("Agenda");
                 });
 
-            modelBuilder.Entity("WDPR.Models.Artiest", b =>
+            modelBuilder.Entity("WDPR.Models.ArtiestBand", b =>
+                {
+                    b.Property<int>("ArtiestId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BandId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ArtiestId", "BandId");
+
+                    b.HasIndex("BandId");
+
+                    b.ToTable("ArtiestBand");
+                });
+
+            modelBuilder.Entity("WDPR.Models.Band", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -245,7 +260,7 @@ namespace WDPR.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Artiest");
+                    b.ToTable("Band");
                 });
 
             modelBuilder.Entity("WDPR.Models.Bestelling", b =>
@@ -263,7 +278,7 @@ namespace WDPR.Migrations
                     b.Property<bool>("Betaald")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("Gebruikerid")
+                    b.Property<int?>("GebruikerId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("IP")
@@ -274,32 +289,61 @@ namespace WDPR.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Gebruikerid");
+                    b.HasIndex("GebruikerId");
 
                     b.ToTable("Bestellingen");
                 });
 
             modelBuilder.Entity("WDPR.Models.Gebruiker", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("email")
+                    b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("naam")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("wachtwoord")
+                    b.Property<string>("Naam")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("id");
+                    b.Property<string>("Wachtwoord")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Gebruiker");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Gebruiker");
+                });
+
+            modelBuilder.Entity("WDPR.Models.ImageModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("Data")
+                        .IsRequired()
+                        .HasColumnType("BLOB");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ImageModel");
                 });
 
             modelBuilder.Entity("WDPR.Models.Kaartje", b =>
@@ -448,6 +492,13 @@ namespace WDPR.Migrations
                     b.ToTable("Zaal");
                 });
 
+            modelBuilder.Entity("WDPR.Models.Artiest", b =>
+                {
+                    b.HasBaseType("WDPR.Models.Gebruiker");
+
+                    b.HasDiscriminator().HasValue("Artiest");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -499,11 +550,30 @@ namespace WDPR.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("WDPR.Models.ArtiestBand", b =>
+                {
+                    b.HasOne("WDPR.Models.Artiest", "Artiest")
+                        .WithMany("ArtiestBands")
+                        .HasForeignKey("ArtiestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WDPR.Models.Band", "Band")
+                        .WithMany("ArtiestBands")
+                        .HasForeignKey("BandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Artiest");
+
+                    b.Navigation("Band");
+                });
+
             modelBuilder.Entity("WDPR.Models.Bestelling", b =>
                 {
                     b.HasOne("WDPR.Models.Gebruiker", "Gebruiker")
                         .WithMany()
-                        .HasForeignKey("Gebruikerid");
+                        .HasForeignKey("GebruikerId");
 
                     b.Navigation("Gebruiker");
                 });
@@ -569,6 +639,11 @@ namespace WDPR.Migrations
                     b.Navigation("Kaartjes");
                 });
 
+            modelBuilder.Entity("WDPR.Models.Band", b =>
+                {
+                    b.Navigation("ArtiestBands");
+                });
+
             modelBuilder.Entity("WDPR.Models.Kaartje", b =>
                 {
                     b.Navigation("StoelKaartjes");
@@ -582,6 +657,11 @@ namespace WDPR.Migrations
             modelBuilder.Entity("WDPR.Models.Zaal", b =>
                 {
                     b.Navigation("Stoelen");
+                });
+
+            modelBuilder.Entity("WDPR.Models.Artiest", b =>
+                {
+                    b.Navigation("ArtiestBands");
                 });
 #pragma warning restore 612, 618
         }

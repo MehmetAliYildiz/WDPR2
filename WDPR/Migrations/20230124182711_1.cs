@@ -26,19 +26,6 @@ namespace WDPR.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Artiest",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Naam = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Artiest", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -78,18 +65,47 @@ namespace WDPR.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Gebruiker",
+                name: "Band",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    naam = table.Column<string>(type: "TEXT", nullable: false),
-                    wachtwoord = table.Column<string>(type: "TEXT", nullable: false),
-                    email = table.Column<string>(type: "TEXT", nullable: false)
+                    Naam = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Gebruiker", x => x.id);
+                    table.PrimaryKey("PK_Band", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Gebruiker",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Naam = table.Column<string>(type: "TEXT", nullable: false),
+                    Wachtwoord = table.Column<string>(type: "TEXT", nullable: false),
+                    Email = table.Column<string>(type: "TEXT", nullable: false),
+                    Discriminator = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Gebruiker", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ImageModel",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    FileName = table.Column<string>(type: "TEXT", nullable: false),
+                    ContentType = table.Column<string>(type: "TEXT", nullable: false),
+                    Data = table.Column<byte[]>(type: "BLOB", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ImageModel", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -239,6 +255,30 @@ namespace WDPR.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ArtiestBand",
+                columns: table => new
+                {
+                    BandId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ArtiestId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArtiestBand", x => new { x.ArtiestId, x.BandId });
+                    table.ForeignKey(
+                        name: "FK_ArtiestBand_Band_BandId",
+                        column: x => x.BandId,
+                        principalTable: "Band",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ArtiestBand_Gebruiker_ArtiestId",
+                        column: x => x.ArtiestId,
+                        principalTable: "Gebruiker",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Bestellingen",
                 columns: table => new
                 {
@@ -246,7 +286,7 @@ namespace WDPR.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Bedrag = table.Column<double>(type: "REAL", nullable: false),
                     IP = table.Column<string>(type: "TEXT", nullable: true),
-                    Gebruikerid = table.Column<int>(type: "INTEGER", nullable: true),
+                    GebruikerId = table.Column<int>(type: "INTEGER", nullable: true),
                     Betaald = table.Column<bool>(type: "INTEGER", nullable: false),
                     BetaalCode = table.Column<string>(type: "TEXT", nullable: true),
                     PlaatsTijd = table.Column<DateTime>(type: "TEXT", nullable: false)
@@ -255,10 +295,10 @@ namespace WDPR.Migrations
                 {
                     table.PrimaryKey("PK_Bestellingen", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Bestellingen_Gebruiker_Gebruikerid",
-                        column: x => x.Gebruikerid,
+                        name: "FK_Bestellingen_Gebruiker_GebruikerId",
+                        column: x => x.GebruikerId,
                         principalTable: "Gebruiker",
-                        principalColumn: "id");
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -358,6 +398,11 @@ namespace WDPR.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_ArtiestBand_BandId",
+                table: "ArtiestBand",
+                column: "BandId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
@@ -395,9 +440,9 @@ namespace WDPR.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bestellingen_Gebruikerid",
+                name: "IX_Bestellingen_GebruikerId",
                 table: "Bestellingen",
-                column: "Gebruikerid");
+                column: "GebruikerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Kaartjes_AgendaId",
@@ -428,7 +473,7 @@ namespace WDPR.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Artiest");
+                name: "ArtiestBand");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -446,6 +491,9 @@ namespace WDPR.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "ImageModel");
+
+            migrationBuilder.DropTable(
                 name: "Reserveringen");
 
             migrationBuilder.DropTable(
@@ -456,6 +504,9 @@ namespace WDPR.Migrations
 
             migrationBuilder.DropTable(
                 name: "VrijeRuimtes");
+
+            migrationBuilder.DropTable(
+                name: "Band");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
