@@ -59,6 +59,19 @@ builder.Services.AddSignalR();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    if (!await roleManager.RoleExistsAsync("admin"))
+    {
+    await roleManager.CreateAsync(new IdentityRole("admin"));
+    }
+    if (!await roleManager.RoleExistsAsync("bezoeker"))
+    {
+    await roleManager.CreateAsync(new IdentityRole("bezoeker"));
+    }
+}
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -84,6 +97,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
-app.MapFallbackToFile("index.html");;
+app.MapFallbackToFile("index.html");
 
 app.Run();

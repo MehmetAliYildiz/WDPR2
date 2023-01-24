@@ -8,19 +8,23 @@ import jwt_decode from 'jwt-decode';
 function Navigatie() {
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const gebruikersnaam = localStorage.getItem('gebruikersNaam')
-    const opgeslagen = localStorage.getItem('opgeslagen')
+    var gebruikersnaam = sessionStorage.getItem('gebruikersNaam')
+    var opgeslagen = sessionStorage.getItem('opgeslagen')
 
 
 
     useEffect(() => {
+      async function checkLoggin(){
+      var gebruikersnaam = sessionStorage.getItem('gebruikersNaam');
+      var opgeslagen = sessionStorage.getItem('opgeslagen');
+      
       if(opgeslagen) {
         if(!gebruikersnaam) {
-          gebruikersnaam = localStorage.setItem('gebruikersNaam', opgeslagen)
+          gebruikersnaam = sessionStorage.setItem('gebruikersNaam', opgeslagen)
           const decoded = jwt_decode(opgeslagen);
           // gebruikernaam uit de jwt token gehaald en nu plaatsen in localstorage
           const mail = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
-          localStorage.setItem('gebruikersNaam',mail );
+          sessionStorage.setItem('gebruikersNaam',mail );
         }
       }
       if(gebruikersnaam) {
@@ -28,6 +32,8 @@ function Navigatie() {
       } else{
         setIsLoggedIn(false);
       }
+    }
+    checkLoggin();
     },[]);
     
     const handleLogout = () => {
@@ -36,7 +42,7 @@ function Navigatie() {
         navigate('/');
       }
       else{
-        localStorage.clear();
+        sessionStorage.clear();
         setIsLoggedIn(false);
         navigate('/');
       }

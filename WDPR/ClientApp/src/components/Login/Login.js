@@ -49,19 +49,19 @@ function Login() {
 
             if (res.ok) {
                 res.json().then(data => {
-                    // jwt token in localstorage opslaan
-                    localStorage.setItem('jwtToken', data.token);
+                    // jwt token in sessionStorage opslaan
+                    sessionStorage.setItem('jwtToken', data.token);
                     // decode jwt token om gebruikersnaam er uit te krijgen
                     if(checked){
-                        localStorage.setItem('opgeslagen', data.token);
+                        sessionStorage.setItem('opgeslagen', data.token);
                     } else{
-                        localStorage.removeItem('opgeslagen');
+                        sessionStorage.removeItem('opgeslagen');
                     }
                     const decoded = jwt_decode(data.token);
-                    // gebruikernaam uit de jwt token gehaald en nu plaatsen in localstorage
+                    // gebruikernaam uit de jwt token gehaald en nu plaatsen in sessionStorage
                     const mail = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
-                    localStorage.setItem('gebruikersNaam', mail);
-                    console.log(mail);
+                    sessionStorage.setItem('gebruikersNaam', mail);
+                    
                 });
                 // setNaam("");
                 // setWachtwoord("")
@@ -83,14 +83,14 @@ function Login() {
     
   useEffect(() => {
     // Check for stored refresh token on mount
-    const storedRefreshToken = localStorage.getItem('opgeslagen');
+    const storedRefreshToken = sessionStorage.getItem('opgeslagen');
     if (storedRefreshToken) {
       setRefreshToken(storedRefreshToken);
-      console.log('refreshtoken zit in localStorage')
+      console.log('refreshtoken zit in sessionStorage')
       navigate('/');
 
     } else{
-        console.log('geen refreshtoken in localStorage')
+        console.log('geen refreshtoken in sessionStorage')
     }
   }, []);
 
