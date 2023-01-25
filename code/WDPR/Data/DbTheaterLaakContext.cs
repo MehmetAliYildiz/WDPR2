@@ -11,7 +11,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
         : base(options) { }
 
     #region DbSets
-    private DbSet<Voorstelling> Voorstelling { get; set; }
+    public DbSet<Voorstelling> Voorstelling { get; set; }
     private DbSet<Reservering> Reserveringen { get; set; }
     private DbSet<Bestelling> Bestellingen { get; set; }
     public DbSet<Gebruiker> Gebruiker { get; set; }
@@ -24,6 +24,8 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     private DbSet<ArtiestBand> ArtiestBand { get; set; }
     private DbSet<Kaartje> Kaartjes { get; set; }
     private DbSet<StoelKaartje> StoelKaartjes { get; set; }
+    
+    public DbSet<Review> Review { get; set; }
     #endregion
 
     #region AddObject
@@ -141,6 +143,11 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
         return StoelKaartjes.Include(sk => sk.Stoel).Include(sk => sk.Kaartje);
     }
 
+    public IEnumerable<Review> GetReview()
+    {
+        return Review.Include(r => r.Gebruiker).Include(r => r.Voorstelling);
+    }
+    
     public IEnumerable<Band> GetBands()
     {
         return Band;
@@ -158,6 +165,11 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     #endregion
 
     #region FindObject
+
+    public async Task<Gebruiker> FindGebruiker(string Id)
+    {
+        return await Gebruiker.FindAsync(Id);
+    }
     public async Task<Voorstelling> FindVoorstelling(int id)
     {
         return await Voorstelling.FindAsync(id);
@@ -201,6 +213,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
+
         builder.UseSqlServer("Data Source=Database,1433;User Id=SA;Password =Pass@word; Initial Catalog=laak;TrustServerCertificate=True;");
 
     }
@@ -251,6 +264,4 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     {
         return base.SaveChangesAsync();
     }
-
-    public DbSet<WDPR.Models.ImageModel> ImageModel { get; set; }
 }

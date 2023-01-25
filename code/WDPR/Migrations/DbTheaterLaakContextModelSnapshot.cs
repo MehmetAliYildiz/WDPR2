@@ -77,6 +77,10 @@ namespace WDPR.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
@@ -127,6 +131,8 @@ namespace WDPR.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -233,8 +239,8 @@ namespace WDPR.Migrations
 
             modelBuilder.Entity("WDPR.Models.ArtiestBand", b =>
                 {
-                    b.Property<int>("ArtiestId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("ArtiestId")
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("BandId")
                         .HasColumnType("INTEGER");
@@ -276,10 +282,10 @@ namespace WDPR.Migrations
                     b.Property<bool>("Betaald")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("GebruikerId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("BezoekerId")
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("IP")
+                    b.Property<string>("GebruikerId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("PlaatsTijd")
@@ -290,58 +296,6 @@ namespace WDPR.Migrations
                     b.HasIndex("GebruikerId");
 
                     b.ToTable("Bestellingen");
-                });
-
-            modelBuilder.Entity("WDPR.Models.Gebruiker", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Naam")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Wachtwoord")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Gebruiker");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Gebruiker");
-                });
-
-            modelBuilder.Entity("WDPR.Models.ImageModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ContentType")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<byte[]>("Data")
-                        .IsRequired()
-                        .HasColumnType("BLOB");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ImageModel");
                 });
 
             modelBuilder.Entity("WDPR.Models.Kaartje", b =>
@@ -398,6 +352,35 @@ namespace WDPR.Migrations
                     b.HasIndex("BestellingId");
 
                     b.ToTable("Reserveringen");
+                });
+
+            modelBuilder.Entity("WDPR.Models.Review", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("gebruikerId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("recensie")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("sterren")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("voorstellingId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("gebruikerId");
+
+                    b.HasIndex("voorstellingId");
+
+                    b.ToTable("Review");
                 });
 
             modelBuilder.Entity("WDPR.Models.Stoel", b =>
@@ -488,6 +471,13 @@ namespace WDPR.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Zaal");
+                });
+
+            modelBuilder.Entity("WDPR.Models.Gebruiker", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.HasDiscriminator().HasValue("Gebruiker");
                 });
 
             modelBuilder.Entity("WDPR.Models.Artiest", b =>
@@ -604,6 +594,25 @@ namespace WDPR.Migrations
                         .IsRequired();
 
                     b.Navigation("Bestelling");
+                });
+
+            modelBuilder.Entity("WDPR.Models.Review", b =>
+                {
+                    b.HasOne("WDPR.Models.Gebruiker", "Gebruiker")
+                        .WithMany()
+                        .HasForeignKey("gebruikerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WDPR.Models.Voorstelling", "Voorstelling")
+                        .WithMany()
+                        .HasForeignKey("voorstellingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Gebruiker");
+
+                    b.Navigation("Voorstelling");
                 });
 
             modelBuilder.Entity("WDPR.Models.Stoel", b =>
