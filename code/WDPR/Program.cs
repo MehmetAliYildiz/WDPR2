@@ -7,7 +7,7 @@ using WDPR.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DbTheaterLaakContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DbTheaterLaakContext") ?? throw new InvalidOperationException("Connection string 'DbBoekingContext' not found.")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DbTheaterLaakContext") ?? throw new InvalidOperationException("Connection string 'DbBoekingContext' not found.")));
 builder.Services.AddScoped<IDbTheaterLaakContext, DbTheaterLaakContext>();
 
 var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
