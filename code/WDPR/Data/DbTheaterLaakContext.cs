@@ -8,7 +8,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 {
     public DbTheaterLaakContext(DbContextOptions<DbTheaterLaakContext> options)
-        : base(options) {}
+        : base(options) { }
 
     #region DbSets
     private DbSet<Voorstelling> Voorstelling { get; set; }
@@ -17,11 +17,11 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     public DbSet<Gebruiker> Gebruiker { get; set; }
     private DbSet<Zaal> Zaal { get; set; }
     private DbSet<VrijeRuimte> VrijeRuimtes { get; set; }
-    private DbSet<Stoel> Stoel {get; set; }
+    private DbSet<Stoel> Stoel { get; set; }
     public DbSet<Agenda> Agenda { get; set; }
-    private DbSet<Band> Band {get; set;}
-    private DbSet<Artiest> Artiest {get; set;}
-    private DbSet<ArtiestBand> ArtiestBand {get; set;}
+    private DbSet<Band> Band { get; set; }
+    private DbSet<Artiest> Artiest { get; set; }
+    private DbSet<ArtiestBand> ArtiestBand { get; set; }
     private DbSet<Kaartje> Kaartjes { get; set; }
     private DbSet<StoelKaartje> StoelKaartjes { get; set; }
     #endregion
@@ -201,7 +201,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
-        builder.UseSqlServer("Data Source=Database,1433;User Id=SA;Password =Pass@word; Initial Catalog=Master;TrustServerCertificate=True;");
+        builder.UseSqlServer("Data Source=Database,1433;User Id=SA;Password =Pass@word; Initial Catalog=laak;TrustServerCertificate=True;");
 
     }
 
