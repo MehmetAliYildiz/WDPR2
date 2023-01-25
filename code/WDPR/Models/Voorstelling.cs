@@ -9,4 +9,10 @@ public class Voorstelling
     public string Name { get; set; }
     public string beschrijving{ get; set; }
     public string Img { get; set; }
+    public virtual ICollection<Review> Reviews { get; set; }
+    
+    public Voorstelling()
+    {
+        Reviews = new List<Review>();
+    }
 }
