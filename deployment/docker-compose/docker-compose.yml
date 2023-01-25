@@ -11,8 +11,8 @@ services:
   reverse_proxy:
     container_name: reverse_proxy
     build:
-      context: ../reverse_proxy
-      dockerfile: ../reverse_proxy/Dockerfile
+      context: ../reverse-proxy
+      dockerfile: ../reverse-proxy/Dockerfile
     ports:
       - 80:80
     depends_on:
