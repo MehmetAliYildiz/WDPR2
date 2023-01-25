@@ -213,21 +213,13 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
-        builder.UseSqlite("Data Source=DbTheaterLaakContext7.db");
+        builder.UseSqlite("Data Source=DbTheaterLaakContext8.db");
 
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-
-        builder.Entity<Review>()
-            .HasOne(r => r.Gebruiker)
-            .WithMany(g => g.Reviews).HasForeignKey(g => g.gebruikerId);
-
-        builder.Entity<Review>()
-            .HasOne(r => r.Voorstelling)
-            .WithMany(v => v.Reviews).HasForeignKey(g => g.voorstellingId);
 
         builder.Entity<Agenda>()
             .HasMany(a => a.Kaartjes)

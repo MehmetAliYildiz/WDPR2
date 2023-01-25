@@ -368,6 +368,9 @@ namespace WDPR.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("sterren")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("voorstellingId")
                         .HasColumnType("INTEGER");
 
@@ -596,13 +599,13 @@ namespace WDPR.Migrations
             modelBuilder.Entity("WDPR.Models.Review", b =>
                 {
                     b.HasOne("WDPR.Models.Gebruiker", "Gebruiker")
-                        .WithMany("Reviews")
+                        .WithMany()
                         .HasForeignKey("gebruikerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("WDPR.Models.Voorstelling", "Voorstelling")
-                        .WithMany("Reviews")
+                        .WithMany()
                         .HasForeignKey("voorstellingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -658,19 +661,9 @@ namespace WDPR.Migrations
                     b.Navigation("StoelKaartjes");
                 });
 
-            modelBuilder.Entity("WDPR.Models.Voorstelling", b =>
-                {
-                    b.Navigation("Reviews");
-                });
-
             modelBuilder.Entity("WDPR.Models.Zaal", b =>
                 {
                     b.Navigation("Stoelen");
-                });
-
-            modelBuilder.Entity("WDPR.Models.Gebruiker", b =>
-                {
-                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("WDPR.Models.Artiest", b =>

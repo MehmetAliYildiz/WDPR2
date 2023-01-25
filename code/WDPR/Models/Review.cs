@@ -8,6 +8,7 @@ public class Review
     [Key]
     public int id{get; set;}
     public string recensie{get; set;}
+    public int sterren { get; set; }
     [ForeignKey("GebruikerId")]
     public string gebruikerId{get; set;}
     [ForeignKey("VoorstellingId")]

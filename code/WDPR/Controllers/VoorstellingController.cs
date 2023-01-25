@@ -81,8 +81,7 @@ namespace WDPR.Controllers
             {
                 Name = voorstellingDTO.Name,
                 beschrijving = voorstellingDTO.beschrijving,
-                Img = voorstellingDTO.Img,
-                Reviews = new List<Review>()
+                Img = voorstellingDTO.Img
             };
             _context.AddVoorstelling(voorstelling);
             await _context.SaveChangesAsync();
