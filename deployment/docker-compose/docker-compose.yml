@@ -1,20 +1,20 @@
 version: "3.9"  # optional since v1.27.0
 services:
   wdpr:
-    container_name: wpdr
+    container_name: wdpr
     build:
       context: ../../code/WDPR
       dockerfile: ../../code/WDPR/Dockerfile
     ports:
-      - "8080:80"
+      - 8081:80
     restart: always
   reverse_proxy:
     container_name: reverse_proxy
     build:
-      context: ../reverse_proxy
-      dockerfile: ../reverse_proxy/Dockerfile
+      context: ../reverse-proxy
+      dockerfile: ../reverse-proxy/Dockerfile
     ports:
-      - 80:80
+      - 8080:8080
     depends_on:
       - wdpr
   database:

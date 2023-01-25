@@ -7,7 +7,7 @@ using WDPR.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DbTheaterLaakContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DbTheaterLaakContext") ?? throw new InvalidOperationException("Connection string 'DbBoekingContext' not found.")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DbTheaterLaakContext") ?? throw new InvalidOperationException("Connection string 'DbBoekingContext' not found.")));
 builder.Services.AddScoped<IDbTheaterLaakContext, DbTheaterLaakContext>();
 
 var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -61,18 +61,18 @@ builder.Services.AddSignalR();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    if (!await roleManager.RoleExistsAsync("admin"))
-    {
-    await roleManager.CreateAsync(new IdentityRole("admin"));
-    }
-    if (!await roleManager.RoleExistsAsync("bezoeker"))
-    {
-    await roleManager.CreateAsync(new IdentityRole("bezoeker"));
-    }
-}
+// using (var scope = app.Services.CreateScope())
+// {
+//     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+//     if (!await roleManager.RoleExistsAsync("admin"))
+//     {
+//     await roleManager.CreateAsync(new IdentityRole("admin"));
+//     }
+//     if (!await roleManager.RoleExistsAsync("bezoeker"))
+//     {
+//     await roleManager.CreateAsync(new IdentityRole("bezoeker"));
+//     }
+// }
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
