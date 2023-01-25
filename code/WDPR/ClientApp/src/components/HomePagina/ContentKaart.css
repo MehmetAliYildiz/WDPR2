@@ -1,0 +1,46 @@
+.ContentKaart {
+    display: inline-block;
+    background-color: #8B0001;
+    color: white;
+    width: 380px;
+    height: 500px;
+    padding: 10px;
+    margin: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    border-radius: 10px;
+    border: 10px;
+    border-style: solid;
+    border-color: #F39A05;
+    transition: all 100ms;
+
+}
+
+.ContentKaart:hover {
+    box-shadow: 10px 10px 5px black;
+}
+
+.ContentKaart p {
+    height: 50px;
+    padding-bottom: 200px;
+    font-weight: 800;
+}
+
+@media screen and (max-width: 500px) {
+    .ContentKaart {
+        display: inline-block;
+        background-color: #8B0001;
+        color: white;
+        width: 90%;
+        height: 500px;
+        padding: 10px;
+        margin: 20px;
+        border-radius: 10px;
+        border: 10px;
+        border-style: solid;
+        border-color: #F39A05;
+        transition: all 100ms;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+}
