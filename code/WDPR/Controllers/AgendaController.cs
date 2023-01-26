@@ -43,7 +43,7 @@ namespace WDPR.Controllers
                 return BadRequest("De voorstelling die je probeert toe te voegen bestaat niet. Check het Id dat je meegeeft opnieuw of voeg eerst de desbetreffende voorstelling toe.");
             }
 
-            var bestaatZaal = _context.GetZaal()
+            var bestaatZaal = _context.GetZalen()
             .Where(z => z.Id == agenda.ZaalId)
             .FirstOrDefault();
 

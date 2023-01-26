@@ -7,7 +7,7 @@ using WDPR.Models;
         IEnumerable<Agenda> GetAgenda();
         IEnumerable<Gebruiker> GetGebruiker();
         IEnumerable<Reservering> GetReserveringen();
-        IEnumerable<Zaal> GetZaal();
+        IEnumerable<Zaal> GetZalen();
         IEnumerable<Kaartje> GetKaartjes();
         IEnumerable<Stoel> GetStoelen();
         IEnumerable<StoelKaartje> GetStoelKaartjes();
