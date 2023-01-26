@@ -11,21 +11,20 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
         : base(options) { }
 
     #region DbSets
-    public DbSet<Voorstelling> Voorstelling { get; set; }
+    private DbSet<Voorstelling> Voorstelling { get; set; }
     private DbSet<Reservering> Reserveringen { get; set; }
     private DbSet<Bestelling> Bestellingen { get; set; }
-    public DbSet<Gebruiker> Gebruiker { get; set; }
+    private DbSet<Gebruiker> Gebruiker { get; set; }
     private DbSet<Zaal> Zaal { get; set; }
     private DbSet<VrijeRuimte> VrijeRuimtes { get; set; }
     private DbSet<Stoel> Stoel { get; set; }
-    public DbSet<Agenda> Agenda { get; set; }
+    private DbSet<Agenda> Agenda { get; set; }
     private DbSet<Band> Band { get; set; }
     private DbSet<Artiest> Artiest { get; set; }
     private DbSet<ArtiestBand> ArtiestBand { get; set; }
     private DbSet<Kaartje> Kaartjes { get; set; }
     private DbSet<StoelKaartje> StoelKaartjes { get; set; }
-    
-    public DbSet<Review> Review { get; set; }
+    private DbSet<Review> Review { get; set; }
     #endregion
 
     #region AddObject
@@ -78,6 +77,11 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     {
         VrijeRuimtes.Add(v);
     }
+
+    public void AddReview(Review r)
+    {
+        Review.Add(r);
+    }
     #endregion
 
     #region RemoveObject
@@ -99,6 +103,11 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     public void RemoveArtiest(string id)
     {
         Artiest.Where(a => a.Id == id).ForEachAsync(a => Artiest.Remove(a));
+    }
+
+    public void RemoveReview(string id)
+    {
+        Review.Where(a => a.Id == id).ForEachAsync(a => Review.Remove(a));
     }
     #endregion
 
@@ -209,11 +218,15 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     {
         return await Stoel.FindAsync(id);
     }
+    public async Task<Review> FindReview(int id)
+    {
+        return await Review.FindAsync(id);
+    }
     #endregion
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
-        builder.UseSqlServer("Data Source=Database,1433;User Id=SA;Password =Pass@word; Initial Catalog=laak;TrustServerCertificate=True;");
+        builder.UseSqlServer("Data Source=20.203.193.158,1433;User Id=SA;Password =Pass@word; Initial Catalog=laak;TrustServerCertificate=True;");
 
     }
 

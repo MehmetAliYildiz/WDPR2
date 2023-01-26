@@ -15,9 +15,9 @@ namespace WDPR.Controllers
     [ApiController]
     public class ReviewController : ControllerBase
     {
-        private readonly DbTheaterLaakContext _context;
+        private readonly IDbTheaterLaakContext _context;
 
-        public ReviewController(DbTheaterLaakContext context)
+        public ReviewController(IDbTheaterLaakContext context)
         {
             _context = context;
         }
