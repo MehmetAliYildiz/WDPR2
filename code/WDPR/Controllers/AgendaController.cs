@@ -16,7 +16,7 @@ namespace WDPR.Controllers
             _context = context;
         }
 
-        [HttpGet("voorstelling/{Id}")]
+        [HttpGet("voorstelling/{id}")]
         public async Task<ActionResult<IEnumerable<Agenda>>> GetAgendaOpVoorstelling(int id)
         {
             var agendas = _context.GetAgenda()
@@ -87,7 +87,7 @@ namespace WDPR.Controllers
         }
 
         // GET: api/Agenda/1
-        [HttpGet("{Id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Agenda>> GetAgenda(int id)
         {
             var agenda = await _context.FindAgenda(id);
@@ -109,7 +109,7 @@ namespace WDPR.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{Id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAgenda(int id)
         {
             var agenda = await _context.FindAgenda(id);

@@ -31,7 +31,7 @@ namespace WDPR.Controllers
         }
 
         // GET: api/Review/5
-        [HttpGet("{Id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Review>> GetReview(int id)
         {
             var review = await _context.FindReview(id);
@@ -107,7 +107,7 @@ namespace WDPR.Controllers
             return CreatedAtAction("GetReview", new { id = review.Id }, review);
         }
         
-        [HttpGet("average/{Id}")]
+        [HttpGet("average/{id}")]
         public async Task<ActionResult<double>> GetAverageReviewRating(int id)
         {
             var voorstellingReviews = _context.GetReview()
@@ -125,7 +125,7 @@ namespace WDPR.Controllers
         }
 
         // DELETE: api/Review/5
-        [HttpDelete("{Id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReview(int id)
         {
             var review = await _context.FindReview(id);

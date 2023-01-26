@@ -16,7 +16,7 @@ namespace WDPR.Controllers
         }
 
 
-        [HttpGet("{Id}/{datum}")]
+        [HttpGet("{id}/{datum}")]
         public IActionResult GetAll([FromRoute] int id, [FromRoute] string datum)
         {
             DateTime date;
