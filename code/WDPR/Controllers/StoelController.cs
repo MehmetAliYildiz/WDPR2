@@ -34,7 +34,7 @@ namespace WDPR.Controllers{
         [HttpGet("{zaalId}/{agendaId}")]
         public IActionResult GetStoelenMetBeschikbaarheid(int zaalId, int agendaId)
         {
-            var zaal = _context.GetZaal().Where(z => z.Id == zaalId);
+            var zaal = _context.GetZalen().Where(z => z.Id == zaalId);
             if (zaal.Count() < 1)
             {
                 return NotFound("Zaal met ID '" + zaalId + "' niet gevonden");
