@@ -34,7 +34,7 @@ function Login() {
     let handleLogin = async (e) => {
         e.preventDefault();
         try {
-            let res = await fetch("http://groep3theaterlaak.switzerlandnorth.cloudapp.azure.com/api/Account/login", {
+            let res = await fetch("https://groep3theaterlaak.switzerlandnorth.cloudapp.azure.com/api/Account/login", {
                 headers: {'Content-Type': 'application/json'},
                 method: "POST",
                 mode:"cors",
@@ -144,7 +144,7 @@ function Login() {
                             <label className="form-label" htmlFor="form2Example22">Wachtwoord</label>
                             <input type="password" id="form2Example22" className="form-control" placeholder="wachtwoord" onChange={(e) => handleChangeWachtwoord(e.target.value)}/>
                             <label><input type="checkbox" checked={checked} onChange={handleChange}/>Onthoud mij</label>
-                            <a style={wwVergeten} href="#!">Wachtwoord vergeten?</a>
+                            <a style={wwVergeten} href="/wwVergeten">Wachtwoord vergeten?</a>
                         </div>
 
                         <div className="text-center pt-1 mb-4 ">

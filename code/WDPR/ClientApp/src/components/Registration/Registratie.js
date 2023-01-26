@@ -49,7 +49,7 @@ function Registratie() {
     let handleRegistratie = async (e) => {
         e.preventDefault();
         try {
-            let res = await fetch("http://groep3theaterlaak.switzerlandnorth.cloudapp.azure.com/api/Account/registreer", {
+            let res = await fetch("https://groep3theaterlaak.switzerlandnorth.cloudapp.azure.com/api/Account/registreer", {
                 headers: {'Content-Type': 'application/json'},
                 method: "POST",
                 mode:"cors",
