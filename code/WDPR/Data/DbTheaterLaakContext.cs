@@ -33,6 +33,13 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
         Reserveringen.Add(r);
     }
 
+    public void AddGebruiker(Gebruiker r){
+        Gebruiker.Add(r);
+    }
+
+    public void AddAgenda(Agenda a){
+        Agenda.Add(a);
+    }
     public void AddVoorstelling(Voorstelling v)
     {
         Voorstelling.Add(v);
@@ -90,6 +97,14 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
         Voorstelling.Where(v => v.Id == id).ForEachAsync(v => Voorstelling.Remove(v));
     }
 
+    public void RemoveAgenda(int id){
+        Agenda.Where(v => v.Id == id).ForEachAsync(v => Agenda.Remove(v));
+    }
+    
+    public void RemoveGebruiker(string id){
+        Gebruiker.Where(v => v.Id == id).ForEachAsync(v => Gebruiker.Remove(v));
+    }
+
     public void RemoveVoorstellingRange(IEnumerable<Voorstelling> v)
     {
         Voorstelling.RemoveRange(v);
@@ -105,9 +120,9 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
         Artiest.Where(a => a.Id == id).ForEachAsync(a => Artiest.Remove(a));
     }
 
-    public void RemoveReview(string id)
+    public void RemoveReview(int id)
     {
-        Review.Where(a => a.Id == id).ForEachAsync(a => Review.Remove(a));
+        Review.Where(a => a.id == id).ForEachAsync(a => Review.Remove(a));
     }
     #endregion
 
@@ -115,6 +130,16 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     public IEnumerable<Reservering> GetReserveringen()
     {
         return Reserveringen.Include(r => r.Bestelling);
+    }
+
+    public IEnumerable<Gebruiker> GetGebruiker()
+    {
+        return Gebruiker;
+    }
+
+    public IEnumerable<Agenda> GetAgenda()
+    {
+        return Agenda;
     }
 
     public IEnumerable<Voorstelling> GetVoorstellingen()
@@ -184,6 +209,11 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
         return await Voorstelling.FindAsync(id);
     }
 
+    public async Task<Agenda> FindAgenda(int id)
+    {
+        return await Agenda.FindAsync(id);
+    }
+
     public async Task<Gebruiker> FindGebruikerByEmail(string email)
     {
         return await Gebruiker.Where(g => g.Email == email).FirstOrDefaultAsync();
@@ -197,11 +227,6 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     public async Task<Artiest> FindArtiest(string id)
     {
         return await Artiest.FindAsync(id);
-    }
-
-    public async Task<Agenda> FindAgenda(int id)
-    {
-        return await Agenda.FindAsync(id);
     }
 
     public Kaartje FindKaartje(int id)

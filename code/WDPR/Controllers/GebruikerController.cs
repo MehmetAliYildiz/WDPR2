@@ -13,7 +13,7 @@ namespace WDPR.Controllers
     [ApiController]
     public class GebruikerController : ControllerBase
     {
-        private readonly DbTheaterLaakContext _context;
+        private readonly IDbTheaterLaakContext _context;
 
         public GebruikerController(DbTheaterLaakContext context)
         {

@@ -1,16 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WDPR.Data;
 using WDPR.Models;
+using WDPR.Data;
 
-namespace WDPR.Controllers
-{
     [Route("api/[controller]")]
     [ApiController]
     public class VoorstellingController : ControllerBase
@@ -129,4 +128,3 @@ namespace WDPR.Controllers
             public string Img { get; set; }
         }
     }
-}

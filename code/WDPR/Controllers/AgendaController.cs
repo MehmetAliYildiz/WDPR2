@@ -9,9 +9,9 @@ namespace WDPR.Controllers
     [Route("api/[controller]")]
     public class AgendaController : ControllerBase
     {
-        private readonly DbTheaterLaakContext _context;
+        private readonly IDbTheaterLaakContext _context;
 
-        public AgendaController(DbTheaterLaakContext context)
+        public AgendaController(IDbTheaterLaakContext context)
         {
             _context = context;
         }
@@ -19,9 +19,9 @@ namespace WDPR.Controllers
         [HttpGet("voorstelling/{id}")]
         public async Task<ActionResult<IEnumerable<Agenda>>> GetAgendaOpVoorstelling(int id)
         {
-            var agendas = await _context.Agenda
+            var agendas = _context.GetAgenda(id)
                 .Where(a => a.VoorstellingId == id)
-                .ToListAsync();
+                .ToList();
 
             if (agendas == null)
             {
