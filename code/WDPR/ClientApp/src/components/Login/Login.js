@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
+import GetEndpoint from "../Admin/EndPointUtil";
 // import axios from "axios";
 
 function Login() {
@@ -34,7 +35,9 @@ function Login() {
     let handleLogin = async (e) => {
         e.preventDefault();
         try {
-            let res = await fetch("https://groep3theaterlaak.switzerlandnorth.cloudapp.azure.com/api/Account/login", {
+            let res = await fetch(GetEndpoint()+"/api/Account/login", {
+
+
                 headers: {'Content-Type': 'application/json'},
                 method: "POST",
                 mode:"cors",

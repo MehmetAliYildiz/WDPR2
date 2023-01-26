@@ -11,6 +11,7 @@ import Popup from './Popup';
 import Footer from "./navFoot/Footer";
 import NavBar from "./navFoot/navbar";
 import './../style/ReserveerForm.css'
+import GetEndpoint from "./Admin/EndPointUtil";
 
 
 class ReserveerForm extends Component
@@ -44,7 +45,7 @@ class ReserveerForm extends Component
             return;
         }
 
-        const res = await fetch(`https://localhost:7260/Zaal/${zaalId}`); 
+        const res = await fetch(GetEndpoint()+`Zaal/${zaalId}`); 
         const data = await res.json();
         if (data.length === 0) {
             console.log(`No zaal with ID ${zaalId} found`);
@@ -104,7 +105,7 @@ class ReserveerForm extends Component
         }
 
         event.preventDefault();
-        const endpoint = 'https://localhost:7260/reservering/post';
+        const endpoint = GetEndpoint()+'/reservering/post';
         const appointment = this.state.schedulerRef.current.tryGetAppointment();
         const data = {
             naam: appointment.name,

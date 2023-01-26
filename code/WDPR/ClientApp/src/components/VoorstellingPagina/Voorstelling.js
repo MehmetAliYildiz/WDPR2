@@ -4,13 +4,14 @@ import "./Voorstelling.css";
 import 'bootstrap/dist/css/bootstrap.css';
 import Footer from "../navFoot/Footer";
 import NavBar from "../navFoot/navbar"
+import GetEndpoint from "../Admin/EndPointUtil";
 function Voorstelling() {
 
     const [post, setPost] = useState([]);
     const [searchNaam, setSearchNaam] = useState("");
 
     useEffect(() => {
-        Axios.get("https://localhost:7260/api/Voorstelling").then((res) => {
+        Axios.get(GetEndpoint()+"/api/Voorstelling").then((res) => {
             setPost(res.data);
             console.log(res.data);
         });
