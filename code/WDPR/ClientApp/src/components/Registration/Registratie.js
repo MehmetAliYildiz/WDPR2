@@ -51,6 +51,7 @@ function Registratie() {
         e.preventDefault();
         try {
             let res = await fetch(GetEndpoint()+"/api/Account/registreer", {
+
                 headers: {'Content-Type': 'application/json'},
                 method: "POST",
                 mode:"cors",

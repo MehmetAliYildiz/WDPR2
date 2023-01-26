@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using System.CodeDom;
 using System.Collections.ObjectModel;
 using WDPR.Data;
 using WDPR.Models;
@@ -21,7 +22,7 @@ namespace WDPR.Controllers
             _boekingHubContext = boekingHubContext;
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("{id}")]
         public IActionResult GetKaartje(int id)
         {
             var kaartje = _context.GetKaartjes().Where(k => k.Id == id);
@@ -78,14 +79,15 @@ namespace WDPR.Controllers
                     PlaatsTijd = DateTime.Now,
                     Bedrag = 20D * kaartjeWithId.StoelIds.Count(),
                     BezoekerId = !gebruiker ? kaartjeWithId.Gebruiker : null,  // Of bezoekerId of gebruiker moet een waarde hebben
-                    Gebruiker = gebruiker ? gebruikerMetMail : null            // boolean gebruiker geeft aan welke van de twee het moet zijn
+                    Gebruiker = gebruiker ? gebruikerMetMail : null,           // boolean gebruiker geeft aan welke van de twee het moet zijn
+                    Type = "Kaartje"
                 },
 
                 // StoelKaartjes wordt leeg gelaten bij constructie
                 StoelKaartjes = new Collection<StoelKaartje>(),
 
-                // HashUsed geeft aan of het kaartje al gebruikt/gescand is door een bezoeker van het theater
-                HashUsed = false
+                // CodeUsed geeft aan of het kaartje al gebruikt/gescand is door een bezoeker van het theater
+                CodeUsed = false
             };
 
             // Context krijgt alvast het kaartje in deze fase
@@ -117,31 +119,63 @@ namespace WDPR.Controllers
             return Ok(kaartje.Id);
         }
 
+        // Post maken is niet RESTful, maar het kan eenmaal niet anders als we een lijst in de body willen
+        [HttpPost]
+        public IActionResult GetKaartjesFromBestellingen([FromBody] List<Bestelling> bestellingen)
+        {
+            var kaartjes = _context.GetKaartjes().Where(k => bestellingen.Any(b => b.Id == k.Bestelling.Id));
+            if (!kaartjes.Any())
+            {
+                return NotFound("Geen kaartjes zijn verbonden aan deze bestellingen");
+            }
+
+            return Ok(kaartjes);
+        }
+
+        [HttpPut("put/{code}")]
+        public IActionResult PutCode([FromRoute] string code, [FromBody] Kaartje kaartje)
+        {
+            var contextKaartje = _context.FindKaartje(kaartje.Id);
+            if (contextKaartje == null)
+            {
+                return NotFound("Kaartje bestaat niet ;-;");
+            }
+            if (code == null || code == "")
+            {
+                return BadRequest("Code mag niet leeg zijn");
+            }
+
+            contextKaartje.Code = code;
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
         // Deze functie zou aangeroepen worden door een kaartjesscanner en geeft terug of het kaartje geldig is
         [HttpGet("verify/{code}")]
         public IActionResult VerifyCode([FromRoute] string code)
         {
             foreach (Kaartje k in _context.GetKaartjes())
             {
-                // Als de hash null is, is het kaartje nog uit een oudere versie van de database, dus sla hem maar over
-                if (k.Hash == null || k.Hash == "") continue;
+                // Als de code null is, is het kaartje nog uit een oudere versie van de database, dus sla hem maar over
+                if (k.Code == null || k.Code == "") continue;
 
-                // Er wordt gecheckt of ten eerste de kaartjescode van de scanner klopt met de hash die in de database staat
-                if (BCrypt.Net.BCrypt.Verify(code, k.Hash))
+                // Er wordt gecheckt of ten eerste de kaartjescode van de scanner klopt met de code die in de database staat
+                if (k.Code == code)
                 {
-                    // Als dit waar is wordt ook gecheckt of de hash al een keer gebruikt is
-                    if (k.HashUsed) return Ok(false);
+                    // Als dit waar is wordt ook gecheckt of de code al een keer gebruikt is
+                    if (k.CodeUsed) return Ok(false);
                     else
                     {
-                        // Zo niet returnt hij true en zet hij dat de hash een keer gebruikt is
-                        k.HashUsed = true;
+                        // Zo niet returnt hij true en zet hij dat de code een keer gebruikt is
+                        k.CodeUsed = true;
                         _context.SaveChangesAsync();
                         return Ok(true);
                     }
                 }
             }
 
-            // Als de kaartjescode niet correspondeert met een hash in de database, bestaat het kaartje niet
+            // Als de kaartjescode niet correspondeert met een code in de database, bestaat het kaartje niet
             return NotFound();
         }
 

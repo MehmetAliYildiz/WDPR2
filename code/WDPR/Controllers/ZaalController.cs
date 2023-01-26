@@ -27,13 +27,13 @@ namespace WDPR.Controllers{
         [HttpGet]
         public IEnumerable<Zaal> GetZaal()
         {
-            return _context.GetZaal();
+            return _context.GetZalen();
         }
         
-        [HttpGet("zaal/{Id}")]
+        [HttpGet("zaal/{id}")]
         public IActionResult GetZaalById(int id)
         {
-            var zaal = _context.GetZaal().Where(z => z.Id == id);
+            var zaal = _context.GetZalen().Where(z => z.Id == id);
             if (zaal.Count() < 1)
             {
                 return NotFound();
@@ -43,12 +43,12 @@ namespace WDPR.Controllers{
         }
 
         [HttpPost]
-        public IActionResult PostZaal([FromBody] ZaalMetStoelnummers zms)
+        public async Task<IActionResult> PostZaal([FromBody] ZaalMetStoelnummers zms)
         {
             Zaal nieuweZaal = new Zaal(zms.Id);
             nieuweZaal.Stoelen = new List<Stoel>();
             _context.AddZaal(nieuweZaal);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             int i = 0;
             foreach (List<int> rij in zms.Rijen)
@@ -67,9 +67,9 @@ namespace WDPR.Controllers{
                 i++;
             }
 
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
 
-            return Ok();
+            return Ok(nieuweZaal.Stoelen.Count() + " " + _context.GetZalen().Where(z => z.Id == nieuweZaal.Id).FirstOrDefault().Stoelen.Count());
         }
     }
 }

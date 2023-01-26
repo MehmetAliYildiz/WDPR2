@@ -16,7 +16,7 @@ namespace WDPR.Controllers
             _context = context;
         }
 
-        [HttpGet("voorstelling/{Id}")]
+        [HttpGet("voorstelling/{id}")]
         public async Task<ActionResult<IEnumerable<Agenda>>> GetAgendaOpVoorstelling(int id)
         {
             var agendas = _context.GetAgenda()
@@ -43,7 +43,7 @@ namespace WDPR.Controllers
                 return BadRequest("De voorstelling die je probeert toe te voegen bestaat niet. Check het Id dat je meegeeft opnieuw of voeg eerst de desbetreffende voorstelling toe.");
             }
 
-            var bestaatZaal = _context.GetZaal()
+            var bestaatZaal = _context.GetZalen()
             .Where(z => z.Id == agenda.ZaalId)
             .FirstOrDefault();
 
@@ -87,7 +87,7 @@ namespace WDPR.Controllers
         }
 
         // GET: api/Agenda/1
-        [HttpGet("{Id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Agenda>> GetAgenda(int id)
         {
             var agenda = await _context.FindAgenda(id);
@@ -109,7 +109,7 @@ namespace WDPR.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{Id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAgenda(int id)
         {
             var agenda = await _context.FindAgenda(id);

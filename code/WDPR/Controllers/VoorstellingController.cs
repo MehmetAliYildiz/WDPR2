@@ -29,7 +29,7 @@ using WDPR.Data;
         }
 
         // GET: api/Voorstelling/5
-        [HttpGet("{Id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Voorstelling>> GetVoorstelling(int id)
         {
             var voorstelling = await _context.FindVoorstelling(id);
@@ -89,7 +89,7 @@ using WDPR.Data;
         }
 
         // DELETE: api/Voorstelling/5
-        [HttpDelete("{Id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteVoorstelling(int id)
         {
             var voorstelling = await _context.FindVoorstelling(id);

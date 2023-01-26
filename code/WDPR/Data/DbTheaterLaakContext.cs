@@ -152,7 +152,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
         return Voorstelling;
     }
 
-    public IEnumerable<Zaal> GetZaal()
+    public IEnumerable<Zaal> GetZalen()
     {
         return Zaal.Include(z => z.Stoelen);
     }
