@@ -31,7 +31,7 @@ jobs:
           echo "Deploying code to the server"
           cd WDPR2
           git fetch --all
-          git reset --hard origin/main
+          git reset --hard origin/master
           git pull --force
           cd deployment
           cd docker-compose
