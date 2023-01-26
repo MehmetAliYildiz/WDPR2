@@ -144,8 +144,15 @@ namespace WDPR.Controllers
             // Als de kaartjescode niet correspondeert met een hash in de database, bestaat het kaartje niet
             return NotFound();
         }
-
+[HttpGet("kaartjeBIjGebruiker")]
+        public IActionResult KaartjeBijGebruiker([FromRoute] string code)
+        {
+            return 
+        }
+ 
     }
+
+       
 
     public class KaartjeWithId
     {
