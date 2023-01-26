@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import * as XLSX from 'xlsx';
 import axios from 'axios';
+import GetEndpoint from '../../Admin/EndPointUtil';
 
 const ExcelUpload = () => {
     const [file, setFile] = useState(null);
@@ -29,7 +30,7 @@ const ExcelUpload = () => {
 
     const createVoorstelling = async (voorstelling) => {
         try {
-            const response = await axios.post(`https://localhost:7260/api/voorstelling`, voorstelling);
+            const response = await axios.post(GetEndpoint+`/api/voorstelling`, voorstelling);
             return response.data.id;
         } catch (error) {
             console.log(error);
@@ -48,7 +49,7 @@ const ExcelUpload = () => {
                         startDatumTijd: row.StartDatumTijd,
                         eindDatumTijd: row.EindDatumTijd
                     }
-                    axios.post(`https://localhost:7260/api/agenda`, agenda)
+                    axios.post(GetEndpoint+`/api/agenda`, agenda)
                         .then(response => console.log(response))
                         .catch(error => console.log(error));
                 } else {
@@ -66,7 +67,7 @@ const ExcelUpload = () => {
                         startDatumTijd: row.StartDatumTijd,
                         eindDatumTijd: row.EindDatumTijd
                     }
-                    axios.post(`https://localhost:7260/api/agenda`, agenda)
+                    axios.post(GetEndpoint+`/api/agenda`, agenda)
                         .then(response => console.log(response))
                         .catch(error => console.log(error));
                 }

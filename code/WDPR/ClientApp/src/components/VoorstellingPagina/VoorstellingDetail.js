@@ -3,6 +3,7 @@ import Axios from "axios";
 import Navigatie from "../navFoot/navbar";
 import Footer from "../navFoot/Footer";
 import "./VoorstellingDetail.css"
+import GetEndpoint from "../Admin/EndPointUtil";
 
 class VoorstellingDetail extends Component {
     constructor(props) {
@@ -17,11 +18,11 @@ class VoorstellingDetail extends Component {
         const queryParameters = new URLSearchParams(window.location.search);
         const voorstellingId = queryParameters.get("itemId");
         
-        Axios.get(`https://localhost:7260/api/Voorstelling/${voorstellingId}`).then((res) => {
+        Axios.get(GetEndpoint()+`/api/Voorstelling/${voorstellingId}`).then((res) => {
             this.setState({ voorstelling: res.data });
         });
 
-        Axios.get(`https://localhost:7260/api/agenda/voorstelling/${voorstellingId}`)
+        Axios.get(GetEndpoint()+`/api/agenda/voorstelling/${voorstellingId}`)
             .then((res) => {
                 if (res.data == null) return;
                 for (let i = 0; i < res.data.length; i++) {
