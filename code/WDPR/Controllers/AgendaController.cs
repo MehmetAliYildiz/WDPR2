@@ -16,10 +16,10 @@ namespace WDPR.Controllers
             _context = context;
         }
 
-        [HttpGet("voorstelling/{id}")]
+        [HttpGet("voorstelling/{Id}")]
         public async Task<ActionResult<IEnumerable<Agenda>>> GetAgendaOpVoorstelling(int id)
         {
-            var agendas = _context.GetAgenda(id)
+            var agendas = _context.GetAgenda()
                 .Where(a => a.VoorstellingId == id)
                 .ToList();
 
@@ -52,18 +52,18 @@ namespace WDPR.Controllers
                 return BadRequest("De zaal met dit Id bestaat niet. Check nogmaals of de zaal die je wil toevoegen aan dit agendapunt bestaat.");
             }
             
-            var alBezet = await _context.Agenda.Where(a => a.ZaalId == agenda.ZaalId).Where(a => (a.StartDatumTijd >= agenda.StartDatumTijd && a.StartDatumTijd < agenda.EindDatumTijd) ||
+            var alBezet = _context.GetAgenda().Where(a => a.ZaalId == agenda.ZaalId).Where(a => (a.StartDatumTijd >= agenda.StartDatumTijd && a.StartDatumTijd < agenda.EindDatumTijd) ||
             (a.EindDatumTijd > agenda.StartDatumTijd && a.EindDatumTijd <= agenda.EindDatumTijd) ||
-            (a.StartDatumTijd <= agenda.StartDatumTijd && a.EindDatumTijd >= agenda.EindDatumTijd)).FirstOrDefaultAsync();
+            (a.StartDatumTijd <= agenda.StartDatumTijd && a.EindDatumTijd >= agenda.EindDatumTijd)).FirstOrDefault();
 
             if (alBezet != null)
             {
                 return BadRequest("Er is al een voorstelling in deze zaal op de ingevoerde tijd.");
             }
 
-            var voorstellingAlBezig = await _context.Agenda.Where(a => a.VoorstellingId == agenda.VoorstellingId).Where(a => (a.StartDatumTijd >= agenda.StartDatumTijd && a.StartDatumTijd < agenda.EindDatumTijd) ||
+            var voorstellingAlBezig = _context.GetAgenda().Where(a => a.VoorstellingId == agenda.VoorstellingId).Where(a => (a.StartDatumTijd >= agenda.StartDatumTijd && a.StartDatumTijd < agenda.EindDatumTijd) ||
             (a.EindDatumTijd > agenda.StartDatumTijd && a.EindDatumTijd <= agenda.EindDatumTijd) ||
-            (a.StartDatumTijd <= agenda.StartDatumTijd && a.EindDatumTijd >= agenda.EindDatumTijd)).FirstOrDefaultAsync();
+            (a.StartDatumTijd <= agenda.StartDatumTijd && a.EindDatumTijd >= agenda.EindDatumTijd)).FirstOrDefault();
 
             if (voorstellingAlBezig != null)
             {
@@ -72,7 +72,7 @@ namespace WDPR.Controllers
 
             agenda.Kaartjes = new List<Kaartje>();
 
-            _context.Agenda.Add(agenda);
+            _context.AddAgenda(agenda);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetAgenda", new { id = agenda.Id }, agenda);
@@ -83,14 +83,14 @@ namespace WDPR.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Agenda>>> GetAgenda()
         {
-            return await _context.Agenda.ToListAsync();
+            return _context.GetAgendas().ToList();
         }
 
         // GET: api/Agenda/1
-        [HttpGet("{id}")]
+        [HttpGet("{Id}")]
         public async Task<ActionResult<Agenda>> GetAgenda(int id)
         {
-            var agenda = await _context.Agenda.FindAsync(id);
+            var agenda = await _context.FindAgenda(id);
 
             if (agenda == null)
             {
@@ -100,61 +100,32 @@ namespace WDPR.Controllers
             return agenda;
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAgenda(int id, Agenda agenda)
-        {
-            if (id != agenda.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(agenda).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AgendaExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
         [HttpDelete]
         public async Task<IActionResult> DeleteAlleAgendas()
         {
-            var agendas = await _context.Agenda.ToListAsync();
-            _context.Agenda.RemoveRange(agendas);
+            var agendas = _context.GetAgendas().ToList();
+            _context.RemoveAgendaRange(agendas);
             await _context.SaveChangesAsync();
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{Id}")]
         public async Task<IActionResult> DeleteAgenda(int id)
         {
-            var agenda = await _context.Agenda.FindAsync(id);
+            var agenda = await _context.FindAgenda(id);
             if (agenda == null)
             {
                 return NotFound();
             }
 
-            _context.Agenda.Remove(agenda);
+            _context.RemoveAgenda(agenda.Id);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
         private bool AgendaExists(int id)
         {
-            return _context.Agenda.Any(e => e.Id == id);
+            return _context.GetAgendas().Any(e => e.Id == id);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace WDPR.Controllers
             return _context.GetBands().ToList();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{Id}")]
         public async Task<ActionResult<Band>> GetBand(int id)
         {
             var band = await _context.FindBand(id);
@@ -51,10 +51,10 @@ namespace WDPR.Controllers
             return CreatedAtAction("GetBand", new { id = band.Id }, band);
         }
 
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutBand(int id, Band band)
+        //[HttpPut("{Id}")]
+        //public async Task<IActionResult> PutBand(int Id, Band band)
         //{
-        //    if (id != band.Id)
+        //    if (Id != band.Id)
         //    {
         //        return BadRequest();
         //    }
@@ -67,7 +67,7 @@ namespace WDPR.Controllers
         //    }
         //    catch (DbUpdateConcurrencyException)
         //    {
-        //        if (!BandExists(id))
+        //        if (!BandExists(Id))
         //        {
         //            return NotFound();
         //        }
@@ -99,7 +99,7 @@ namespace WDPR.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{Id}")]
         public async Task<ActionResult<Band>> DeleteBand(int id)
         {
             var band = await _context.FindBand(id);

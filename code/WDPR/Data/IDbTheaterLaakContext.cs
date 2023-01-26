@@ -4,8 +4,8 @@ using WDPR.Models;
     public interface IDbTheaterLaakContext
     {
         IEnumerable<Review> GetReview();
-        IEnumerable<Review> GetAgenda();
-        IEnumerable<Review> GetGebruiker();
+        IEnumerable<Agenda> GetAgenda();
+        IEnumerable<Gebruiker> GetGebruiker();
         IEnumerable<Reservering> GetReserveringen();
         IEnumerable<Zaal> GetZaal();
         IEnumerable<Kaartje> GetKaartjes();
@@ -19,7 +19,6 @@ using WDPR.Models;
         IEnumerable<Voorstelling> GetVoorstellingen();
         Task<Voorstelling> FindVoorstelling(int id);
         Task<Agenda> FindAgenda(int id);
-        Task<Voorstelling> FindGebruiker(int id);
         Task<Review> FindReview(int id);
         Task<Band> FindBand(int id);
         Task<Bestelling> FindBestelling(int id);
@@ -48,6 +47,7 @@ using WDPR.Models;
         void RemoveGebruiker(string id);
         void RemoveVoorstelling(int id);
         void RemoveVoorstellingRange(IEnumerable<Voorstelling> v);
+        void RemoveAgendaRange(IEnumerable<Agenda> a);
 
         int SaveChanges();
         Task<int> SaveChangesAsync();

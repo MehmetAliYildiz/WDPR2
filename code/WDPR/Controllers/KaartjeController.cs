@@ -21,7 +21,7 @@ namespace WDPR.Controllers
             _boekingHubContext = boekingHubContext;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{Id}")]
         public IActionResult GetKaartje(int id)
         {
             var kaartje = _context.GetKaartjes().Where(k => k.Id == id);

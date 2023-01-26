@@ -29,7 +29,7 @@ using WDPR.Data;
         }
 
         // GET: api/Voorstelling/5
-        [HttpGet("{id}")]
+        [HttpGet("{Id}")]
         public async Task<ActionResult<Voorstelling>> GetVoorstelling(int id)
         {
             var voorstelling = await _context.FindVoorstelling(id);
@@ -44,10 +44,10 @@ using WDPR.Data;
 
         // PUT: api/Voorstelling/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutVoorstelling(int id, Voorstelling voorstelling)
+        //[HttpPut("{Id}")]
+        //public async Task<IActionResult> PutVoorstelling(int Id, Voorstelling voorstelling)
         //{
-        //    if (id != voorstelling.Id)
+        //    if (Id != voorstelling.Id)
         //    {
         //        return BadRequest();
         //    }
@@ -60,7 +60,7 @@ using WDPR.Data;
         //    }
         //    catch (DbUpdateConcurrencyException)
         //    {
-        //        if (!VoorstellingExists(id))
+        //        if (!VoorstellingExists(Id))
         //        {
         //            return NotFound();
         //        }
@@ -89,7 +89,7 @@ using WDPR.Data;
         }
 
         // DELETE: api/Voorstelling/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{Id}")]
         public async Task<IActionResult> DeleteVoorstelling(int id)
         {
             var voorstelling = await _context.FindVoorstelling(id);

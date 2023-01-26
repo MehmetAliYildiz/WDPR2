@@ -31,7 +31,7 @@ namespace WDPR.Controllers
         }
 
         // GET: api/Review/5
-        [HttpGet("{id}")]
+        [HttpGet("{Id}")]
         public async Task<ActionResult<Review>> GetReview(int id)
         {
             var review = await _context.FindReview(id);
@@ -46,10 +46,10 @@ namespace WDPR.Controllers
 
         // // PUT: api/Review/5
         // // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        // [HttpPut("{id}")]
-        // public async Task<IActionResult> PutReview(int id, Review review)
+        // [HttpPut("{Id}")]
+        // public async Task<IActionResult> PutReview(int Id, Review review)
         // {
-        //     if (id != review.id)
+        //     if (Id != review.Id)
         //     {
         //         return BadRequest();
         //     }
@@ -62,7 +62,7 @@ namespace WDPR.Controllers
         //     }
         //     catch (DbUpdateConcurrencyException)
         //     {
-        //         if (!ReviewExists(id))
+        //         if (!ReviewExists(Id))
         //         {
         //             return NotFound();
         //         }
@@ -81,8 +81,8 @@ namespace WDPR.Controllers
         public async Task<ActionResult<Review>> PostReview(ReviewDTO reviewDTO)
         {
             var existingReview = _context.GetReview()
-                .Where(r => r.gebruikerId == reviewDTO.gebruikerId)
-                .Where(r => r.voorstellingId == reviewDTO.voorstellingId)
+                .Where(r => r.GebruikerId == reviewDTO.gebruikerId)
+                .Where(r => r.VoorstellingId == reviewDTO.voorstellingId)
                 .FirstOrDefault();
 
             if (existingReview != null)
@@ -92,26 +92,26 @@ namespace WDPR.Controllers
 
             if (reviewDTO.sterren < 0 || reviewDTO.sterren > 5)
             {
-                return BadRequest("Je mag alleen maar tussen de 0 en 5 sterren geven.");
+                return BadRequest("Je mag alleen maar tussen de 0 en 5 Sterren geven.");
             }
             var review = new Review()
             {
-                recensie = reviewDTO.recensie,
-                sterren = reviewDTO.sterren,
+                Recensie = reviewDTO.recensie,
+                Sterren = reviewDTO.sterren,
                 Gebruiker = await _context.FindGebruiker(reviewDTO.gebruikerId),
                 Voorstelling = await _context.FindVoorstelling(reviewDTO.voorstellingId)
             };
             _context.AddReview(review);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetReview", new { id = review.id }, review);
+            return CreatedAtAction("GetReview", new { id = review.Id }, review);
         }
         
-        [HttpGet("average/{id}")]
+        [HttpGet("average/{Id}")]
         public async Task<ActionResult<double>> GetAverageReviewRating(int id)
         {
             var voorstellingReviews = _context.GetReview()
-                .Where(r => r.voorstellingId == id)
+                .Where(r => r.VoorstellingId == id)
                 .ToList();
 
             if (voorstellingReviews.Count == 0)
@@ -119,13 +119,13 @@ namespace WDPR.Controllers
                 return NotFound("No reviews found for this voorstelling");
             }
 
-            var averageRating = voorstellingReviews.Average(r => r.sterren);
+            var averageRating = voorstellingReviews.Average(r => r.Sterren);
 
             return Ok(averageRating);
         }
 
         // DELETE: api/Review/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{Id}")]
         public async Task<IActionResult> DeleteReview(int id)
         {
             var review = await _context.FindReview(id);
@@ -142,7 +142,7 @@ namespace WDPR.Controllers
 
         private bool ReviewExists(int id)
         {
-            return _context.GetReview().Any(e => e.id == id);
+            return _context.GetReview().Any(e => e.Id == id);
         }
 
         public class ReviewDTO

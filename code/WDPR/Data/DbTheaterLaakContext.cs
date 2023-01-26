@@ -92,6 +92,16 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     #endregion
 
     #region RemoveObject
+    public void RemoveVoorstellingRange(IEnumerable<Voorstelling> v)
+    {
+        Voorstelling.RemoveRange(v);
+    }
+
+    public void RemoveAgendaRange(IEnumerable<Agenda> a)
+    {
+        Agenda.RemoveRange(a);
+    }
+
     public void RemoveVoorstelling(int id)
     {
         Voorstelling.Where(v => v.Id == id).ForEachAsync(v => Voorstelling.Remove(v));
@@ -103,11 +113,6 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     
     public void RemoveGebruiker(string id){
         Gebruiker.Where(v => v.Id == id).ForEachAsync(v => Gebruiker.Remove(v));
-    }
-
-    public void RemoveVoorstellingRange(IEnumerable<Voorstelling> v)
-    {
-        Voorstelling.RemoveRange(v);
     }
 
     public void RemoveBand(int id)
@@ -122,7 +127,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     public void RemoveReview(int id)
     {
-        Review.Where(a => a.id == id).ForEachAsync(a => Review.Remove(a));
+        Review.Where(a => a.Id == id).ForEachAsync(a => Review.Remove(a));
     }
     #endregion
 

@@ -21,7 +21,7 @@ namespace WDPR.Controllers
             return _context.GetVrijeRuimtes();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{Id}")]
         public IActionResult GetVrijeRuimteById(int id)
         {
             var vrijeRuimte = _context.GetVrijeRuimtes().Where(vr => vr.Id == id);

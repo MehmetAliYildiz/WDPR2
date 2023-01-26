@@ -27,7 +27,7 @@ namespace WDPR.Controllers {
             return _context.GetArtiesten().ToList();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{Id}")]
         public async Task<ActionResult<Artiest>> GetArtiest(string id)
         {
             var artiest = await _context.FindArtiest(id);
@@ -56,7 +56,7 @@ namespace WDPR.Controllers {
             return CreatedAtAction("GetArtiest", result);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{Id}")]
         public async Task<ActionResult<Artiest>> DeleteArtiest(string id)
         {
             var artiest = await _context.FindArtiest(id);
