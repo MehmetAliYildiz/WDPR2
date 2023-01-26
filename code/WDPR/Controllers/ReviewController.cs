@@ -106,7 +106,7 @@ namespace WDPR.Controllers
 
             return CreatedAtAction("GetReview", new { id = review.Id }, review);
         }
-        
+
         [HttpGet("average/{id}")]
         public async Task<ActionResult<double>> GetAverageReviewRating(int id)
         {
@@ -139,6 +139,22 @@ namespace WDPR.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("voorstelling/{id}")]
+        public async Task<ActionResult<IEnumerable<Review>>> GetVoorstellingReviews(int id)
+        {
+            var voorstellingReviews = _context.GetReview()
+                .Where(r => r.VoorstellingId == id)
+                .ToList();
+
+            if (voorstellingReviews.Count == 0)
+            {
+                return NotFound("Geen reviews voor deze voorstelling");
+            }
+
+            return Ok(voorstellingReviews);
+        }
+
 
         private bool ReviewExists(int id)
         {
