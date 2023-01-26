@@ -48,7 +48,7 @@ namespace WDPR.Controllers{
             Zaal nieuweZaal = new Zaal(zms.Id);
             nieuweZaal.Stoelen = new List<Stoel>();
             _context.AddZaal(nieuweZaal);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             int i = 0;
             foreach (List<int> rij in zms.Rijen)
@@ -67,7 +67,7 @@ namespace WDPR.Controllers{
                 i++;
             }
 
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return Ok(nieuweZaal.Stoelen.Count() + " " + _context.GetZalen().Where(z => z.Id == nieuweZaal.Id).FirstOrDefault().Stoelen.Count());
         }
