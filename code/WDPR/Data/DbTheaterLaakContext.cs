@@ -8,22 +8,24 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 {
     public DbTheaterLaakContext(DbContextOptions<DbTheaterLaakContext> options)
-        : base(options) {}
+        : base(options) { }
 
     #region DbSets
-    private DbSet<Voorstelling> Voorstelling { get; set; }
+    public DbSet<Voorstelling> Voorstelling { get; set; }
     private DbSet<Reservering> Reserveringen { get; set; }
     private DbSet<Bestelling> Bestellingen { get; set; }
     public DbSet<Gebruiker> Gebruiker { get; set; }
     private DbSet<Zaal> Zaal { get; set; }
     private DbSet<VrijeRuimte> VrijeRuimtes { get; set; }
-    private DbSet<Stoel> Stoel {get; set; }
+    private DbSet<Stoel> Stoel { get; set; }
     public DbSet<Agenda> Agenda { get; set; }
-    private DbSet<Band> Band {get; set;}
-    private DbSet<Artiest> Artiest {get; set;}
-    private DbSet<ArtiestBand> ArtiestBand {get; set;}
+    private DbSet<Band> Band { get; set; }
+    private DbSet<Artiest> Artiest { get; set; }
+    private DbSet<ArtiestBand> ArtiestBand { get; set; }
     private DbSet<Kaartje> Kaartjes { get; set; }
     private DbSet<StoelKaartje> StoelKaartjes { get; set; }
+    
+    public DbSet<Review> Review { get; set; }
     #endregion
 
     #region AddObject
@@ -141,6 +143,11 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
         return StoelKaartjes.Include(sk => sk.Stoel).Include(sk => sk.Kaartje);
     }
 
+    public IEnumerable<Review> GetReview()
+    {
+        return Review.Include(r => r.Gebruiker).Include(r => r.Voorstelling);
+    }
+    
     public IEnumerable<Band> GetBands()
     {
         return Band;
@@ -158,6 +165,11 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     #endregion
 
     #region FindObject
+
+    public async Task<Gebruiker> FindGebruiker(string Id)
+    {
+        return await Gebruiker.FindAsync(Id);
+    }
     public async Task<Voorstelling> FindVoorstelling(int id)
     {
         return await Voorstelling.FindAsync(id);
@@ -251,6 +263,4 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     {
         return base.SaveChangesAsync();
     }
-
-    public DbSet<WDPR.Models.ImageModel> ImageModel { get; set; }
 }

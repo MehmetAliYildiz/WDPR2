@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -74,8 +75,14 @@ namespace WDPR.Controllers
         //}
 
         [HttpPost]
-        public async Task<ActionResult<Voorstelling>> PostVoorstelling(Voorstelling voorstelling)
+        public async Task<ActionResult<Voorstelling>> PostVoorstelling(VoorstellingDTO voorstellingDTO)
         {
+            var voorstelling = new Voorstelling()
+            {
+                Name = voorstellingDTO.Name,
+                beschrijving = voorstellingDTO.beschrijving,
+                Img = voorstellingDTO.Img
+            };
             _context.AddVoorstelling(voorstelling);
             await _context.SaveChangesAsync();
 
@@ -111,6 +118,15 @@ namespace WDPR.Controllers
         private bool VoorstellingExists(int id)
         {
             return _context.GetVoorstellingen().Any(e => e.Id == id);
+        }
+        
+        public class VoorstellingDTO
+        {
+            [Key]
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string beschrijving{ get; set; }
+            public string Img { get; set; }
         }
     }
 }
