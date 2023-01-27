@@ -48,7 +48,7 @@ export default class StoelBoeken extends Component {
             console.log("Connected!");
         });
 
-        axios.get('https://localhost:7260/Stoel/' + this.getZaalId() + '/' + this.getAgendaId())
+        axios.get(GetEndpoint() + this.getZaalId() + '/' + this.getAgendaId())
             .then(response => {
                 this.setState({
                     stoelen: response.data
@@ -123,7 +123,7 @@ export default class StoelBoeken extends Component {
             geselecteerdeStoelen.push(this.state.stoelen[index].id);
         }
 
-        let endpoint = 'https://localhost:7260/Kaartje' + (gebruikersNaam ? '/gebruiker' : '/bezoeker');
+        let endpoint = GetEndpoint() + (gebruikersNaam ? '/gebruiker' : '/bezoeker');
         const data = {
             agendaId: this.getAgendaId(),
             stoelIds: geselecteerdeStoelen,
@@ -137,7 +137,7 @@ export default class StoelBoeken extends Component {
             console.error(err);
         }
 
-        endpoint = 'https://localhost:7260/Bestelling/payment/' + (gebruikersNaam ? 'gebruiker/' : 'bezoeker/') + (gebruikersNaam ? gebruikersNaam : bezId);
+        endpoint = GetEndpoint() + (gebruikersNaam ? 'gebruiker/' : 'bezoeker/') + (gebruikersNaam ? gebruikersNaam : bezId);
         console.log(endpoint);
         try {
             const response = await axios.get(endpoint);
