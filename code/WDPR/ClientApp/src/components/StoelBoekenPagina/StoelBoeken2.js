@@ -38,7 +38,7 @@ export default class StoelBoeken extends Component {
 
     componentDidMount() {
         this.state.connection.current = new HubConnectionBuilder()
-            .withUrl(GetEndpoint()+"/myhub", {
+            .withUrl(GetEndpoint()+ "myhub", {
                 skipNegotiation: true,
                 transport: HttpTransportType.WebSockets
             })
