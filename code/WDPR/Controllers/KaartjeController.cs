@@ -15,11 +15,13 @@ namespace WDPR.Controllers
     {
         private readonly IDbTheaterLaakContext _context;
         private readonly IHubContext<BoekingUpdateHub> _boekingHubContext;
+        private readonly UserManager<Gebruiker> _userManager;
 
-        public KaartjeController(IDbTheaterLaakContext context, IHubContext<BoekingUpdateHub> boekingHubContext)
+        public KaartjeController(IDbTheaterLaakContext context, IHubContext<BoekingUpdateHub> boekingHubContext, UserManager<Gebruiker> userManager)
         {
             _context = context;
             _boekingHubContext = boekingHubContext;
+            _userManager = userManager;
         }
 
         [HttpGet("{id}")]
@@ -182,7 +184,26 @@ namespace WDPR.Controllers
             return NotFound();
         }
 
-    }
+
+
+        [HttpGet("kaartjeBIjGebruiker")]
+        public async Task<IActionResult> KaartjeBijGebruikerAsync([FromBody] string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            var bestellingOpId = _context.GetBestellingen().Where(u => u.Gebruiker.Id == user.Id);
+            if (!bestellingOpId.Any())
+            {
+                return NotFound("er zijn geen kaartjes gekoppeld aan je account");
+            }
+
+            return Ok(GetKaartjesFromBestellingen(bestellingOpId.ToList()));
+            
+        }
+ 
+     }
+
+       
 
     public class KaartjeWithId
     {
