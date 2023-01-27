@@ -17,6 +17,9 @@ import ExcelUploaden from './components/AdminPanel/CSVToevoegen/ExcelUploaden';
 import StoelBoeken2 from './components/StoelBoekenPagina/StoelBoeken2';
 import SocketTest from './components/SocketTest';
 import VoorstellingPost from "./components/VoorstellingPagina/VoorstellingPost";
+import WachtwoordVergeten from './components/WachtwoordVergeten/WachtwoordVergeten';
+import GebruikersPortaal from './components/GebruikersPortaal/GebruikersPortaal';
+
 
 
 export default function App() {
@@ -40,6 +43,8 @@ export default function App() {
                 <Route path={'/voorstelling/post'} element={<VoorstellingPost />}></Route>
                 <Route path='/admin/exceltoevoegen' element={<ExcelUploaden/>}></Route>
                 <Route path={'/pay'} element={<PaymentForm />}></Route>
+                <Route path={'/wwVergeten'} element={<WachtwoordVergeten />}></Route>
+                <Route pathe={'/gebruikerportaal'} element={<GebruikersPortaal/>}></Route>
             </Routes>
         </>
 
