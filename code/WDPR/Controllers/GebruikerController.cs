@@ -68,6 +68,19 @@ namespace WDPR.Controllers
             return NoContent();
         }
 
+        [HttpGet]
+        [Route("GebruikerIdOpvragen")]
+        public async Task<ActionResult<Gebruiker>> GebruikerIdOpvragen(string email)
+        {
+            var user = await _context.FindGebruikerByEmail(email);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok(new Gebruiker{ Id = user.Id });
+        }
+
+
         private bool GebruikerExists(string id)
         {
             return _context.GetGebruiker().Any(e => e.Id == id);
