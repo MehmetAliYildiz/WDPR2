@@ -16,7 +16,8 @@ export default class StoelBoeken extends Component {
             geselecteerd: null,
             maxBereikt: false,
             connection: React.createRef(),
-            tempId: ""
+            tempId: "",
+            redirectLink: null
         }
     }
 
@@ -101,14 +102,14 @@ export default class StoelBoeken extends Component {
         this.setState({ maxBereikt: geselecteerdeCount >= 25 });
     }
 
-    handleSubmit = () => {
+    handleSubmit = async () => {
         let gebruikersNaam = sessionStorage.getItem('gebruikersNaam');
-        let bezoekerId;
+        let bezId;
         if (!gebruikersNaam) {
-            bezoekerId = localStorage.getItem('bezoekerId');
-            if (!bezoekerId) {
-                bezoekerId = uuidv4();
-                localStorage.setItem('bezoekerId', bezoekerId);
+            bezId = localStorage.getItem('bezoekerId');
+            if (!bezId) {
+                bezId = uuidv4();
+                localStorage.setItem('bezoekerId', bezId);
             }
         }
 
@@ -121,15 +122,25 @@ export default class StoelBoeken extends Component {
             geselecteerdeStoelen.push(this.state.stoelen[index].id);
         }
 
-        const endpoint = 'https://localhost:7260/Kaartje' + (gebruikersNaam ? '/gebruiker' : '/bezoeker');
+        let endpoint = 'https://localhost:7260/Kaartje' + (gebruikersNaam ? '/gebruiker' : '/bezoeker');
         const data = {
             agendaId: this.getAgendaId(),
             stoelIds: geselecteerdeStoelen,
             code: kaartjesCode,
-            gebruiker: gebruikersNaam ? gebruikersNaam : bezoekerId
+            gebruikerEmail: gebruikersNaam,
+            bezoekerId: bezId
         };
         try {
-            axios.post(endpoint, data);
+            await axios.post(endpoint, data);
+        } catch (err) {
+            console.error(err);
+        }
+
+        endpoint = 'https://localhost:7260/Bestelling/payment/' + (gebruikersNaam ? 'gebruiker/' : 'bezoeker/') + (gebruikersNaam ? gebruikersNaam : bezId);
+        console.log(endpoint);
+        try {
+            const response = await axios.get(endpoint);
+            this.setState({ redirectLink: "http://allyourgoods-transport-webapp-staging.azurewebsites.net/?id=" + response.data.code });
         } catch (err) {
             console.error(err);
         }
@@ -142,6 +153,10 @@ export default class StoelBoeken extends Component {
     }
 
     render() {
+        if (this.state.redirectLink !== null) {
+            window.location.href = this.state.redirectLink;
+            return ("");
+        }
         const rows = [];
         let j = null;
         for (let i = 0; i < this.state.stoelen.length; i++) {
