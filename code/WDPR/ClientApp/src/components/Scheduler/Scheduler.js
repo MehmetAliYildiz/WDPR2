@@ -6,6 +6,7 @@ import SchedulerTable from './SchedulerTable';
 import Popup from '../Popup';
 import "./../../style/FlatpickrCustom.css";
 import './../../style/Scheduler.css';
+import GetEndpoint from '../Admin/EndPointUtil';
 
 class Scheduler extends Component {
     constructor(props) {
@@ -131,7 +132,7 @@ class Scheduler extends Component {
 
     fetchData = async () => {
         // Fetch alle reserveringen op de huidige dag
-        const res = await fetch(`https://localhost:7260/reservering/${this.getZaalId()}/${this.state.date.getFullYear()}-${this.state.date.getMonth() + 1}-${this.state.date.getDate()}`);
+        const res = await fetch(GetEndpoint()+`reservering/${this.getZaalId()}/${this.state.date.getFullYear()}-${this.state.date.getMonth() + 1}-${this.state.date.getDate()}`);
         if (!res.ok) {
             throw Error(res.statusText);
             return;

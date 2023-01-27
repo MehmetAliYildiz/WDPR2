@@ -1,5 +1,6 @@
 ﻿import { HubConnectionBuilder, HttpTransportType } from "@microsoft/signalr";
 import { useState, useRef, useEffect } from 'react';
+import GetEndpoint from "./Admin/EndPointUtil";
 
 function SocketTest() {
     const [data, setData] = useState();
@@ -7,7 +8,7 @@ function SocketTest() {
 
     useEffect(() => {
         connection.current = new HubConnectionBuilder()
-            .withUrl("https://localhost:7260/myhub", {
+            .withUrl(GetEndpoint+"/myhub", {
                 skipNegotiation: true,
                 transport: HttpTransportType.WebSockets
             })

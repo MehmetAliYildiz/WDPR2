@@ -6,6 +6,7 @@ import axios from 'axios';
 import shortid from 'shortid';
 import jwt_decode from 'jwt-decode';
 import { v4 as uuidv4 } from 'uuid';
+import GetEndpoint from '../Admin/EndPointUtil';
 
 export default class StoelBoeken extends Component {
     constructor(props) {
@@ -37,7 +38,7 @@ export default class StoelBoeken extends Component {
 
     componentDidMount() {
         this.state.connection.current = new HubConnectionBuilder()
-            .withUrl("https://localhost:7260/myhub", {
+            .withUrl(GetEndpoint()+"/myhub", {
                 skipNegotiation: true,
                 transport: HttpTransportType.WebSockets
             })

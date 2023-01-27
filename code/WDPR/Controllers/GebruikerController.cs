@@ -28,7 +28,7 @@ namespace WDPR.Controllers
         }
 
         // GET: api/Gebruiker/5
-        [HttpGet("{Id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Gebruiker>> GetGebruiker(string id)
         {
             var gebruiker = await _context.FindGebruiker(id);
@@ -53,7 +53,7 @@ namespace WDPR.Controllers
         }
 
         // DELETE: api/Gebruiker/5
-        [HttpDelete("{Id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGebruiker(string id)
         {
             var gebruiker = await _context.FindGebruiker(id);

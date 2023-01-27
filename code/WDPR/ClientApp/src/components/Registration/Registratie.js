@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {FaRegCalendar} from 'react-icons/fa';
 import {IoPersonAdd} from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
+import GetEndpoint from "../Admin/EndPointUtil";
 
 function Registratie() {
     const wwVergeten = {
@@ -49,7 +50,8 @@ function Registratie() {
     let handleRegistratie = async (e) => {
         e.preventDefault();
         try {
-            let res = await fetch("http://groep3theaterlaak.switzerlandnorth.cloudapp.azure.com/api/Account/registreer", {
+            let res = await fetch(GetEndpoint()+"/api/Account/registreer", {
+
                 headers: {'Content-Type': 'application/json'},
                 method: "POST",
                 mode:"cors",

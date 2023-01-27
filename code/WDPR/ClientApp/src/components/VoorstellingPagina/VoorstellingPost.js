@@ -3,6 +3,7 @@ import axios from 'axios';
 import Footer from "../navFoot/Footer";
 import NavBar from "../navFoot/navbar";
 import "./Voorstelling.css";
+import GetEndpoint from '../Admin/EndPointUtil';
 
 function VoorstellingPost() {
     const [voorstelling, setVoorstelling] = useState({
@@ -15,7 +16,7 @@ function VoorstellingPost() {
     const [voorstellingen, setVoorstellingen] = useState([]);
 
     useEffect(() => {
-        axios.get('https://localhost:7260/api/Voorstelling')
+        axios.get(GetEndpoint+'/api/Voorstelling')
             .then(response => {
                 setVoorstellingen(response.data);
             })
@@ -30,7 +31,7 @@ function VoorstellingPost() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('https://localhost:7260/api/Voorstelling', voorstelling)
+        axios.post(GetEndpoint()+'/api/Voorstelling', voorstelling)
             .then(response => {
                 console.log(response);
                 setVoorstelling({ Name: '', beschrijving: '', Img: '' });

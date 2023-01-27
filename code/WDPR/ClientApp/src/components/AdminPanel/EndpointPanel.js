@@ -1,12 +1,13 @@
 ﻿import { Component } from "react";
 import axios from 'axios';
 import IntegerField from './IntegerField';
+import GetEndpoint from "../Admin/EndPointUtil";
 export default class EndpointPanel extends Component {
 
     async postToEndpoint(url, body) {
         let res = null;
         let err;
-        await axios.post('https://localhost:7260/' + url, body)
+        await axios.post(GetEndpoint()+"/" + url, body)
             .then(response => {
                 res = response;
             })
@@ -20,7 +21,7 @@ export default class EndpointPanel extends Component {
     async getFromEndpoint(url) {
         let data;
         let err;
-        await axios.get('https://localhost:7260/' + url)
+        await axios.get(GetEndpoint()+"/" + url)
             .then(response => {
                 data = response.data;
             })
