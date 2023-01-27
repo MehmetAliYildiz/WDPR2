@@ -5,23 +5,62 @@ import Footer from "../navFoot/Footer";
 import "./VoorstellingDetail.css"
 
 class VoorstellingDetail extends Component {
+
     constructor(props) {
         super(props);
-        
+
         this.state = {
             voorstelling: [],
+            gebruiker: [],
             agendas: [],
             reviews: [],
             newReview: {
-                gebruikerId: 'fa521449-a6a2-4f6a-ba58-e8b3faf53fe3',
+                gebruikerId: '',
                 voorstellingId: '',
                 recensie: '',
                 sterren: 0
             }
+
         }
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    handleSubmit(e) {
+
+        e.preventDefault();
+        var gebruikersnaam = sessionStorage.getItem('gebruikersNaam');
+        // console.log(gebruikersnaam)
+
+        if (gebruikersnaam === "" || gebruikersnaam === null) {
+            alert("Helaas, je moet inloggen om voor deze voorstelling een review te plaatsen");
+            return;
+        }        
+        Axios.get(`https://localhost:7260/api/gebruiker/GebruikerIdOpvragen?email=${gebruikersnaam}`).then((res) => {
+            this.setState({ gebruiker: res.data });
+            console.log(res.data.id);
+            this.state.newReview.gebruikerId = res.data.id;
+
+            this.state.newReview.voorstellingId = this.state.voorstelling.id;
+            console.log(this.state.newReview);
+            Axios.post("https://localhost:7260/api/review", this.state.newReview)
+                .then(res => {
+                    this.setState(prevState => {
+                        return {
+                            reviews: [...prevState.reviews, res.data],
+                            newReview: {
+                                gebruikerId: '',
+                                voorstellingId: '',
+                                recensie: '',
+                                sterren: 0
+                            }
+                        }
+                    });
+                })
+                .catch(err => console.log(err));
+        });
     }
 
-    
+
+
 
 
     componentDidMount() {
@@ -44,12 +83,12 @@ class VoorstellingDetail extends Component {
         Axios.get(`https://localhost:7260/api/review/voorstelling/${voorstellingId}`)
             .then((res) => {
                 this.setState({ reviews: res.data });
-                console.log(res.data)
+                // console.log(res.data)
             });
     }
 
     render() {
-        
+
         const agendaItems = this.state.agendas.map(agenda => {
             const startDatumTijd = new Date(agenda.startDatumTijd).toLocaleDateString();
             const eindDatumTijd = new Date(agenda.eindDatumTijd).toLocaleDateString();
@@ -77,7 +116,6 @@ class VoorstellingDetail extends Component {
         } else {
             reviewItems = <p>Er zijn geen recensies voor deze voorstelling.</p>;
         }
-
         return (
             <>
                 <Navigatie />
@@ -90,9 +128,21 @@ class VoorstellingDetail extends Component {
                     <div>
                         <p>Reviews:</p>
                         <div className="reviewItems">{reviewItems}</div>
-        
-
                     </div>
+
+                    <form onSubmit={this.handleSubmit}>
+                        <label>
+                            Review:
+                            <textarea value={this.state.newReview.recensie} onChange={(e) => this.setState({ newReview: { ...this.state.newReview, recensie: e.target.value } })} />
+                        </label>
+                        <label>
+                            Sterren:
+                            <input type="number" min="1" max="5" value={this.state.newReview.sterren} onChange={(e) => this.setState({ newReview: { ...this.state.newReview, sterren: e.target.value } })} />
+                        </label>
+                        <input type="submit" value="Plaats Review!" />
+                    </form>
+
+
 
                     <p>Hieronder staan alle mogelijke opties om {this.state.voorstelling.name} te bezoeken:</p>
                     <div className="agendaItem">{agendaItems}</div>
