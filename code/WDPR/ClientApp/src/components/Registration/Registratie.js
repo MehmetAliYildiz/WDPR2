@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaRegCalendar } from 'react-icons/fa';
 import { IoPersonAdd } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
+import GetEndpoint from "../Admin/EndPointUtil";
 
 function Registratie() {
     const wwVergeten = {
@@ -51,6 +52,7 @@ function Registratie() {
         try {
             let res = await fetch("https://localhost:7260/api/Account/registreer", {
                 headers: { 'Content-Type': 'application/json' },
+
                 method: "POST",
                 mode: "cors",
                 body: JSON.stringify({

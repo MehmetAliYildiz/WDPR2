@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using WDPR.Data;
+using WDPR.Models;
 
 namespace WDPR.Controllers
 {
@@ -16,17 +18,35 @@ namespace WDPR.Controllers
             _context = context;
         }
 
-        [HttpGet("ip/{ip}")]
-        public async Task<IActionResult> GetPaymentFromIP([FromRoute] string ip)
+        [HttpGet("payment/bezoeker/{bezoekerCode}")]
+        public async Task<IActionResult> GetPaymentFromBezoeker([FromRoute] string bezoekerCode)
+        {
+            var bestellingen = _context.GetBestellingen().Where(b => b.BezoekerId == bezoekerCode).ToList();
+            if (!bestellingen.Any()) return NotFound("Geen bestellingen gevonden voor bezoeker met Id '" + bezoekerCode + "'");
+            return await GetPayment(bestellingen);
+        }
+
+        [HttpGet("payment/gebruiker/{gebruikerEmail}")]
+        public async Task<IActionResult> GetPaymentFromFromGebruiker([FromRoute] string gebruikerEmail)
+        {
+            var bestellingen = _context.GetBestellingen().Where(b => {
+                if (b.Gebruiker == null) return false;
+                return b.Gebruiker.Email == gebruikerEmail;
+            }).ToList();
+            if (!bestellingen.Any()) return NotFound("Geen bestellingen gevonden voor gebruiker met Email '" + gebruikerEmail + "'");
+            return await GetPayment(bestellingen);
+        }
+
+        private async Task<IActionResult> GetPayment(List<Bestelling> bestellingen)
         {
             using (var client = new HttpClient())
             {
                 //var bestellingen = _context.GetBestellingen().Where(b => b.IP == ip);
                 var values = new
                 {
-                    amount = 40.0,//bestellingen.Sum(b => b.Bedrag),
-                    redirectUrl = "https://77.172.8.98:62033/paymentcomplete",
-                    feedbackUrl = "https://77.172.8.98:7260/bestelling/voltooid"
+                    amount = bestellingen.Sum(b => b.Bedrag),
+                    redirectUrl = "http://20.203.193.158/paymentcomplete",
+                    feedbackUrl = "http://20.203.193.158/bestelling/voltooid"
                 };
 
                 var json = JsonSerializer.Serialize(values);
@@ -38,26 +58,33 @@ namespace WDPR.Controllers
 
                 Console.WriteLine(responseString);
 
-                //bestellingen.ToList().ForEach(b => b.BetaalCode = <>);
-                //_context.SaveChangesAsync();
+                var code = JsonSerializer.Deserialize<CodeWrapper>(responseString).Code;
+                Console.WriteLine(code);
+                bestellingen.ToList().ForEach(b => b.BetaalCode = code);
+                _context.SaveChanges();
 
-                return Ok();
+                return Ok(responseString);
             }
         }
 
         [HttpPost("voltooid")]
-        public IActionResult Voltooid([FromBody] string code)
+        public IActionResult Voltooid(HttpRequest request)
         {
-            //var bestellingen = _context.GetBestellingen().Where(b => b.BetaalCode == code);
-            //bestellingen.ToList().ForEach(b => {
+            Console.WriteLine("Dit is een body: " + request.Body);
+            //var bestellingen = _context.GetBestellingen().Where(b => b.BetaalCode == codeWrapper.Code);
+            //bestellingen.ToList().ForEach(b =>
+            //{
             //    b.Betaald = true;
-            //    b.BetaalCode = null;
             //});
             //_context.SaveChangesAsync();
-            Console.WriteLine(code);
-            Console.WriteLine("Received post");
 
-            return Ok();
+            return Ok(request.Body);
         }
+    }
+
+    public class CodeWrapper
+    {
+        [JsonPropertyName("code")]
+        public string Code { get; set; }
     }
 }

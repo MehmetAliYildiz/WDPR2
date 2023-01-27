@@ -54,22 +54,25 @@ namespace WDPR.Controllers
             {
                 return BadRequest("Maximaal 25 stoelen kunnen tegelijk geboekt worden");
             }
-            if (kaartjeWithId.Gebruiker == null)
+            if (gebruiker && kaartjeWithId.GebruikerEmail == null)
             {
-                return BadRequest("Gebruiker mag niet leeg zijn");
+                return BadRequest("GebruikerEmail mag niet leeg zijn");
             }
-            if (gebruiker && kaartjeWithId.Gebruiker != null)
+            if (!gebruiker && kaartjeWithId.BezoekerId == null)
             {
-                gebruikerMetMail = await _context.FindGebruikerByEmail(kaartjeWithId.Gebruiker);
+                return BadRequest("BezoekerId mag niet leeg zijn");
+            }
+            if (gebruiker && kaartjeWithId.GebruikerEmail != null)
+            {
+                gebruikerMetMail = await _context.FindGebruikerByEmail(kaartjeWithId.GebruikerEmail);
                 if (gebruikerMetMail == null)
-                    return BadRequest("Geen gebruiker met email '" + kaartjeWithId.Gebruiker + "' gevonden");
+                    return BadRequest("Geen gebruiker met email '" + kaartjeWithId.GebruikerEmail + "' gevonden");
             }
             #endregion
 
             var request = HttpContext.Request;
             Kaartje kaartje = new Kaartje()
             {
-                Id = _context.GetKaartjes().Count() > 0 ? _context.GetKaartjes().Max(k => k.Id) + 1 : 0,
                 Agenda = await _context.FindAgenda(kaartjeWithId.AgendaId),
 
                 // Nieuwe bestelling wordt aangemaakt in de naam van gebruiker/bezoeker
@@ -78,7 +81,7 @@ namespace WDPR.Controllers
                     Betaald = false,
                     PlaatsTijd = DateTime.Now,
                     Bedrag = 20D * kaartjeWithId.StoelIds.Count(),
-                    BezoekerId = !gebruiker ? kaartjeWithId.Gebruiker : null,  // Of bezoekerId of gebruiker moet een waarde hebben
+                    BezoekerId = !gebruiker ? kaartjeWithId.GebruikerEmail : null,  // Of bezoekerId of gebruiker moet een waarde hebben
                     Gebruiker = gebruiker ? gebruikerMetMail : null,           // boolean gebruiker geeft aan welke van de twee het moet zijn
                     Type = "Kaartje"
                 },
@@ -107,7 +110,7 @@ namespace WDPR.Controllers
             }
 
             // Kaartje en bestelling wordt tegelijk opgeslagen
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             // Boekingpagina wordt geupdate met de stoelen die nu bezet zijn
             foreach (int stoelId in kaartjeWithId.StoelIds)
@@ -185,7 +188,8 @@ namespace WDPR.Controllers
     {
         public int AgendaId { get; set; }
         public string Code { get; set; }
-        public string? Gebruiker { get; set; }
+        public string? GebruikerEmail { get; set; }
+        public string? BezoekerId { get; set; }
         public List<int> StoelIds { get; set; }
     }
 }
