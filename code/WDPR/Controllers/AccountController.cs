@@ -68,6 +68,18 @@ public async Task<IActionResult> Login([FromBody] GebruikerLogin gebruikerLogin)
         }
     }
 
+    // [HttpPost]
+    // [Route("GebruikerIdOpvragen")]
+    // public async Task<ActionResult<IEnumerable<Gebruiker>>> GebruikerIdOpvragen(string email)
+    // {
+    //     var user = await _userManager.FindByEmailAsync(email);
+    // if (user == null)
+    // {
+    //     return NotFound();
+    // }
+    //     return Ok(new Gebruiker{ Id = user.Id });
+    // }
+
 
 [HttpPut]
 [Route("wachtwoordWijzigen")]
