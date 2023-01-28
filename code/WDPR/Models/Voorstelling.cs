@@ -9,4 +9,6 @@ public class Voorstelling
     public string Name { get; set; }
     public string beschrijving{ get; set; }
     public string Img { get; set; }
+     public int? BandId { get; set; }
+    public Band Band { get; set; }
 }

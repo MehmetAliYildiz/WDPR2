@@ -13,9 +13,9 @@ namespace WDPR.Controllers {
     public class ArtiestController : ControllerBase
     {
         private readonly IDbTheaterLaakContext _context;
-        private readonly UserManager<Artiest> _userManager;
+        private readonly UserManager<Gebruiker> _userManager;
 
-        public ArtiestController(IDbTheaterLaakContext context, UserManager<Artiest> userManager)
+        public ArtiestController(IDbTheaterLaakContext context, UserManager<Gebruiker> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -50,10 +50,11 @@ namespace WDPR.Controllers {
                 ArtiestBands = new List<ArtiestBand>()
             };
 
-            var result = _userManager.CreateAsync(artiest, artiestDTO.Wachtwoord);
+            var result = await _userManager.CreateAsync(artiest, artiestDTO.Wachtwoord);
+            await _userManager.AddToRoleAsync(artiest, "artiest");
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetArtiest", result);
+            return CreatedAtAction("GetArtiest", new { id = artiest.Id }, artiest);
         }
 
         [HttpDelete("{id}")]
