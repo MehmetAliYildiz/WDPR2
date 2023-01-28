@@ -256,7 +256,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
-        builder.UseSqlServer("Data Source=20.203.193.158,1433;User Id=SA;Password =Pass@word; Initial Catalog=laak;TrustServerCertificate=True;");
+        builder.UseSqlServer("Data Source=Database,1433;User Id=SA;Password =Pass@word; Initial Catalog=laak;TrustServerCertificate=True;");
 
     }
 
