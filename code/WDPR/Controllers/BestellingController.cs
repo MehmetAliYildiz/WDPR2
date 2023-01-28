@@ -18,11 +18,19 @@ namespace WDPR.Controllers
             _context = context;
         }
 
+        [HttpGet("getBestellingFromCode/{betaalCode}")]
+        public IActionResult GetBestellingFromBezoeker([FromRoute] string betaalCode)
+        {
+            if (betaalCode == "" || betaalCode == null) return BadRequest("bezoekerId mag niet leeg zijn");
+
+            return Ok(_context.GetBestellingen().Where(b => b.BetaalCode == betaalCode));
+        }
+
         [HttpGet("payment/bezoeker/{bezoekerCode}")]
         public async Task<IActionResult> GetPaymentFromBezoeker([FromRoute] string bezoekerCode)
         {
-            var bestellingen = _context.GetBestellingen().Where(b => b.BezoekerId == bezoekerCode).ToList();
-            if (!bestellingen.Any()) return NotFound("Geen bestellingen gevonden voor bezoeker met Id '" + bezoekerCode + "'");
+            var bestellingen = _context.GetBestellingen().Where(b => b.BezoekerId == bezoekerCode && b.Betaald == true).ToList();
+            if (!bestellingen.Any()) return NotFound("Geen open bestellingen gevonden voor bezoeker met Id '" + bezoekerCode + "'");
             return await GetPayment(bestellingen);
         }
 
@@ -31,9 +39,9 @@ namespace WDPR.Controllers
         {
             var bestellingen = _context.GetBestellingen().Where(b => {
                 if (b.Gebruiker == null) return false;
-                return b.Gebruiker.Email == gebruikerEmail;
+                return b.Gebruiker.Email == gebruikerEmail && b.Betaald == false;
             }).ToList();
-            if (!bestellingen.Any()) return NotFound("Geen bestellingen gevonden voor gebruiker met Email '" + gebruikerEmail + "'");
+            if (!bestellingen.Any()) return NotFound("Geen open bestellingen gevonden voor gebruiker met Email '" + gebruikerEmail + "'");
             return await GetPayment(bestellingen);
         }
 
@@ -45,8 +53,8 @@ namespace WDPR.Controllers
                 var values = new
                 {
                     amount = bestellingen.Sum(b => b.Bedrag),
-                    redirectUrl = "http://20.203.193.158/paymentcomplete",
-                    feedbackUrl = "http://20.203.193.158/bestelling/voltooid"
+                    redirectUrl = "https://localhost:44469/paymentcomplete",
+                    feedbackUrl = "http://20.77.66.80/bestelling/voltooid"
                 };
 
                 var json = JsonSerializer.Serialize(values);
@@ -68,17 +76,16 @@ namespace WDPR.Controllers
         }
 
         [HttpPost("voltooid")]
-        public IActionResult Voltooid(HttpRequest request)
+        public IActionResult Voltooid(CodeWrapper codeWrapper)
         {
-            Console.WriteLine("Dit is een body: " + request.Body);
-            //var bestellingen = _context.GetBestellingen().Where(b => b.BetaalCode == codeWrapper.Code);
-            //bestellingen.ToList().ForEach(b =>
-            //{
-            //    b.Betaald = true;
-            //});
-            //_context.SaveChangesAsync();
+            var bestellingen = _context.GetBestellingen().Where(b => b.BetaalCode == codeWrapper.Code);
+            bestellingen.ToList().ForEach(b =>
+            {
+                b.Betaald = true;
+            });
+            _context.SaveChangesAsync();
 
-            return Ok(request.Body);
+            return Ok(codeWrapper.Code);
         }
     }
 

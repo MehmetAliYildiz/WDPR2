@@ -11,7 +11,7 @@ function Voorstelling() {
     const [searchNaam, setSearchNaam] = useState("");
 
     useEffect(() => {
-        Axios.get(GetEndpoint()+"/api/Voorstelling").then((res) => {
+        Axios.get(GetEndpoint() + "api/Voorstelling").then((res) => {
             setPost(res.data);
             console.log(res.data);
         });

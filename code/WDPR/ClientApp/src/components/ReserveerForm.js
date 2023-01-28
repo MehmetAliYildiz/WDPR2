@@ -105,7 +105,7 @@ class ReserveerForm extends Component
         }
 
         event.preventDefault();
-        const endpoint = GetEndpoint()+'/reservering/post';
+        const endpoint = GetEndpoint() + '/reservering/post';
         const appointment = this.state.schedulerRef.current.tryGetAppointment();
         const data = {
             naam: appointment.name,
