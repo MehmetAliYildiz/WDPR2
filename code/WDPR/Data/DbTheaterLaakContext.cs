@@ -169,7 +169,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     public IEnumerable<Bestelling> GetBestellingen()
     {
-        return Bestellingen;
+        return Bestellingen.Include(b => b.Gebruiker);
     }
 
     public IEnumerable<Stoel> GetStoelen()
