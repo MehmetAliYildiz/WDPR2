@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {FaRegCalendar} from 'react-icons/fa';
 import {IoPersonAdd} from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
@@ -53,4 +53,4 @@ function KaartjesCards() {
     );
 }
 
-export default GebruikersPortaal;
+export default KaartjesCards;
