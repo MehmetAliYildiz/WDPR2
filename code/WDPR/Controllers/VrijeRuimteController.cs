@@ -38,7 +38,7 @@ namespace WDPR.Controllers
         {
             _context.AddVrijeRuimte(nieuweRuimte);
             _context.SaveChangesAsync();
-            Console.WriteLine(_context.GetVrijeRuimtes().Count());
+
             return Ok();
         }
     }

@@ -36,8 +36,6 @@ function Login() {
         e.preventDefault();
         try {
             let res = await fetch("https://localhost:7260/api/Account/login", {
-
-
                 headers: {'Content-Type': 'application/json'},
                 method: "POST",
                 mode:"cors",

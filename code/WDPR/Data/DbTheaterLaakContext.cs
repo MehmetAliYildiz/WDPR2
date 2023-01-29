@@ -165,12 +165,12 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     public IEnumerable<Kaartje> GetKaartjes()
     {
-        return Kaartjes;
+        return Kaartjes.Include(k => k.Bestelling).Include(k => k.Agenda);
     }
 
     public IEnumerable<Bestelling> GetBestellingen()
     {
-        return Bestellingen;
+        return Bestellingen.Include(b => b.Gebruiker);
     }
 
     public IEnumerable<Stoel> GetStoelen()
@@ -180,7 +180,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     public IEnumerable<StoelKaartje> GetStoelKaartjes()
     {
-        return StoelKaartjes.Include(sk => sk.Stoel).Include(sk => sk.Kaartje);
+        return StoelKaartjes.Include(sk => sk.Stoel).Include(sk => sk.Kaartje).Include(sk => sk.Kaartje.Agenda);
     }
 
     public IEnumerable<Review> GetReview()
@@ -257,6 +257,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
+    
         builder.UseSqlServer("Data Source=20.77.66.80,1433;User Id=SA;Password =Pass@word; Initial Catalog=laak;TrustServerCertificate=True;");
 
     }

@@ -2,12 +2,200 @@
     padding: 5%;
 }
 .voorstellingPlaatje {
-    width: 80%;
+    max-height: 80%;
+    max-width: 80%;
+    
 }
 .reviewItem{
-    background-color: black;
+    background-color: #8B0001;
     color: white;
     margin-top: 10px;
-    padding: 5px;
+    padding: 20px;
     border-radius: 20px;
+    width: 500px;
+}
+.ReviewText{
+    font-weight: 900;
+}
+.VoorstellingInfo{
+    display: flex;
+    align-items: center;
+}
+.VoorstellingInfo h1{
+    font-weight: 900;
+}
+.VoorstellingInfo p{
+    padding-top: 10px;
+}
+
+.VoorstellingText{
+    padding-left: 20px;
+    width: 40%;
+    word-wrap: break-word;
+
+}
+.Review{
+    font-size: 20px;
+    margin-top: 20px;
+    padding: 10px;
+    font-weight: 900;
+    max-width: 300px;
+    border-radius: 10px;
+    border: 10px solid ;
+    border-color: #8B0001;
+    color: black;
+}
+.Lijn {
+    background-color: #8B0001;
+    margin-top: 10px;
+    height: 2px;
+    width: 20%;
+}
+
+.Boekknop {
+    font-size: 16px;
+    color: white;
+    text-decoration: none;
+    background-color: #8B0001;
+    padding: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border-radius: 10px;
+    transition: all 100ms;
+}
+
+.Boekknop:hover {
+    background-color: black;
+    color: white;
+}
+.AgendaItem {
+    display: inline-block;
+    background-color: #F39A05;
+    max-width: 270px;
+    min-width: 230px;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 10px;
+}
+.AgendaItem p{
+    font-weight: 900;
+}
+.voorstellingInfoWrapper h2{
+    font-weight: 900;
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+.voorstellingInfoWrapper h3{
+    font-weight: 700;
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+.voorstellingInfoWrapper h4{
+    font-weight: 500;
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+
+.Survey {
+    margin-right: 50%;
+    width: 60%;
+    padding: 2em;
+    background-color: #f9f9f9;
+    border-radius: 1em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.Survey h4 {
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+.Survey label {
+    display: block;
+    margin-bottom: 1em;
+}
+
+.Survey textarea,
+.Survey input[type="number"] {
+    width: 100%;
+    padding: 0.5em;
+    border: none;
+    border-radius: 0.5em;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    font-size: 1em;
+    transition: all 0.2s ease-in-out;
+}
+
+.Survey textarea:focus,
+.Survey input[type="number"]:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.Survey input[type="submit"] {
+    width: 50%;
+    padding: 1em;
+    background-color: #8B0001;
+    color: #fff;
+    border: none;
+    border-radius: 0.5em;
+    font-size: 1em;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.Survey input[type="submit"]:hover {
+    background-color: #000000;
+}
+.FormWrapper{
+    display: flex;
+    justify-content: left;
+}
+
+
+@media screen and (max-width: 1200px) {
+    .VoorstellingInfo{
+        display: block;
+        align-items: center;
+    }
+    .VoorstellingText{
+        padding-left: 0px;
+        width: 100%;
+    }
+    .voorstellingInfoWrapper{
+        padding: 10px;
+    }
+    .voorstellingPlaatje {
+        max-height: 100%;
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+    .Lijntje {
+        background-color: #8B0001;
+        margin-top: 10px;
+        height: 2px;
+        width: 20%;
+    }
+    .Survey {
+        margin: 0 auto;
+        width: 100%;
+        padding: 2em;
+        background-color: #f9f9f9;
+        border-radius: 1em;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .reviewItem{
+        background-color: #8B0001;
+        color: white;
+        margin-top: 10px;
+        padding: 20px;
+        border-radius: 20px;
+        width: 80%;
+    }
+    .AgendaItem {
+        width: 100%;
+    }
+    .Survey input[type="submit"] {
+        width: 100%;
+    }
 }

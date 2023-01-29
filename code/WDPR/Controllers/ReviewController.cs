@@ -85,15 +85,11 @@ namespace WDPR.Controllers
                 .Where(r => r.VoorstellingId == reviewDTO.voorstellingId)
                 .FirstOrDefault();
 
-            // if (existingReview != null)
-            // {
-            //     return BadRequest("You have already posted a review for this voorstelling");
-            // }
-
-            if (reviewDTO.sterren < 0 || reviewDTO.sterren > 5)
+            if (existingReview != null)
             {
-                return BadRequest("Je mag alleen maar tussen de 0 en 5 Sterren geven.");
+                return BadRequest("You have already posted a review for this voorstelling");
             }
+
             var review = new Review()
             {
                 Recensie = reviewDTO.recensie,
