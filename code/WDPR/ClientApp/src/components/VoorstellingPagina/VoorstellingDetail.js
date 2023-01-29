@@ -138,44 +138,46 @@ class VoorstellingDetail extends Component {
         return (
             <>
                 <Navigatie />
-                <div className="voorstellingInfoWrapper">
-                    <div className="VoorstellingInfo">
-                        <img className="voorstellingPlaatje" src={this.state.voorstelling.img} alt="..." />
-                        <div className="VoorstellingText">
-                            <h1>{this.state.voorstelling.name}</h1>
-                            <div className="Lijntje"></div>
-                            <p>{this.state.voorstelling.beschrijving}</p>
+                <div className="main">
+                    <div className="voorstellingInfoWrapper">
+                        <div className="VoorstellingInfo">
+                            <img className="voorstellingPlaatje" src={this.state.voorstelling.img} alt="..." />
+                            <div className="VoorstellingText">
+                                <h1>{this.state.voorstelling.name}</h1>
+                                <div className="Lijntje"></div>
+                                <p>{this.state.voorstelling.beschrijving}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                        <p className="Review">Gemiddelde Sterren: {this.state.averageRating}</p>
-                        <h3>Recensies</h3>
-                        <div className="reviewItems">{reviewItems}</div>
+                        <div>
+                            <p className="Review">Gemiddelde Sterren: {this.state.averageRating}</p>
+                            <h3>Recensies</h3>
+                            <div className="reviewItems">{reviewItems}</div>
 
-                    </div>
-                    <h4>Plaats Nieuwe Review</h4>
-                    <div className="FormWrapper">
-                    <form onSubmit={this.handleSubmit} className="Survey">
-                        <label>
-                            Review:
-                            <textarea value={this.state.newReview.recensie} onChange={(e) => this.setState({ newReview: { ...this.state.newReview, recensie: e.target.value } })} />
-                        </label>
-                        <label>
-                            Sterren:
-                            <input type="number" min="1" max="5" value={this.state.newReview.sterren} onChange={(e) => this.setState({ newReview: { ...this.state.newReview, sterren: e.target.value } })} />
-                        </label>
-                        <input type="submit" value="Plaats Review" />
-                    </form>
-                    </div>
+                        </div>
+                        <h4>Plaats Nieuwe Review</h4>
+                        <div className="FormWrapper">
+                        <form onSubmit={this.handleSubmit} className="Survey">
+                            <label>
+                                Review:
+                                <textarea value={this.state.newReview.recensie} onChange={(e) => this.setState({ newReview: { ...this.state.newReview, recensie: e.target.value } })} />
+                            </label>
+                            <label>
+                                Sterren:
+                                <input type="number" min="1" max="5" value={this.state.newReview.sterren} onChange={(e) => this.setState({ newReview: { ...this.state.newReview, sterren: e.target.value } })} />
+                            </label>
+                            <input type="submit" value="Plaats Review" />
+                        </form>
+                        </div>
                     
 
 
 
-                    <h2>Boek Stoelen Voor {this.state.voorstelling.name}</h2>
-                    <div className="agendaItem">{agendaItems}</div>
+                        <h2>Boek Stoelen Voor {this.state.voorstelling.name}</h2>
+                        <div className="agendaItem">{agendaItems}</div>
 
-                </div>
+                    </div>
                 <Footer />
+                </div>
             </>
 
         );

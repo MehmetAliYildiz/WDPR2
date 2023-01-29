@@ -19,10 +19,15 @@ import SocketTest from './components/SocketTest';
 import WachtwoordVergeten from './components/WachtwoordVergeten/WachtwoordVergeten';
 import GebruikersPortaal from './components/GebruikersPortaal/GebruikersPortaal';
 import PaymentComplete from './components/Payment/PaymentComplete';
+
 import VoorstellingPost from './components/AdminPanel/VoorstellingPost';
 import ArtiestPost from './components/AdminPanel/ArtiestPost';
 import GebruikerGet from './components/AdminPanel/GebruikerGet';
 import BandPost from './components/AdminPanel/BandPost';
+
+import AdminHoofdMenu from './components/AdminPanel/AdminHoofdMenu';
+import AdminLogin from './components/Admin/adminLogin';
+
 
 
 
@@ -38,9 +43,9 @@ export default function App() {
                 <Route path='/inloggen' element={<Inloggen />}></Route>
                 <Route path='/reserveren' element={<Reserveren />}></Route>
                 <Route path='/registreer' element={<Registratie />}></Route>
-                <Route path='/reserveren/zaal' element={<ReserveerForm />}></Route>
+                <Route path='/reserveren/ruimte' element={<ReserveerForm />}></Route>
                 <Route path='/winkelmandje' element={<ShoppingCart />}></Route>
-                <Route path='/admin' element={<AdminPanel />}></Route>
+                <Route path='/admin/zaalbeheer' element={<AdminPanel />}></Route>
                 <Route path='/voorstelling/geselecteerd' element={<VoorstellingDetail />}></Route>
                 <Route path='/voorstelling/boekstoel' element={<StoelBoeken2 />}></Route>
                 <Route path='/sockettest' element={<SocketTest />}></Route>
@@ -50,9 +55,13 @@ export default function App() {
                 <Route path={'/wwVergeten'} element={<WachtwoordVergeten />}></Route>
                 <Route path={'/gebruikerportaal'} element={<GebruikersPortaal />}></Route>
                 <Route path={'/paymentcomplete'} element={<PaymentComplete />}></Route>
+
                 <Route path={'/Admin/Artiest'} element={<ArtiestPost />}></Route>
                 <Route path={'/Admin/Gebruiker'} element={<GebruikerGet />}></Route>
                 <Route path={'/Admin/Band'} element={<BandPost />}></Route>
+
+                <Route path={'/admin'} element={<AdminHoofdMenu />}></Route>
+                <Route path={'/admin/login'} element={<AdminLogin />}></Route>
             </Routes>
         </>
 

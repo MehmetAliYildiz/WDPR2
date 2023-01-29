@@ -147,10 +147,10 @@ button.scheduler-row:hover {
     z-index: 2;
 }
 
-    .appointment-outer .remove-button:hover {
-        background-color: rgba(229, 229, 229, 1.0);
-        border-color: rgb(210, 210, 210);
-    }
+.appointment-outer .remove-button:hover {
+    background-color: rgba(229, 229, 229, 1.0);
+    border-color: rgb(210, 210, 210);
+}
 
 .appointment-outer .remove-button:active {
     background-color: rgba(180, 180, 180, 1.0);
