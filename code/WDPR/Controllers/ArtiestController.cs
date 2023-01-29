@@ -12,10 +12,10 @@ namespace WDPR.Controllers {
     [Route("api/[controller]")]
     public class ArtiestController : ControllerBase
     {
-        private readonly IDbTheaterLaakContext _context;
+        private readonly DbTheaterLaakContext _context;
         private readonly UserManager<Gebruiker> _userManager;
 
-        public ArtiestController(IDbTheaterLaakContext context, UserManager<Gebruiker> userManager)
+        public ArtiestController(DbTheaterLaakContext context, UserManager<Gebruiker> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -41,21 +41,30 @@ namespace WDPR.Controllers {
         }
 
         [HttpPost]
-        public async Task<CreatedAtActionResult> PostArtiest(ArtiestDTO artiestDTO)
+        public async Task<IActionResult> PostArtiest(ArtiestDTO artiestDTO)
         {
+            var existingUserByEmail = await _userManager.FindByEmailAsync(artiestDTO.Email);
+            if (existingUserByEmail != null)
+            {
+                return BadRequest("Email already exists.");
+            }
+
+            var existingUserByName = await _userManager.FindByNameAsync(artiestDTO.gebruikersnaam);
+            if (existingUserByName != null)
+            {
+                return BadRequest("Username already exists.");
+            }
+
             var artiest = new Artiest()
             {
                 UserName = artiestDTO.gebruikersnaam,
                 Email = artiestDTO.Email,
+                PasswordHash = artiestDTO.Wachtwoord,
                 ArtiestBands = new List<ArtiestBand>()
             };
 
-            var result = await _userManager.CreateAsync(artiest, artiestDTO.Wachtwoord);
-            if (result.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(artiest, "Artiest");
-            }
-            
+            // await _userManager.AddToRoleAsync(artiest, "Artiest");
+            _context.AddArtiest(artiest);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetArtiest", new { id = artiest.Id }, artiest);
