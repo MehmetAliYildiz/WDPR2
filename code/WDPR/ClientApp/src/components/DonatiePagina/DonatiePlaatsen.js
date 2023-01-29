@@ -60,7 +60,7 @@ const DonatiePlaatsen = () => {
                     <textarea rows="2" className="form-control" value={tekst} onChange={e => setTekst(e.target.value)} />
                     </div>
                     <div className="mb-3 d-grid">
-                    <button type="submit" className="btn btn-primary" style={loginKnop}>Herstel wachtwoord</button>
+                    <button type="submit" className="btn btn-primary" style={loginKnop}>Doneer</button>
                     </div>
                 </form>
 
