@@ -108,8 +108,6 @@ export default class StoelBoeken extends Component {
         }
 
         const geselecteerdeStoelen = [];
-        const kaartjesCode = this.generateKaartjesCode();
-        this.setState({ tempId: kaartjesCode });
 
         for (let index = 0; index < this.state.stoelen.length; index++) {
             if (this.state.stoelen[index].status !== "Geselecteerd") continue;
@@ -120,9 +118,9 @@ export default class StoelBoeken extends Component {
         const data = {
             agendaId: this.getAgendaId(),
             stoelIds: geselecteerdeStoelen,
-            code: kaartjesCode,
             gebruikerEmail: gebruikersNaam,
-            bezoekerId: bezId
+            bezoekerId: bezId,
+            code: ""
         };
         try {
             await axios.post(endpoint, data);

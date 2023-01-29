@@ -132,11 +132,17 @@ namespace WDPR.Controllers
         [HttpPost("kaartjesFromBestellingen")]
         public IActionResult GetKaartjesFromBestellingen([FromBody] List<Bestelling> bestellingen)
         {
-            var kaartjes = _context.GetKaartjes().Where(k => bestellingen.Any(b => b.Id == k.Bestelling.Id));
+            var kaartjes = _context.GetKaartjes().Where(k => bestellingen.Any(b => b.Id == k.Bestelling.Id)).ToList();
             if (!kaartjes.Any())
             {
                 return NotFound("Geen kaartjes zijn verbonden aan deze bestellingen");
             }
+
+            kaartjes.ForEach(k =>
+            {
+                if (k.Agenda == null) return;
+                k.Agenda.Kaartjes = new List<Kaartje>();
+            });
 
             return Ok(kaartjes);
         }
