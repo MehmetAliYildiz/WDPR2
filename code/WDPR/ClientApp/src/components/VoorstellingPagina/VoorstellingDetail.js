@@ -28,22 +28,19 @@ class VoorstellingDetail extends Component {
     }
 
     handleSubmit(e) {
-
         e.preventDefault();
         var gebruikersnaam = sessionStorage.getItem('gebruikersNaam');
-        // console.log(gebruikersnaam)
-
+    
         if (gebruikersnaam === "" || gebruikersnaam === null) {
             alert("Helaas, je moet inloggen om voor deze voorstelling een review te plaatsen");
             return;
         }
         Axios.get(`https://localhost:7260/api/gebruiker/GebruikerIdOpvragen?email=${gebruikersnaam}`).then((res) => {
             this.setState({ gebruiker: res.data });
-            console.log(res.data.id);
             this.state.newReview.gebruikerId = res.data.id;
-
+    
             this.state.newReview.voorstellingId = this.state.voorstelling.id;
-            console.log(this.state.newReview);
+    
             Axios.post("https://localhost:7260/api/review", this.state.newReview)
                 .then(res => {
                     this.setState(prevState => {
@@ -57,10 +54,18 @@ class VoorstellingDetail extends Component {
                             }
                         }
                     });
+                    // Here you can make the API call to get the new average rating
+                    Axios.get(`https://localhost:7260/api/review/average/${this.state.voorstelling.id}`)
+                    .then(res => {
+                        
+                        this.setState({ averageRating: Math.round(res.data * 10) / 10 });
+                    })
+                    .catch(err => console.log(err));
                 })
                 .catch(err => alert("Je kan niet nog een review plaatsen"));
         });
     }
+    
 
     componentDidMount() {
 
@@ -70,14 +75,14 @@ class VoorstellingDetail extends Component {
 
         Axios.get(`https://localhost:7260/api/review/average/${voorstellingId}`)
             .then(res => {
-                this.setState({ averageRating: res.data });
+                this.setState({ averageRating: Math.round(res.data * 10) / 10 });
 
             })
             .catch(err => console.log(err));
 
 
         Axios.get(`https://localhost:7260/api/Voorstelling/${voorstellingId}`).then((res) => {
-
+            console.log(res.data.BandId);
             this.setState({ voorstelling: res.data });
         });
 
@@ -102,13 +107,12 @@ class VoorstellingDetail extends Component {
 
         const agendaItems = this.state.agendas.map(agenda => {
             const startDatumTijd = new Date(agenda.startDatumTijd).toLocaleDateString(undefined, {hour: '2-digit', minute:'2-digit'});
-            const eindDatumTijd = new Date(agenda.eindDatumTijd).toLocaleDateString(undefined, {hour: '2-digit', minute:'2-digit'});
+            const eindDatumTijd = new Date(agenda.startDatumTijd).toLocaleDateString(undefined, {hour: '2-digit', minute:'2-digit'});
 
             return (
                 <section className="AgendaItem">
-                    <p>Zaalnummer: {agenda.zaalId}</p>
-                    <p>Begin: {startDatumTijd}</p>
-                    <p>Eind: {eindDatumTijd}</p>
+                    <p>Starttijd: {startDatumTijd}</p>
+                    <p>Eindtijd: {eindDatumTijd}</p>
                     <a href={`voorstelling/boekstoel?zaalId=${agenda.zaalId}&agendaId=${agenda.id}`} className="Boekknop">Boek Stoelen</a>
                 </section>
             );
@@ -116,8 +120,8 @@ class VoorstellingDetail extends Component {
 
         let reviewItems;
         if (this.state.reviews.length > 0) {
-
             reviewItems = this.state.reviews.map(review => {
+                // Axios.get(`https://localhost:7260/api/gebruiker/${review.gebruikerId}`)
                 return (
                     <section className="reviewItem">
                         <p className="ReviewText">{review.recensie}</p>
@@ -140,7 +144,6 @@ class VoorstellingDetail extends Component {
                         <div className="VoorstellingText">
                             <h1>{this.state.voorstelling.name}</h1>
                             <div className="Lijntje"></div>
-                            {/* <p>Bekijk hier de informatie over {this.state.voorstelling.name} en boek je kaartje op de gewenste dag en tijd</p> */}
                             <p>{this.state.voorstelling.beschrijving}</p>
                         </div>
                     </div>
@@ -150,25 +153,25 @@ class VoorstellingDetail extends Component {
                         <div className="reviewItems">{reviewItems}</div>
 
                     </div>
-                    <h4>Plaats nieuwe recensie</h4>
+                    <h4>Plaats Nieuwe Review</h4>
                     <div className="FormWrapper">
                     <form onSubmit={this.handleSubmit} className="Survey">
                         <label>
-                            Recensie:
+                            Review:
                             <textarea value={this.state.newReview.recensie} onChange={(e) => this.setState({ newReview: { ...this.state.newReview, recensie: e.target.value } })} />
                         </label>
                         <label>
                             Sterren:
                             <input type="number" min="1" max="5" value={this.state.newReview.sterren} onChange={(e) => this.setState({ newReview: { ...this.state.newReview, sterren: e.target.value } })} />
                         </label>
-                        <input type="submit" value="Plaats Recensie" />
+                        <input type="submit" value="Plaats Review" />
                     </form>
                     </div>
                     
 
 
 
-                    <h2>Tijden en tickets voor {this.state.voorstelling.name}</h2>
+                    <h2>Boek Stoelen Voor {this.state.voorstelling.name}</h2>
                     <div className="agendaItem">{agendaItems}</div>
 
                 </div>
