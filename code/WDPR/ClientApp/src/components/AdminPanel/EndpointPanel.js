@@ -7,7 +7,7 @@ export default class EndpointPanel extends Component {
     async postToEndpoint(url, body) {
         let res = null;
         let err;
-        await axios.post(GetEndpoint()+"/" + url, body)
+        await axios.post(GetEndpoint() + url, body)
             .then(response => {
                 res = response;
             })
@@ -21,7 +21,7 @@ export default class EndpointPanel extends Component {
     async getFromEndpoint(url) {
         let data;
         let err;
-        await axios.get(GetEndpoint()+"/" + url)
+        await axios.get(GetEndpoint() + url)
             .then(response => {
                 data = response.data;
             })
