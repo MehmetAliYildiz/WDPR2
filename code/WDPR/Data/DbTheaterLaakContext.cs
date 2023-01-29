@@ -12,6 +12,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     #region DbSets
     private DbSet<Voorstelling> Voorstelling { get; set; }
+    public DbSet<Admin> Admin {get; set;}
     private DbSet<Reservering> Reserveringen { get; set; }
     private DbSet<Bestelling> Bestellingen { get; set; }
     private DbSet<Gebruiker> Gebruiker { get; set; }
@@ -256,13 +257,19 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
-        builder.UseSqlServer("Data Source=20.77.66.80,1433;User Id=SA;MultipleActiveResultSets=true;Password =Pass@word; Initial Catalog=laak;TrustServerCertificate=True;");
+    
+        builder.UseSqlServer("Data Source=20.77.66.80,1433;User Id=SA;Password =Pass@word; Initial Catalog=laak;TrustServerCertificate=True;");
 
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+
+        builder.Entity<Voorstelling>()
+        .HasOne(v => v.Band)
+        .WithMany(b => b.Voorstelling)
+        .HasForeignKey(v => v.BandId);
 
         builder.Entity<Agenda>()
             .HasMany(a => a.Kaartjes)
