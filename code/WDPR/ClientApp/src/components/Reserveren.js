@@ -14,15 +14,15 @@ function Reserveren() {
 
     const navigate = useNavigate();
 
-    const handleButtonClick = (zaalId) => {
-        navigate(`/reserveren/zaal?zaalId=${zaalId}`);
-        console.log(`Button with id ${zaalId} clicked`);
+    const handleButtonClick = (ruimteId) => {
+        navigate(`/reserveren/ruimte?ruimteId=${ruimteId}`);
+        console.log(`Button with id ${ruimteId} clicked`);
     };
 
     return (
         <div>
             <NavBar></NavBar>
-            <h1>Select an object to rent:</h1>
+            <h1>Huur een ruimte</h1>
             <ZaalLijst onButtonClick={handleButtonClick} />
             {selectedObject && <button onClick={() => navigateToWebForm(selectedObject)}>Next</button>}
             <Footer style={{ bottom: "0%", position: "fixed", width: "100vw" }} />
