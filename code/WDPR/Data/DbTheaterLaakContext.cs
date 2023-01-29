@@ -12,6 +12,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     #region DbSets
     private DbSet<Voorstelling> Voorstelling { get; set; }
+    public DbSet<Admin> Admin {get; set;}
     private DbSet<Reservering> Reserveringen { get; set; }
     private DbSet<Bestelling> Bestellingen { get; set; }
     private DbSet<Gebruiker> Gebruiker { get; set; }

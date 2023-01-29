@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WDPR.Migrations
 {
     [DbContext(typeof(DbTheaterLaakContext))]
-    [Migration("20230128122624_1")]
-    partial class _1
+    [Migration("20230129155057_Voorstelling")]
+    partial class Voorstelling
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -466,6 +466,10 @@ namespace WDPR.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("BandId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
                     b.Property<string>("Img")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -479,6 +483,8 @@ namespace WDPR.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BandId");
 
                     b.ToTable("Voorstelling");
                 });
@@ -518,6 +524,13 @@ namespace WDPR.Migrations
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.HasDiscriminator().HasValue("Gebruiker");
+                });
+
+            modelBuilder.Entity("WDPR.Models.Admin", b =>
+                {
+                    b.HasBaseType("WDPR.Models.Gebruiker");
+
+                    b.HasDiscriminator().HasValue("Admin");
                 });
 
             modelBuilder.Entity("WDPR.Models.Artiest", b =>
@@ -681,6 +694,17 @@ namespace WDPR.Migrations
                     b.Navigation("Stoel");
                 });
 
+            modelBuilder.Entity("WDPR.Models.Voorstelling", b =>
+                {
+                    b.HasOne("WDPR.Models.Band", "Band")
+                        .WithMany("Voorstelling")
+                        .HasForeignKey("BandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Band");
+                });
+
             modelBuilder.Entity("WDPR.Models.Agenda", b =>
                 {
                     b.Navigation("Kaartjes");
@@ -689,6 +713,8 @@ namespace WDPR.Migrations
             modelBuilder.Entity("WDPR.Models.Band", b =>
                 {
                     b.Navigation("ArtiestBands");
+
+                    b.Navigation("Voorstelling");
                 });
 
             modelBuilder.Entity("WDPR.Models.Kaartje", b =>

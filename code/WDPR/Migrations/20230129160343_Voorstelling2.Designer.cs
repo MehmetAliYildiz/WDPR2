@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WDPR.Migrations
 {
     [DbContext(typeof(DbTheaterLaakContext))]
-    [Migration("20230128201215_VoorstellingUpdate")]
-    partial class VoorstellingUpdate
+    [Migration("20230129160343_Voorstelling2")]
+    partial class Voorstelling2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -466,8 +466,7 @@ namespace WDPR.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BandId")
-                        .IsRequired()
+                    b.Property<int>("BandId")
                         .HasColumnType("int");
 
                     b.Property<string>("Img")
@@ -524,6 +523,13 @@ namespace WDPR.Migrations
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.HasDiscriminator().HasValue("Gebruiker");
+                });
+
+            modelBuilder.Entity("WDPR.Models.Admin", b =>
+                {
+                    b.HasBaseType("WDPR.Models.Gebruiker");
+
+                    b.HasDiscriminator().HasValue("Admin");
                 });
 
             modelBuilder.Entity("WDPR.Models.Artiest", b =>

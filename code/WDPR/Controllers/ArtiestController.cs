@@ -51,11 +51,16 @@ namespace WDPR.Controllers {
             };
 
             var result = await _userManager.CreateAsync(artiest, artiestDTO.Wachtwoord);
-            await _userManager.AddToRoleAsync(artiest, "artiest");
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(artiest, "Artiest");
+            }
+            
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetArtiest", new { id = artiest.Id }, artiest);
         }
+
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<Artiest>> DeleteArtiest(string id)

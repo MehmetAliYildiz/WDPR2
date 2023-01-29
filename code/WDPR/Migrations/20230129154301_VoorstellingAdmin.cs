@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WDPR.Migrations
 {
     /// <inheritdoc />
-    public partial class _1 : Migration
+    public partial class VoorstellingAdmin : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -78,21 +78,6 @@ namespace WDPR.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Band", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Voorstelling",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    beschrijving = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Img = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Voorstelling", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -275,29 +260,23 @@ namespace WDPR.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Review",
+                name: "Voorstelling",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Recensie = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Sterren = table.Column<int>(type: "int", nullable: false),
-                    GebruikerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    VoorstellingId = table.Column<int>(type: "int", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    beschrijving = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Img = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BandId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Review", x => x.Id);
+                    table.PrimaryKey("PK_Voorstelling", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Review_AspNetUsers_GebruikerId",
-                        column: x => x.GebruikerId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Review_Voorstelling_VoorstellingId",
-                        column: x => x.VoorstellingId,
-                        principalTable: "Voorstelling",
+                        name: "FK_Voorstelling_Band_BandId",
+                        column: x => x.BandId,
+                        principalTable: "Band",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -370,6 +349,34 @@ namespace WDPR.Migrations
                         name: "FK_Reserveringen_Bestellingen_BestellingId",
                         column: x => x.BestellingId,
                         principalTable: "Bestellingen",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Review",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Recensie = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Sterren = table.Column<int>(type: "int", nullable: false),
+                    GebruikerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    VoorstellingId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Review", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Review_AspNetUsers_GebruikerId",
+                        column: x => x.GebruikerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Review_Voorstelling_VoorstellingId",
+                        column: x => x.VoorstellingId,
+                        principalTable: "Voorstelling",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -481,6 +488,11 @@ namespace WDPR.Migrations
                 name: "IX_StoelKaartjes_KaartjeId",
                 table: "StoelKaartjes",
                 column: "KaartjeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Voorstelling_BandId",
+                table: "Voorstelling",
+                column: "BandId");
         }
 
         /// <inheritdoc />
@@ -517,9 +529,6 @@ namespace WDPR.Migrations
                 name: "VrijeRuimtes");
 
             migrationBuilder.DropTable(
-                name: "Band");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -530,6 +539,9 @@ namespace WDPR.Migrations
 
             migrationBuilder.DropTable(
                 name: "Stoel");
+
+            migrationBuilder.DropTable(
+                name: "Band");
 
             migrationBuilder.DropTable(
                 name: "Agenda");
