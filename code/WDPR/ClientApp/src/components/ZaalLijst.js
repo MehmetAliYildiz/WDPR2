@@ -10,7 +10,7 @@ class ZaalLijst extends Component {
     }
 
     componentDidMount = async () => {
-        const res = await fetch(GetEndpoint()+"/VrijeRuimte");
+        const res = await fetch(GetEndpoint() + "VrijeRuimte");
         console.log(res.body);
         const data = await res.json();
         this.setState({ buttons: data });

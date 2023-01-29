@@ -19,6 +19,7 @@ import SocketTest from './components/SocketTest';
 import VoorstellingPost from "./components/VoorstellingPagina/VoorstellingPost";
 import WachtwoordVergeten from './components/WachtwoordVergeten/WachtwoordVergeten';
 import GebruikersPortaal from './components/GebruikersPortaal/GebruikersPortaal';
+import PaymentComplete from './components/Payment/PaymentComplete';
 
 
 
@@ -44,7 +45,8 @@ export default function App() {
                 <Route path='/admin/exceltoevoegen' element={<ExcelUploaden/>}></Route>
                 <Route path={'/pay'} element={<PaymentForm />}></Route>
                 <Route path={'/wwVergeten'} element={<WachtwoordVergeten />}></Route>
-                <Route pathe={'/gebruikerportaal'} element={<GebruikersPortaal/>}></Route>
+                <Route path={'/gebruikerportaal'} element={<GebruikersPortaal />}></Route>
+                <Route path={'/paymentcomplete'} element={<PaymentComplete />}></Route>
             </Routes>
         </>
 

@@ -164,12 +164,12 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     public IEnumerable<Kaartje> GetKaartjes()
     {
-        return Kaartjes;
+        return Kaartjes.Include(k => k.Bestelling);
     }
 
     public IEnumerable<Bestelling> GetBestellingen()
     {
-        return Bestellingen;
+        return Bestellingen.Include(b => b.Gebruiker);
     }
 
     public IEnumerable<Stoel> GetStoelen()
@@ -179,7 +179,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     public IEnumerable<StoelKaartje> GetStoelKaartjes()
     {
-        return StoelKaartjes.Include(sk => sk.Stoel).Include(sk => sk.Kaartje);
+        return StoelKaartjes.Include(sk => sk.Stoel).Include(sk => sk.Kaartje).Include(sk => sk.Kaartje.Agenda);
     }
 
     public IEnumerable<Review> GetReview()

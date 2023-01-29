@@ -12,6 +12,7 @@ function Voorstelling() {
 
     useEffect(() => {
         Axios.get("https://localhost:7260/api/Voorstelling").then((res) => {
+
             setPost(res.data);
             console.log(res.data);
         });

@@ -7,6 +7,8 @@ import shortid from 'shortid';
 import jwt_decode from 'jwt-decode';
 import { v4 as uuidv4 } from 'uuid';
 import GetEndpoint from '../Admin/EndPointUtil';
+import Navigatie from '../navFoot/navbar';
+import Footer from '../navFoot/Footer';
 
 export default class StoelBoeken extends Component {
     constructor(props) {
@@ -48,7 +50,7 @@ export default class StoelBoeken extends Component {
             console.log("Connected!");
         });
 
-        axios.get(GetEndpoint() + this.getZaalId() + '/' + this.getAgendaId())
+        axios.get(GetEndpoint() + 'Stoel/' + this.getZaalId() + '/' + this.getAgendaId())
             .then(response => {
                 this.setState({
                     stoelen: response.data
@@ -123,7 +125,7 @@ export default class StoelBoeken extends Component {
             geselecteerdeStoelen.push(this.state.stoelen[index].id);
         }
 
-        let endpoint = GetEndpoint() + (gebruikersNaam ? '/gebruiker' : '/bezoeker');
+        let endpoint = GetEndpoint() + 'Kaartje/' + (gebruikersNaam ? 'gebruiker' : 'bezoeker');
         const data = {
             agendaId: this.getAgendaId(),
             stoelIds: geselecteerdeStoelen,
@@ -137,7 +139,7 @@ export default class StoelBoeken extends Component {
             console.error(err);
         }
 
-        endpoint = GetEndpoint() + (gebruikersNaam ? 'gebruiker/' : 'bezoeker/') + (gebruikersNaam ? gebruikersNaam : bezId);
+        endpoint = GetEndpoint() + 'Bestelling/payment/' + (gebruikersNaam ? 'gebruiker/' : 'bezoeker/') + (gebruikersNaam ? gebruikersNaam : bezId);
         console.log(endpoint);
         try {
             const response = await axios.get(endpoint);
@@ -189,13 +191,17 @@ export default class StoelBoeken extends Component {
         }
 
         return (
-            <div className="stoel-select">
-                {rowDivs}
+            <div>
+                <Navigatie/>
+                <div className="stoel-select">
+                    {rowDivs}
 
-                <button type="button" onClick={this.handleSubmit}>
-                    Submit
-                </button>
-                {this.state.tempId}
+                    <button type="button" onClick={this.handleSubmit}>
+                        Submit
+                    </button>
+                    {this.state.tempId}
+                </div>
+                <Footer/>
             </div>
         );
     }

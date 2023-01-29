@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using System.CodeDom;
 using System.Collections.ObjectModel;
+using System.Text.Json;
 using WDPR.Data;
 using WDPR.Models;
 
@@ -71,7 +72,7 @@ namespace WDPR.Controllers
                     return BadRequest("Geen gebruiker met email '" + kaartjeWithId.GebruikerEmail + "' gevonden");
             }
             #endregion
-
+            Console.WriteLine(JsonSerializer.Serialize(kaartjeWithId));
             var request = HttpContext.Request;
             Kaartje kaartje = new Kaartje()
             {
@@ -83,13 +84,16 @@ namespace WDPR.Controllers
                     Betaald = false,
                     PlaatsTijd = DateTime.Now,
                     Bedrag = 20D * kaartjeWithId.StoelIds.Count(),
-                    BezoekerId = !gebruiker ? kaartjeWithId.GebruikerEmail : null,  // Of bezoekerId of gebruiker moet een waarde hebben
+                    BezoekerId = !gebruiker ? kaartjeWithId.BezoekerId : null,  // Of bezoekerId of gebruiker moet een waarde hebben
                     Gebruiker = gebruiker ? gebruikerMetMail : null,           // boolean gebruiker geeft aan welke van de twee het moet zijn
                     Type = "Kaartje"
                 },
 
                 // StoelKaartjes wordt leeg gelaten bij constructie
                 StoelKaartjes = new Collection<StoelKaartje>(),
+
+                // De code wordt gescand bij het theater om te zien of het kaartje echt bestaat
+                Code = Guid.NewGuid().ToString().Substring(0, 8),
 
                 // CodeUsed geeft aan of het kaartje al gebruikt/gescand is door een bezoeker van het theater
                 CodeUsed = false
@@ -125,7 +129,7 @@ namespace WDPR.Controllers
         }
 
         // Post maken is niet RESTful, maar het kan eenmaal niet anders als we een lijst in de body willen
-        [HttpPost]
+        [HttpPost("kaartjesFromBestellingen")]
         public IActionResult GetKaartjesFromBestellingen([FromBody] List<Bestelling> bestellingen)
         {
             var kaartjes = _context.GetKaartjes().Where(k => bestellingen.Any(b => b.Id == k.Bestelling.Id));

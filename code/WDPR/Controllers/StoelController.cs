@@ -42,12 +42,14 @@ namespace WDPR.Controllers{
 
             var stoelen = zaal.First().Stoelen;
             var kaartjes = _context.GetKaartjes().ToList();
-            var beschikbareStoelen = stoelen.Where(
+            var beschikbareStoelen = stoelen.Where
+            (
                 s => !_context.GetStoelKaartjes().Any(sk => sk.Stoel.Id == s.Id && kaartjes.Any(k =>
                 {
                     if (k.Agenda == null) return false;
                     return k.Id == sk.KaartjeId && k.Agenda.Id == agendaId;
-                })));
+                }))
+            );
 
             stoelen.ToList().ForEach(s => s.Status = "Bezet"); // Zet de status van -ALLE- stoelen in de zaal naar bezet
             beschikbareStoelen.ToList().ForEach(bs => bs.Status = "Vrij"); // Zet de status van beschikbare stoelen naar vrij

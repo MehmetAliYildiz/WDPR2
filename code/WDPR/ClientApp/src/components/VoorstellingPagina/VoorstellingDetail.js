@@ -82,6 +82,7 @@ class VoorstellingDetail extends Component {
         });
 
         Axios.get(`https://localhost:7260/api/agenda/voorstelling/${voorstellingId}`)
+
             .then((res) => {
                 if (res.data == null) return;
                 for (let i = 0; i < res.data.length; i++) {
@@ -90,8 +91,8 @@ class VoorstellingDetail extends Component {
                     console.log(res.data[i])
                 }
             }
-            );
-        Axios.get(`https://localhost:7260/api/review/voorstelling/${voorstellingId}`)
+        );
+        Axios.get(GetEndpoint() + `api/review/voorstelling/${voorstellingId}`)
             .then((res) => {
                 this.setState({ reviews: res.data });
             });
