@@ -208,6 +208,7 @@ namespace WDPR.Controllers
                 return NotFound("er zijn geen kaartjes gekoppeld aan je account");
             }
 
+            var kaartjes = GetKaartjesFromBestellingen(bestellingOpId.ToList());
             return Ok(GetKaartjesFromBestellingen(bestellingOpId.ToList()));
             
         }

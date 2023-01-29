@@ -21,11 +21,11 @@ function QrCode({ kaartjes }) {
     <div>
       
       {kaartjes.map(kaartje => (
-        <div className="card" key={kaartje.id}>
+        <div className="card" key={kaartje.Id}>
             <div className={"ticket ${printen ? 'print-ticket' : ''}"} >
                 <QRCode value={kaartje.code}/>
                 <div className="card-body text-center">
-                    <div>id: {kaartje.naam}</div>
+                    <div>id: {kaartje.bestelling.gebruiker.userName}</div>
                     <div>start tijd: {kaartje.StartDatumTijd}</div>
                     <div>eind tijd: {kaartje.EindDatumTijd}</div>
                     <div>kaartje code: {kaartje.code}</div>

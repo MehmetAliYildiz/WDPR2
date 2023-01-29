@@ -23,7 +23,8 @@ function GebruikersPortaal() {
                 if (data.error) {
                     setError(data.error);
                 } else {
-                    setKaartjes(data);
+                    setKaartjes(data.value);
+                    console.log(kaartjes)
                 }
             })
             .catch(err => setError(err.message));
@@ -48,4 +49,4 @@ function GebruikersPortaal() {
     );
 }
 
-export default KaartjesCards;
+export default GebruikersPortaal;
