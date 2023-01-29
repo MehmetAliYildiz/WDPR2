@@ -80,7 +80,8 @@ using WDPR.Data;
             {
                 Name = voorstellingDTO.Name,
                 beschrijving = voorstellingDTO.beschrijving,
-                Img = voorstellingDTO.Img
+                Img = voorstellingDTO.Img,
+                BandId = voorstellingDTO.BandId
             };
             _context.AddVoorstelling(voorstelling);
             await _context.SaveChangesAsync();
@@ -126,5 +127,6 @@ using WDPR.Data;
             public string Name { get; set; }
             public string beschrijving{ get; set; }
             public string Img { get; set; }
+            public int BandId {get; set;}
         }
     }

@@ -7,13 +7,13 @@
     
 }
 .reviewItem{
-    background-color: #8B0001;
-    color: white;
+    color: black;
     margin-top: 10px;
     padding: 20px;
     border-radius: 20px;
     width: 500px;
-}
+    border: 5px solid #8B0001;
+    }
 .ReviewText{
     font-weight: 900;
 }
@@ -34,6 +34,9 @@
     word-wrap: break-word;
 
 }
+.VoorstellingText p{
+    font-size: 20px;
+}
 .Review{
     font-size: 20px;
     margin-top: 20px;
@@ -41,7 +44,7 @@
     font-weight: 900;
     max-width: 300px;
     border-radius: 10px;
-    border: 10px solid ;
+    border: 5px solid ;
     border-color: #8B0001;
     color: black;
 }
@@ -72,8 +75,10 @@
     display: inline-block;
     background-color: #F39A05;
     max-width: 270px;
+    min-width: 230px;
     padding: 20px;
     border-radius: 10px;
+    margin: 10px;
 }
 .AgendaItem p{
     font-weight: 900;
@@ -181,5 +186,14 @@
         background-color: #f9f9f9;
         border-radius: 1em;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .reviewItem{
+        width: 80%;
+    }
+    .AgendaItem {
+        width: 100%;
+    }
+    .Survey input[type="submit"] {
+        width: 100%;
     }
 }
