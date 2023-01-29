@@ -44,6 +44,7 @@ function GebruikersPortaal() {
                     <p className="text-center">Er zijn nog geen kaartjes gekoppeld aan uw account</p>
                 )}
             </div>
+
             <Footer/>
         </>
     );
