@@ -11,6 +11,7 @@ class VoorstellingDetail extends Component {
         super(props);
 
         this.state = {
+            averageRating: null,
             voorstelling: [],
             gebruiker: [],
             agendas: [],
@@ -25,6 +26,7 @@ class VoorstellingDetail extends Component {
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
     handleSubmit(e) {
 
         e.preventDefault();
@@ -34,7 +36,7 @@ class VoorstellingDetail extends Component {
         if (gebruikersnaam === "" || gebruikersnaam === null) {
             alert("Helaas, je moet inloggen om voor deze voorstelling een review te plaatsen");
             return;
-        }        
+        }
         Axios.get(`https://localhost:7260/api/gebruiker/GebruikerIdOpvragen?email=${gebruikersnaam}`).then((res) => {
             this.setState({ gebruiker: res.data });
             console.log(res.data.id);
@@ -56,83 +58,100 @@ class VoorstellingDetail extends Component {
                         }
                     });
                 })
-                .catch(err => console.log(err));
+                .catch(err => alert("Je kan niet nog een review plaatsen"));
         });
     }
 
-
-
-
-
     componentDidMount() {
+
         const queryParameters = new URLSearchParams(window.location.search);
         const voorstellingId = queryParameters.get("itemId");
+
+
+        Axios.get(`https://localhost:7260/api/review/average/${voorstellingId}`)
+            .then(res => {
+                this.setState({ averageRating: res.data });
+
+            })
+            .catch(err => console.log(err));
+
 
         Axios.get(`https://localhost:7260/api/Voorstelling/${voorstellingId}`).then((res) => {
 
             this.setState({ voorstelling: res.data });
         });
 
-        Axios.get(GetEndpoint() + `api/agenda/voorstelling/${voorstellingId}`)
+        Axios.get(`https://localhost:7260/api/agenda/voorstelling/${voorstellingId}`)
+
             .then((res) => {
                 if (res.data == null) return;
                 for (let i = 0; i < res.data.length; i++) {
                     this.state.agendas.push(res.data[i]);
                     this.setState({ agendas: this.state.agendas });
+                    console.log(res.data[i])
                 }
             }
         );
         Axios.get(GetEndpoint() + `api/review/voorstelling/${voorstellingId}`)
             .then((res) => {
                 this.setState({ reviews: res.data });
-                // console.log(res.data)
             });
     }
 
     render() {
 
         const agendaItems = this.state.agendas.map(agenda => {
-            const startDatumTijd = new Date(agenda.startDatumTijd).toLocaleDateString();
-            const eindDatumTijd = new Date(agenda.eindDatumTijd).toLocaleDateString();
+            const startDatumTijd = new Date(agenda.startDatumTijd).toLocaleDateString(undefined, {hour: '2-digit', minute:'2-digit'});
+            const eindDatumTijd = new Date(agenda.startDatumTijd).toLocaleDateString(undefined, {hour: '2-digit', minute:'2-digit'});
+
             return (
-                <section>
-                    <p>{agenda.id}</p>
-                    <p>{startDatumTijd}</p>
-                    <p>{eindDatumTijd}</p>
-                    <a href={`voorstelling/boekstoel?zaalId=${agenda.zaalId}&agendaId=${agenda.id}`}>Boek nu</a>
+                <section className="AgendaItem">
+                    <p>Starttijd: {startDatumTijd}</p>
+                    <p>Eindtijd: {eindDatumTijd}</p>
+                    <a href={`voorstelling/boekstoel?zaalId=${agenda.zaalId}&agendaId=${agenda.id}`} className="Boekknop">Boek Stoelen</a>
                 </section>
             );
         });
 
         let reviewItems;
         if (this.state.reviews.length > 0) {
+
             reviewItems = this.state.reviews.map(review => {
                 return (
                     <section className="reviewItem">
-                        <p>{review.recensie}</p>
+                        <p className="ReviewText">{review.recensie}</p>
                         <p>{review.sterren} Sterren</p>
                     </section>
+
                 );
             });
 
         } else {
             reviewItems = <p>Er zijn geen recensies voor deze voorstelling.</p>;
         }
+
         return (
             <>
                 <Navigatie />
                 <div className="voorstellingInfoWrapper">
-                    <h1>{this.state.voorstelling.name}</h1>
-                    <p>Bekijk hier de informatie over {this.state.voorstelling.name} en boek je kaartje op de gewenste dag en tijd</p>
-                    <img className="voorstellingPlaatje" src={this.state.voorstelling.img} alt="..." />
-                    <p>{this.state.voorstelling.beschrijving}</p>
-
-                    <div>
-                        <p>Reviews:</p>
-                        <div className="reviewItems">{reviewItems}</div>
+                    <div className="VoorstellingInfo">
+                        <img className="voorstellingPlaatje" src={this.state.voorstelling.img} alt="..." />
+                        <div className="VoorstellingText">
+                            <h1>{this.state.voorstelling.name}</h1>
+                            <div className="Lijntje"></div>
+                            {/* <p>Bekijk hier de informatie over {this.state.voorstelling.name} en boek je kaartje op de gewenste dag en tijd</p> */}
+                            <p>{this.state.voorstelling.beschrijving}</p>
+                        </div>
                     </div>
+                    <div>
+                        <p className="Review">Gemiddelde Sterren: {this.state.averageRating}</p>
+                        <h3>Recensies</h3>
+                        <div className="reviewItems">{reviewItems}</div>
 
-                    <form onSubmit={this.handleSubmit}>
+                    </div>
+                    <h4>Plaats Nieuwe Review</h4>
+                    <div className="FormWrapper">
+                    <form onSubmit={this.handleSubmit} className="Survey">
                         <label>
                             Review:
                             <textarea value={this.state.newReview.recensie} onChange={(e) => this.setState({ newReview: { ...this.state.newReview, recensie: e.target.value } })} />
@@ -141,12 +160,14 @@ class VoorstellingDetail extends Component {
                             Sterren:
                             <input type="number" min="1" max="5" value={this.state.newReview.sterren} onChange={(e) => this.setState({ newReview: { ...this.state.newReview, sterren: e.target.value } })} />
                         </label>
-                        <input type="submit" value="Plaats Review!" />
+                        <input type="submit" value="Plaats Review" />
                     </form>
+                    </div>
+                    
 
 
 
-                    <p>Hieronder staan alle mogelijke opties om {this.state.voorstelling.name} te bezoeken:</p>
+                    <h2>Boek Stoelen Voor {this.state.voorstelling.name}</h2>
                     <div className="agendaItem">{agendaItems}</div>
 
                 </div>
