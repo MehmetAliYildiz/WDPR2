@@ -132,7 +132,8 @@ public class wwVergetenDTO{
     [DataType(DataType.Password)]
     public string NewPassword { get; set; }
 
+    [Required]
     [DataType(DataType.Password)]
-    [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+    [Compare("NewPassword", ErrorMessage = "nieuwe wachtwoord en confirmwachtwoord matchen niet.")]
     public string ConfirmPassword { get; set; }
 }
