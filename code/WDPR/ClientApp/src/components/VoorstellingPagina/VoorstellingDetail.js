@@ -176,8 +176,8 @@ class VoorstellingDetail extends Component {
                         <div className="agendaItem">{agendaItems}</div>
 
                     </div>
-                </div>
                 <Footer />
+                </div>
             </>
 
         );
