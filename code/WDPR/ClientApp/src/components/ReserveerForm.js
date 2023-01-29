@@ -45,7 +45,7 @@ class ReserveerForm extends Component
             return;
         }
 
-        const res = await fetch(GetEndpoint()+`Zaal/${zaalId}`); 
+        const res = await fetch(GetEndpoint() + `VrijeRuimte/${zaalId}`); 
         const data = await res.json();
         if (data.length === 0) {
             console.log(`No zaal with ID ${zaalId} found`);
@@ -105,13 +105,13 @@ class ReserveerForm extends Component
         }
 
         event.preventDefault();
-        const endpoint = GetEndpoint() + '/reservering/post';
+        const endpoint = GetEndpoint() + 'reservering/post';
         const appointment = this.state.schedulerRef.current.tryGetAppointment();
         const data = {
             naam: appointment.name,
             startTijd: appointment.startTime.toISOString(),
             eindTijd: appointment.endTime.toISOString(),
-            bestelling: {},
+            bestelling: { type: "Reservering" },
             vrijeRuimteId: this.getZaalId(),
         };
         try {

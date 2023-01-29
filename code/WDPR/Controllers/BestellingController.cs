@@ -29,7 +29,7 @@ namespace WDPR.Controllers
         [HttpGet("payment/bezoeker/{bezoekerCode}")]
         public async Task<IActionResult> GetPaymentFromBezoeker([FromRoute] string bezoekerCode)
         {
-            var bestellingen = _context.GetBestellingen().Where(b => b.BezoekerId == bezoekerCode && b.Betaald == true).ToList();
+            var bestellingen = _context.GetBestellingen().Where(b => b.BezoekerId == bezoekerCode && b.Betaald == false).ToList();
             if (!bestellingen.Any()) return NotFound("Geen open bestellingen gevonden voor bezoeker met Id '" + bezoekerCode + "'");
             return await GetPayment(bestellingen);
         }

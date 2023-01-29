@@ -30,7 +30,7 @@ namespace WDPR.Controllers{
             return _context.GetZalen();
         }
         
-        [HttpGet("zaal/{id}")]
+        [HttpGet("Zaal/{id}")]
         public IActionResult GetZaalById(int id)
         {
             var zaal = _context.GetZalen().Where(z => z.Id == id);
