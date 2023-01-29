@@ -208,9 +208,20 @@ namespace WDPR.Controllers
                 return NotFound("er zijn geen kaartjes gekoppeld aan je account");
             }
 
-            var kaartjes = GetKaartjesFromBestellingen(bestellingOpId.ToList());
-            return Ok(GetKaartjesFromBestellingen(bestellingOpId.ToList()));
-            
+            var kResult = GetKaartjesFromBestellingen(bestellingOpId.ToList());
+            if (!(kResult is OkObjectResult))
+            {
+                return BadRequest("Kaartjes from bestellingen gaf een error");
+            }
+
+            var kaartjes = _context.GetKaartjes().Where(k => bestellingOpId.Any(b => b.Id == k.Bestelling.Id)).ToList();
+            if (!kaartjes.Any())
+            {
+                return NotFound("Geen kaartjes zijn verbonden aan deze bestellingen");
+            }
+
+            kaartjes.ForEach(k => k.Agenda.Kaartjes = new List<Kaartje>());
+            return Ok(kaartjes);
         }
  
      }

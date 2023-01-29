@@ -23,8 +23,8 @@ function GebruikersPortaal() {
                 if (data.error) {
                     setError(data.error);
                 } else {
-                    setKaartjes(data.value);
-                    console.log(kaartjes)
+                    setKaartjes(data);
+                    console.log(data);
                 }
             })
             .catch(err => setError(err.message));
