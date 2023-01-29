@@ -26,6 +26,7 @@ function GebruikersPortaal() {
             .then(data => {
                 if (data.error) {
                     setError(data.error);
+                    console.log('geen data');
                 } else {
                     setKaartjes(data);
                     console.log(data);
@@ -48,17 +49,17 @@ function GebruikersPortaal() {
         <>
             <NavBar/>
             <div className="container">
+                <div className="row">
                 <h1 className="text-center my-5">Kaartjes</h1>
-                {error && <p className="text-danger">{error}</p>}
+
                 {kaartjes.length > 0 ? (
                     <div>
                         { getKaartjes() }
                     </div>
                 ) : (
                     <p className="text-center">Er zijn nog geen kaartjes gekoppeld aan uw account</p>
-                )}
+                )}</div>
             </div>
-
             <Footer/>
         </>
     ) : (

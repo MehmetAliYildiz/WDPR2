@@ -83,6 +83,9 @@ function Navigatie() {
                 <li className="nav-item">
                   <a className="nav-link" href="/doneren">Doneren</a>
                 </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="/reserveren">Zaal huren</a>
+                </li>
                 
                 
                 {isLoggedIn ? 
@@ -96,9 +99,9 @@ function Navigatie() {
                   <li className="nav-item">
                     <a className="btn koop nav-link" onClick={handleLogout} >uitloggen</a>
                   </li>
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                       <a className="btn koop nav-link" href="/winkelmand">winkelmand</a>
-                  </li>
+                  </li> */}
                 </>
                 
                  : 
