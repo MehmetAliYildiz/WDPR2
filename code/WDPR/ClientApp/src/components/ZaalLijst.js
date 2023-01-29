@@ -15,12 +15,8 @@ class ZaalLijst extends Component {
         const data = await res.json();
         this.setState({ buttons: data });
     };
-
-    // Function to generate buttons based on response data
     generateButtons = response => {
-        // Create an array of buttons
         const buttons = response.map(zaal => {
-            // Return a new button element for each zaal
             return (
                 <button
                     key={`Zaal ${zaal.id}`}

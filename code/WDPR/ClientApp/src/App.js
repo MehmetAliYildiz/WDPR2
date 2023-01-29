@@ -20,6 +20,8 @@ import VoorstellingPost from "./components/VoorstellingPagina/VoorstellingPost";
 import WachtwoordVergeten from './components/WachtwoordVergeten/WachtwoordVergeten';
 import GebruikersPortaal from './components/GebruikersPortaal/GebruikersPortaal';
 import PaymentComplete from './components/Payment/PaymentComplete';
+import AdminHoofdMenu from './components/AdminPanel/AdminHoofdMenu';
+import AdminLogin from './components/Admin/adminLogin';
 
 
 
@@ -37,7 +39,7 @@ export default function App() {
                 <Route path='/registreer' element={<Registratie />}></Route>
                 <Route path='/reserveren/ruimte' element={<ReserveerForm />}></Route>
                 <Route path='/winkelmandje' element={<ShoppingCart />}></Route>
-                <Route path='/admin' element={<AdminPanel />}></Route>
+                <Route path='/admin/zaalbeheer' element={<AdminPanel />}></Route>
                 <Route path='/voorstelling/geselecteerd' element={<VoorstellingDetail />}></Route>
                 <Route path='/voorstelling/boekstoel' element={<StoelBoeken2 />}></Route>
                 <Route path='/sockettest' element={<SocketTest />}></Route>
@@ -47,6 +49,9 @@ export default function App() {
                 <Route path={'/wwVergeten'} element={<WachtwoordVergeten />}></Route>
                 <Route path={'/gebruikerportaal'} element={<GebruikersPortaal />}></Route>
                 <Route path={'/paymentcomplete'} element={<PaymentComplete />}></Route>
+                <Route path={'/admin'} element={<AdminHoofdMenu />}></Route>
+                <Route path={'/admin/login'} element={<AdminLogin />}></Route>
+
             </Routes>
         </>
 
