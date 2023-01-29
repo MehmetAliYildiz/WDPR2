@@ -7,6 +7,7 @@ function QrCode({ kaartjes }) {
 
   const handlePrint = () => {
     setPrint(true);
+    var prinen = document.getElementById("ticket")
     window.print();
     setPrint(false);
   }
@@ -21,17 +22,19 @@ function QrCode({ kaartjes }) {
     <div>
       
       {kaartjes.map(kaartje => (
-        <div className="card" key={kaartje.Id}>
-            <div className={"ticket ${printen ? 'print-ticket' : ''}"} >
+
+        <div className="card " key={kaartje.Id}>
+            <div id='ticket' className={" text-center ticket ${printen ? 'print-ticket' : ''}"} >
                 <QRCode value={kaartje.code}/>
-                <div className="card-body text-center">
-                    <div>id: {kaartje.bestelling.gebruiker.userName}</div>
-                    <div>start tijd: {kaartje.agenda.startDatumTijd}</div>
-                    <div>eind tijd: {kaartje.agenda.eindDatumTijd}</div>
+                <div className="card-body">
+                    <div>naam: {kaartje.bestelling.gebruiker.userName}</div>
+                    <div>start tijd: {new Date(kaartje.agenda.startDatumTijd).toLocaleDateString(undefined, {hour: '2-digit', minute:'2-digit'})}</div>
+                    <div>eind tijd: {new Date(kaartje.agenda.eindDatumTijd).toLocaleDateString(undefined, {hour: '2-digit', minute:'2-digit'})}</div>
                     <div>kaartje code: {kaartje.code}</div>
                 </div>
             </div>
             <button className="btn btn-primary" onClick={handlePrint}>Print</button>
+            <button className="btn btn-primary" onClick={handlePrint}>Agenda</button>
         </div>
       ))}
     </div>
