@@ -12,7 +12,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     #region DbSets
     private DbSet<Voorstelling> Voorstelling { get; set; }
-    public DbSet<Admin> Admin {get; set;}
+    private DbSet<Admin> Admin {get; set;}
     private DbSet<Reservering> Reserveringen { get; set; }
     private DbSet<Bestelling> Bestellingen { get; set; }
     private DbSet<Gebruiker> Gebruiker { get; set; }
@@ -36,6 +36,10 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     public void AddGebruiker(Gebruiker r){
         Gebruiker.Add(r);
+    }
+
+    public void AddAdmin(Admin a){
+        Admin.Add(a);
     }
 
     public void AddAgenda(Agenda a){
@@ -126,6 +130,11 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
         Artiest.Remove(Artiest.Find(id));
     }
 
+    public void RemoveAdmin(string id)
+    {
+        Admin.Remove(Admin.Find(id));
+    }
+
     public void RemoveReview(int id)
     {
         Review.Remove(Review.Find(id));
@@ -142,6 +151,12 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     {
         return Gebruiker;
     }
+
+    public IEnumerable<Admin> GetAdmin()
+    {
+        return Admin;
+    }
+
 
     public IEnumerable<Agenda> GetAgenda()
     {
@@ -210,6 +225,12 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     {
         return await Gebruiker.FindAsync(Id);
     }
+
+    public async Task<Admin> FindAdmin(string Id)
+    {
+        return await Admin.FindAsync(Id);
+    }
+
     public async Task<Voorstelling> FindVoorstelling(int id)
     {
         return await Voorstelling.FindAsync(id);
