@@ -14,10 +14,10 @@ namespace WDPR.Controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
-        private readonly DbTheaterLaakContext _context;
+        private readonly IDbTheaterLaakContext _context;
         private readonly UserManager<Gebruiker> _userManager;
 
-        public AdminController(DbTheaterLaakContext context, UserManager<Gebruiker> userManager)
+        public AdminController(IDbTheaterLaakContext context, UserManager<Gebruiker> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -25,16 +25,16 @@ namespace WDPR.Controllers
 
         // GET: api/Admin
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Admin>>> GetAdmin()
+        public ActionResult<List<Admin>> GetAdmins()
         {
-            return await _context.Admin.ToListAsync();
+            return _context.GetAdmin().ToList();
         }
 
         // GET: api/Admin/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Admin>> GetAdmin(string id)
+        public async Task<ActionResult<Admin>> GetAdmin1(string id)
         {
-            var admin = await _context.Admin.FindAsync(id);
+            var admin = await _context.FindAdmin(id);
 
             if (admin == null)
             {
@@ -44,74 +44,89 @@ namespace WDPR.Controllers
             return admin;
         }
 
-        // PUT: api/Admin/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAdmin(string id, Admin admin)
-        {
-            if (id != admin.Id)
-            {
-                return BadRequest();
-            }
+        // // PUT: api/Admin/5
+        // // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // [HttpPut("{id}")]
+        // public async Task<IActionResult> PutAdmin(string id, Admin admin)
+        // {
+        //     if (id != admin.Id)
+        //     {
+        //         return BadRequest();
+        //     }
 
-            _context.Entry(admin).State = EntityState.Modified;
+        //     _context.Entry(admin).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AdminExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //     try
+        //     {
+        //         await _context.SaveChangesAsync();
+        //     }
+        //     catch (DbUpdateConcurrencyException)
+        //     {
+        //         if (!AdminExists(id))
+        //         {
+        //             return NotFound();
+        //         }
+        //         else
+        //         {
+        //             throw;
+        //         }
+        //     }
 
-            return NoContent();
-        }
+        //     return NoContent();
+        // }
 
         // POST: api/Admin
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<CreatedAtActionResult> PostArtiest(AdminDTO adminDTO)
+        public async Task<ActionResult<IEnumerable<Admin>>> PostArtiest(AdminDTO adminDTO)
         {
             var admin = new Admin()
             {
                 UserName = adminDTO.gebruikersnaam,
+                PasswordHash = adminDTO.Wachtwoord,
                 Email = adminDTO.Email
             };
 
-            var result = await _userManager.CreateAsync(admin, adminDTO.Wachtwoord);
-            await _userManager.AddToRoleAsync(admin, "admin");
+            // await _userManager.AddToRoleAsync(admin, "Admin");
+            _context.AddAdmin(admin);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetAdmin", new { id = admin.Id }, admin);
+            
         }
 
-        // DELETE: api/Admin/5
+        //
+        // // POST: api/Admin
+        // // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // [HttpPost]
+        // [Route("registreer")]
+        // public async Task<ActionResult<IEnumerable<Admin>>> Registreer([FromBody] GebruikerMetWachwoordAdmin gebruikerMetWachwoord)
+        // {
+        //     var resultaat = await _userManager.CreateAsync(gebruikerMetWachwoord, gebruikerMetWachwoord.Wachtwoord);
+        //     if (!resultaat.Succeeded)
+        //     {
+        //         return new BadRequestObjectResult(resultaat);
+        //     }
+        //     else
+        //     {
+        //         await _userManager.AddToRoleAsync(gebruikerMetWachwoord, "Admin");
+        //         return StatusCode(201);
+        //     }
+        // }
+
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAdmin(string id)
+        public async Task<ActionResult<Admin>> DeleteAdmin(string id)
         {
-            var admin = await _context.Admin.FindAsync(id);
+            var admin = await _context.FindAdmin(id);
             if (admin == null)
             {
                 return NotFound();
             }
 
-            _context.Admin.Remove(admin);
+            _context.RemoveAdmin(id);
             await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
-
-        private bool AdminExists(string id)
-        {
-            return _context.Admin.Any(e => e.Id == id);
+            return admin;
         }
 
         public class AdminDTO {
