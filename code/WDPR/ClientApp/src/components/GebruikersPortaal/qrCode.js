@@ -26,8 +26,8 @@ function QrCode({ kaartjes }) {
                 <QRCode value={kaartje.code}/>
                 <div className="card-body text-center">
                     <div>id: {kaartje.bestelling.gebruiker.userName}</div>
-                    <div>start tijd: {kaartje.StartDatumTijd}</div>
-                    <div>eind tijd: {kaartje.EindDatumTijd}</div>
+                    <div>start tijd: {kaartje.agenda.startDatumTijd}</div>
+                    <div>eind tijd: {kaartje.agenda.eindDatumTijd}</div>
                     <div>kaartje code: {kaartje.code}</div>
                 </div>
             </div>
