@@ -92,7 +92,7 @@ class VoorstellingDetail extends Component {
                 }
             }
         );
-        Axios.get(GetEndpoint() + `api/review/voorstelling/${voorstellingId}`)
+        Axios.get(`https://localhost:7260/api/review/voorstelling/${voorstellingId}`)
             .then((res) => {
                 this.setState({ reviews: res.data });
             });
@@ -102,12 +102,13 @@ class VoorstellingDetail extends Component {
 
         const agendaItems = this.state.agendas.map(agenda => {
             const startDatumTijd = new Date(agenda.startDatumTijd).toLocaleDateString(undefined, {hour: '2-digit', minute:'2-digit'});
-            const eindDatumTijd = new Date(agenda.startDatumTijd).toLocaleDateString(undefined, {hour: '2-digit', minute:'2-digit'});
+            const eindDatumTijd = new Date(agenda.eindDatumTijd).toLocaleDateString(undefined, {hour: '2-digit', minute:'2-digit'});
 
             return (
                 <section className="AgendaItem">
-                    <p>Starttijd: {startDatumTijd}</p>
-                    <p>Eindtijd: {eindDatumTijd}</p>
+                    <p>Zaalnummer: {agenda.zaalId}</p>
+                    <p>Begin: {startDatumTijd}</p>
+                    <p>Eind: {eindDatumTijd}</p>
                     <a href={`voorstelling/boekstoel?zaalId=${agenda.zaalId}&agendaId=${agenda.id}`} className="Boekknop">Boek Stoelen</a>
                 </section>
             );
@@ -149,25 +150,25 @@ class VoorstellingDetail extends Component {
                         <div className="reviewItems">{reviewItems}</div>
 
                     </div>
-                    <h4>Plaats Nieuwe Review</h4>
+                    <h4>Plaats nieuwe recensie</h4>
                     <div className="FormWrapper">
                     <form onSubmit={this.handleSubmit} className="Survey">
                         <label>
-                            Review:
+                            Recensie:
                             <textarea value={this.state.newReview.recensie} onChange={(e) => this.setState({ newReview: { ...this.state.newReview, recensie: e.target.value } })} />
                         </label>
                         <label>
                             Sterren:
                             <input type="number" min="1" max="5" value={this.state.newReview.sterren} onChange={(e) => this.setState({ newReview: { ...this.state.newReview, sterren: e.target.value } })} />
                         </label>
-                        <input type="submit" value="Plaats Review" />
+                        <input type="submit" value="Plaats Recensie" />
                     </form>
                     </div>
                     
 
 
 
-                    <h2>Boek Stoelen Voor {this.state.voorstelling.name}</h2>
+                    <h2>Tijden en tickets voor {this.state.voorstelling.name}</h2>
                     <div className="agendaItem">{agendaItems}</div>
 
                 </div>
