@@ -50,11 +50,11 @@ function BandPost() {
           <input className="form-control" type="text" value={bandName} onChange={(e) => setBandName(e.target.value)}
           />
         </label>
-        <button type="submit">Add Band</button>
+        <button type="submit">Band aanmaken</button>
       </form>
       {postSuccess && <p>Band added successfully!</p>}
       {postError && <p>Error adding band. Please try again.</p>}
-      <h1 className={"title"}>Table Band</h1>
+      <h1 className={"title"}>Alle Bands</h1>
       <table className="table">
         <thead>
           <tr>
