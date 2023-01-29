@@ -54,7 +54,7 @@ export default class PostPanel extends EndpointPanel {
                     </h3>
                     {fieldSections}
                     <button type="button" onClick={this.handlePostSubmit}>
-                        Submit
+                        Maak aan
                     </button>
                 </form>
                 <label>

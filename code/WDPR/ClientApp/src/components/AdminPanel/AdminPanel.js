@@ -39,8 +39,8 @@ export default class AdminPanel extends Component {
         ]
         return (
             <div>
-                <h1>Admin Panel</h1>
-                <PostPanel fields={zaalPostFields} extraData={zaalPostExtraData} endPoint="Zaal" title="Maak een zaal aan" />
+                <h1>Zaalbeheer</h1>
+                <PostPanel fields={zaalPostFields} extraData={zaalPostExtraData} endPoint="Zaal/zaal" title="Maak een zaal aan" />
                 <GetPanel fields={zaalGetFields} endPoint="Zaal/zaal" title="Vraag een zaal op" />
             </div>
         );
