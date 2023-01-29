@@ -88,13 +88,12 @@ namespace WDPR.Controllers
             {
                 return NotFound();
             }
-
-            var artiest = await _context.FindBand(bandId);
+            var artiest = await _context.FindArtiest(artiestId);
             if (artiest == null)
             {
                 return NotFound();
             }
-            _context.AddArtiestBand(new ArtiestBand { BandId = bandId, ArtiestId = artiestId });
+            _context.AddArtiestBand(new ArtiestBand { BandId = bandId, ArtiestId = artiest.Id });
             await _context.SaveChangesAsync();
             return NoContent();
         }

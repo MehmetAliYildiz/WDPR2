@@ -190,19 +190,38 @@ namespace WDPR.Controllers
 
 
 
-        [HttpGet("kaartjeBIjGebruiker")]
-        public async Task<IActionResult> KaartjeBijGebruikerAsync([FromBody] string email)
+        [HttpGet("kaartjeBijGebruiker/{email}")]
+        public async Task<IActionResult> KaartjeBijGebruikerAsync(string email)
         {
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _context.FindGebruikerByEmail(email);
+            if(user == null)
+            return NotFound("user not found");
 
-            var bestellingOpId = _context.GetBestellingen().Where(u => u.Gebruiker.Id == user.Id);
+            var bestellingOpId = _context.GetBestellingen().Where(b => {
+                if(b.Gebruiker == null){
+                    return false;
+                }
+                return b.Gebruiker.Id == user.Id;
+            });
             if (!bestellingOpId.Any())
             {
                 return NotFound("er zijn geen kaartjes gekoppeld aan je account");
             }
 
-            return Ok(GetKaartjesFromBestellingen(bestellingOpId.ToList()));
-            
+            var kResult = GetKaartjesFromBestellingen(bestellingOpId.ToList());
+            if (!(kResult is OkObjectResult))
+            {
+                return BadRequest("Kaartjes from bestellingen gaf een error");
+            }
+
+            var kaartjes = _context.GetKaartjes().Where(k => bestellingOpId.Any(b => b.Id == k.Bestelling.Id)).ToList();
+            if (!kaartjes.Any())
+            {
+                return NotFound("Geen kaartjes zijn verbonden aan deze bestellingen");
+            }
+
+            kaartjes.ForEach(k => k.Agenda.Kaartjes = new List<Kaartje>());
+            return Ok(kaartjes);
         }
  
      }

@@ -68,7 +68,7 @@ function Navigatie() {
               </div>
 
             </div>
-            <button className="navbar-toggler uitklapper" type="button" data-bs-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="navigatie schakelaar">
+            <button className="navbar-toggler uitklapper" type="button" data-toggle="collapse" data-target="#navbarKlap" aria-controls="navbarText" aria-expanded="false" aria-label="navigatie schakelaar">
               <span className="navbar-toggler-icon"></span>
             </button>
               <div className="collapse navbar-collapse col-xl-1 " id={"navbarKlap"}>
