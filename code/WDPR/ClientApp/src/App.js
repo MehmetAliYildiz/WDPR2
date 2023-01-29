@@ -35,7 +35,7 @@ export default function App() {
                 <Route path='/inloggen' element={<Inloggen />}></Route>
                 <Route path='/reserveren' element={<Reserveren />}></Route>
                 <Route path='/registreer' element={<Registratie />}></Route>
-                <Route path='/reserveren/zaal' element={<ReserveerForm />}></Route>
+                <Route path='/reserveren/ruimte' element={<ReserveerForm />}></Route>
                 <Route path='/winkelmandje' element={<ShoppingCart />}></Route>
                 <Route path='/admin' element={<AdminPanel />}></Route>
                 <Route path='/voorstelling/geselecteerd' element={<VoorstellingDetail />}></Route>
