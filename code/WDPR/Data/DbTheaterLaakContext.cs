@@ -164,7 +164,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     public IEnumerable<Kaartje> GetKaartjes()
     {
-        return Kaartjes.Include(k => k.Bestelling);
+        return Kaartjes.Include(k => k.Bestelling).Include(k => k.Agenda);
     }
 
     public IEnumerable<Bestelling> GetBestellingen()
@@ -256,7 +256,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
-        builder.UseSqlServer("Data Source=20.77.66.80,1433;User Id=SA;Password =Pass@word; Initial Catalog=laak;TrustServerCertificate=True;");
+        builder.UseSqlServer("Data Source=20.77.66.80,1433;User Id=SA;MultipleActiveResultSets=true;Password =Pass@word; Initial Catalog=laak;TrustServerCertificate=True;");
 
     }
 
