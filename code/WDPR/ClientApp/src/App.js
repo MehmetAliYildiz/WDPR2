@@ -16,10 +16,13 @@ import VoorstellingDetail from './components/VoorstellingPagina/VoorstellingDeta
 import ExcelUploaden from './components/AdminPanel/CSVToevoegen/ExcelUploaden';
 import StoelBoeken2 from './components/StoelBoekenPagina/StoelBoeken2';
 import SocketTest from './components/SocketTest';
-import VoorstellingPost from "./components/VoorstellingPagina/VoorstellingPost";
 import WachtwoordVergeten from './components/WachtwoordVergeten/WachtwoordVergeten';
 import GebruikersPortaal from './components/GebruikersPortaal/GebruikersPortaal';
 import PaymentComplete from './components/Payment/PaymentComplete';
+import VoorstellingPost from './components/AdminPanel/VoorstellingPost';
+import ArtiestPost from './components/AdminPanel/ArtiestPost';
+import GebruikerGet from './components/AdminPanel/GebruikerGet';
+import BandPost from './components/AdminPanel/BandPost';
 
 
 
@@ -41,12 +44,15 @@ export default function App() {
                 <Route path='/voorstelling/geselecteerd' element={<VoorstellingDetail />}></Route>
                 <Route path='/voorstelling/boekstoel' element={<StoelBoeken2 />}></Route>
                 <Route path='/sockettest' element={<SocketTest />}></Route>
-                <Route path={'/voorstelling/post'} element={<VoorstellingPost />}></Route>
+                <Route path={'/Admin/Voorstelling'} element={<VoorstellingPost />}></Route>
                 <Route path='/admin/exceltoevoegen' element={<ExcelUploaden/>}></Route>
                 <Route path={'/pay'} element={<PaymentForm />}></Route>
                 <Route path={'/wwVergeten'} element={<WachtwoordVergeten />}></Route>
                 <Route path={'/gebruikerportaal'} element={<GebruikersPortaal />}></Route>
                 <Route path={'/paymentcomplete'} element={<PaymentComplete />}></Route>
+                <Route path={'/Admin/Artiest'} element={<ArtiestPost />}></Route>
+                <Route path={'/Admin/Gebruiker'} element={<GebruikerGet />}></Route>
+                <Route path={'/Admin/Band'} element={<BandPost />}></Route>
             </Routes>
         </>
 
