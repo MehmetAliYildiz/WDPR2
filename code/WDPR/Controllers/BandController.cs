@@ -23,7 +23,7 @@ namespace WDPR.Controllers
             return _context.GetBands().ToList();
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Band>> GetBand(int id)
         {
             var band = await _context.FindBand(id);
@@ -99,7 +99,7 @@ namespace WDPR.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{Id}")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult<Band>> DeleteBand(int id)
         {
             var band = await _context.FindBand(id);

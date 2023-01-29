@@ -16,7 +16,7 @@ namespace WDPR.Controllers
         }
 
 
-        [HttpGet("{Id}/{datum}")]
+        [HttpGet("{id}/{datum}")]
         public IActionResult GetAll([FromRoute] int id, [FromRoute] string datum)
         {
             DateTime date;
@@ -42,7 +42,8 @@ namespace WDPR.Controllers
             {
                 Betaald = false,
                 PlaatsTijd = DateTime.Now,
-                Bedrag = (nieuweReservering.EindTijd.Hour * 60 + nieuweReservering.EindTijd.Minute - (nieuweReservering.StartTijd.Hour * 60 + nieuweReservering.StartTijd.Minute)) * 0.25D
+                Bedrag = (nieuweReservering.EindTijd.Hour * 60 + nieuweReservering.EindTijd.Minute - (nieuweReservering.StartTijd.Hour * 60 + nieuweReservering.StartTijd.Minute)) * 0.25D,
+                Type = "Reservering"
             };
 
             var overlappingEvents = _context.GetReserveringen()

@@ -48,4 +48,4 @@ function GebruikersPortaal() {
     );
 }
 
-export default GebruikersPortaal;
+export default KaartjesCards;

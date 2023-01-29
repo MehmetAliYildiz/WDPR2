@@ -31,7 +31,7 @@ namespace WDPR.Controllers
         }
 
         // GET: api/Review/5
-        [HttpGet("{Id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Review>> GetReview(int id)
         {
             var review = await _context.FindReview(id);
@@ -85,10 +85,10 @@ namespace WDPR.Controllers
                 .Where(r => r.VoorstellingId == reviewDTO.voorstellingId)
                 .FirstOrDefault();
 
-            if (existingReview != null)
-            {
-                return BadRequest("You have already posted a review for this voorstelling");
-            }
+            // if (existingReview != null)
+            // {
+            //     return BadRequest("You have already posted a review for this voorstelling");
+            // }
 
             if (reviewDTO.sterren < 0 || reviewDTO.sterren > 5)
             {
@@ -106,8 +106,8 @@ namespace WDPR.Controllers
 
             return CreatedAtAction("GetReview", new { id = review.Id }, review);
         }
-        
-        [HttpGet("average/{Id}")]
+
+        [HttpGet("average/{id}")]
         public async Task<ActionResult<double>> GetAverageReviewRating(int id)
         {
             var voorstellingReviews = _context.GetReview()
@@ -125,7 +125,7 @@ namespace WDPR.Controllers
         }
 
         // DELETE: api/Review/5
-        [HttpDelete("{Id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReview(int id)
         {
             var review = await _context.FindReview(id);
@@ -139,6 +139,22 @@ namespace WDPR.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("voorstelling/{id}")]
+        public async Task<ActionResult<IEnumerable<Review>>> GetVoorstellingReviews(int id)
+        {
+            var voorstellingReviews = _context.GetReview()
+                .Where(r => r.VoorstellingId == id)
+                .ToList();
+
+            if (voorstellingReviews.Count == 0)
+            {
+                return NotFound("Geen reviews voor deze voorstelling");
+            }
+
+            return Ok(voorstellingReviews);
+        }
+
 
         private bool ReviewExists(int id)
         {

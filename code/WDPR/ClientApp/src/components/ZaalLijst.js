@@ -1,4 +1,5 @@
 ﻿import React, { Component } from "react";
+import GetEndpoint from "./Admin/EndPointUtil";
 
 class ZaalLijst extends Component {
     constructor(props) {
@@ -9,7 +10,7 @@ class ZaalLijst extends Component {
     }
 
     componentDidMount = async () => {
-        const res = await fetch("https://localhost:7260/VrijeRuimte");
+        const res = await fetch(GetEndpoint() + "VrijeRuimte");
         console.log(res.body);
         const data = await res.json();
         this.setState({ buttons: data });

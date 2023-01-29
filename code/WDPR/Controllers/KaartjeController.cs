@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using System.CodeDom;
 using System.Collections.ObjectModel;
+using System.Text.Json;
 using WDPR.Data;
 using WDPR.Models;
 
@@ -24,7 +25,7 @@ namespace WDPR.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("{id}")]
         public IActionResult GetKaartje(int id)
         {
             var kaartje = _context.GetKaartjes().Where(k => k.Id == id);
@@ -56,22 +57,25 @@ namespace WDPR.Controllers
             {
                 return BadRequest("Maximaal 25 stoelen kunnen tegelijk geboekt worden");
             }
-            if (kaartjeWithId.Gebruiker == null)
+            if (gebruiker && kaartjeWithId.GebruikerEmail == null)
             {
-                return BadRequest("Gebruiker mag niet leeg zijn");
+                return BadRequest("GebruikerEmail mag niet leeg zijn");
             }
-            if (gebruiker && kaartjeWithId.Gebruiker != null)
+            if (!gebruiker && kaartjeWithId.BezoekerId == null)
             {
-                gebruikerMetMail = await _context.FindGebruikerByEmail(kaartjeWithId.Gebruiker);
+                return BadRequest("BezoekerId mag niet leeg zijn");
+            }
+            if (gebruiker && kaartjeWithId.GebruikerEmail != null)
+            {
+                gebruikerMetMail = await _context.FindGebruikerByEmail(kaartjeWithId.GebruikerEmail);
                 if (gebruikerMetMail == null)
-                    return BadRequest("Geen gebruiker met email '" + kaartjeWithId.Gebruiker + "' gevonden");
+                    return BadRequest("Geen gebruiker met email '" + kaartjeWithId.GebruikerEmail + "' gevonden");
             }
             #endregion
-
+            Console.WriteLine(JsonSerializer.Serialize(kaartjeWithId));
             var request = HttpContext.Request;
             Kaartje kaartje = new Kaartje()
             {
-                Id = _context.GetKaartjes().Count() > 0 ? _context.GetKaartjes().Max(k => k.Id) + 1 : 0,
                 Agenda = await _context.FindAgenda(kaartjeWithId.AgendaId),
 
                 // Nieuwe bestelling wordt aangemaakt in de naam van gebruiker/bezoeker
@@ -80,13 +84,16 @@ namespace WDPR.Controllers
                     Betaald = false,
                     PlaatsTijd = DateTime.Now,
                     Bedrag = 20D * kaartjeWithId.StoelIds.Count(),
-                    BezoekerId = !gebruiker ? kaartjeWithId.Gebruiker : null,  // Of bezoekerId of gebruiker moet een waarde hebben
+                    BezoekerId = !gebruiker ? kaartjeWithId.BezoekerId : null,  // Of bezoekerId of gebruiker moet een waarde hebben
                     Gebruiker = gebruiker ? gebruikerMetMail : null,           // boolean gebruiker geeft aan welke van de twee het moet zijn
                     Type = "Kaartje"
                 },
 
                 // StoelKaartjes wordt leeg gelaten bij constructie
                 StoelKaartjes = new Collection<StoelKaartje>(),
+
+                // De code wordt gescand bij het theater om te zien of het kaartje echt bestaat
+                Code = Guid.NewGuid().ToString().Substring(0, 8),
 
                 // CodeUsed geeft aan of het kaartje al gebruikt/gescand is door een bezoeker van het theater
                 CodeUsed = false
@@ -109,7 +116,7 @@ namespace WDPR.Controllers
             }
 
             // Kaartje en bestelling wordt tegelijk opgeslagen
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             // Boekingpagina wordt geupdate met de stoelen die nu bezet zijn
             foreach (int stoelId in kaartjeWithId.StoelIds)
@@ -122,7 +129,7 @@ namespace WDPR.Controllers
         }
 
         // Post maken is niet RESTful, maar het kan eenmaal niet anders als we een lijst in de body willen
-        [HttpPost]
+        [HttpPost("kaartjesFromBestellingen")]
         public IActionResult GetKaartjesFromBestellingen([FromBody] List<Bestelling> bestellingen)
         {
             var kaartjes = _context.GetKaartjes().Where(k => bestellingen.Any(b => b.Id == k.Bestelling.Id));
@@ -213,7 +220,8 @@ namespace WDPR.Controllers
     {
         public int AgendaId { get; set; }
         public string Code { get; set; }
-        public string? Gebruiker { get; set; }
+        public string? GebruikerEmail { get; set; }
+        public string? BezoekerId { get; set; }
         public List<int> StoelIds { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
 import {MdAdminPanelSettings, MdAddModerator} from 'react-icons/md';
+import GetEndpoint from "./EndPointUtil";
 
 // import axios from "axios";
 
@@ -35,7 +36,7 @@ function AdminLogin() {
     let handleLogin = async (e) => {
         e.preventDefault();
         try {
-            let res = await fetch("https://localhost:7260/api/Account/login", {
+            let res = await fetch(GetEndpoint+"/api/Account/login", {
                 headers: {'Content-Type': 'application/json'},
                 method: "POST",
                 mode:"cors",

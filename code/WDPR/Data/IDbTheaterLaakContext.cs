@@ -40,7 +40,7 @@ using WDPR.Models;
         void AddZaal(Zaal z);
         void AddVrijeRuimte(VrijeRuimte v);
         void AddVoorstelling(Voorstelling v);
-        void RemoveReview(int r);
+        void RemoveReview(int id);
         void RemoveBand(int id);
         void RemoveArtiest(string id);
         void RemoveAgenda(int id);
@@ -48,6 +48,7 @@ using WDPR.Models;
         void RemoveVoorstelling(int id);
         void RemoveVoorstellingRange(IEnumerable<Voorstelling> v);
         void RemoveAgendaRange(IEnumerable<Agenda> a);
+
 
         int SaveChanges();
         Task<int> SaveChangesAsync();

@@ -28,7 +28,7 @@ namespace WDPR.Controllers
         }
 
         // GET: api/Gebruiker/5
-        [HttpGet("{Id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Gebruiker>> GetGebruiker(string id)
         {
             var gebruiker = await _context.FindGebruiker(id);
@@ -53,7 +53,7 @@ namespace WDPR.Controllers
         }
 
         // DELETE: api/Gebruiker/5
-        [HttpDelete("{Id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGebruiker(string id)
         {
             var gebruiker = await _context.FindGebruiker(id);
@@ -67,6 +67,19 @@ namespace WDPR.Controllers
 
             return NoContent();
         }
+
+        [HttpGet]
+        [Route("GebruikerIdOpvragen")]
+        public async Task<ActionResult<Gebruiker>> GebruikerIdOpvragen(string email)
+        {
+            var user = await _context.FindGebruikerByEmail(email);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok(new Gebruiker{ Id = user.Id });
+        }
+
 
         private bool GebruikerExists(string id)
         {

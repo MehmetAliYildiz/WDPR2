@@ -104,30 +104,30 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     public void RemoveVoorstelling(int id)
     {
-        Voorstelling.Where(v => v.Id == id).ForEachAsync(v => Voorstelling.Remove(v));
+        Voorstelling.Remove(Voorstelling.Find(id));
     }
 
     public void RemoveAgenda(int id){
-        Agenda.Where(v => v.Id == id).ForEachAsync(v => Agenda.Remove(v));
+        Agenda.Remove(Agenda.Find(id));
     }
     
     public void RemoveGebruiker(string id){
-        Gebruiker.Where(v => v.Id == id).ForEachAsync(v => Gebruiker.Remove(v));
+        Gebruiker.Remove(Gebruiker.Find(id));
     }
 
     public void RemoveBand(int id)
     {
-        Band.Where(b => b.Id == id).ForEachAsync(b => Band.Remove(b));
+        Band.Remove(Band.Find(id));
     }
 
     public void RemoveArtiest(string id)
     {
-        Artiest.Where(a => a.Id == id).ForEachAsync(a => Artiest.Remove(a));
+        Artiest.Remove(Artiest.Find(id));
     }
 
     public void RemoveReview(int id)
     {
-        Review.Where(a => a.Id == id).ForEachAsync(a => Review.Remove(a));
+        Review.Remove(Review.Find(id));
     }
     #endregion
 
@@ -164,12 +164,12 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     public IEnumerable<Kaartje> GetKaartjes()
     {
-        return Kaartjes;
+        return Kaartjes.Include(k => k.Bestelling);
     }
 
     public IEnumerable<Bestelling> GetBestellingen()
     {
-        return Bestellingen;
+        return Bestellingen.Include(b => b.Gebruiker);
     }
 
     public IEnumerable<Stoel> GetStoelen()
@@ -179,7 +179,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     public IEnumerable<StoelKaartje> GetStoelKaartjes()
     {
-        return StoelKaartjes.Include(sk => sk.Stoel).Include(sk => sk.Kaartje);
+        return StoelKaartjes.Include(sk => sk.Stoel).Include(sk => sk.Kaartje).Include(sk => sk.Kaartje.Agenda);
     }
 
     public IEnumerable<Review> GetReview()

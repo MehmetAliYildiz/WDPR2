@@ -27,7 +27,7 @@ namespace WDPR.Controllers {
             return _context.GetArtiesten().ToList();
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Artiest>> GetArtiest(string id)
         {
             var artiest = await _context.FindArtiest(id);
@@ -45,7 +45,7 @@ namespace WDPR.Controllers {
         {
             var artiest = new Artiest()
             {
-                UserName = artiestDTO.UserName,
+                UserName = artiestDTO.gebruikersnaam,
                 Email = artiestDTO.Email,
                 ArtiestBands = new List<ArtiestBand>()
             };
@@ -56,7 +56,7 @@ namespace WDPR.Controllers {
             return CreatedAtAction("GetArtiest", result);
         }
 
-        [HttpDelete("{Id}")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult<Artiest>> DeleteArtiest(string id)
         {
             var artiest = await _context.FindArtiest(id);
@@ -72,7 +72,9 @@ namespace WDPR.Controllers {
         }
     }
 
-    public class ArtiestDTO : Gebruiker {
+    public class ArtiestDTO {
+        public string gebruikersnaam {get; set;}
         public string Wachtwoord { get; set; }
+        public string Email {get; set;}
     }
 }
