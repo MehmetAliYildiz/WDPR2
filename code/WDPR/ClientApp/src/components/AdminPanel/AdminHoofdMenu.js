@@ -1,9 +1,13 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import './AdminHoofdmenu.css'
+import Footer from "../navFoot/Footer";
+import NavBar from "../navFoot/navbar";
 
 export default function AdminHoofdMenu() {
     return (
+        <>
+        <NavBar/>
         <div className="admin-menu-container">
             <h1>Welkom op de adminpagina!</h1>
             <div className="admin-menu-buttons">
@@ -13,10 +17,22 @@ export default function AdminHoofdMenu() {
                 <Link to="/admin/zaalbeheer">
                     <button className="admin-menu-button">Zaalbeheer</button>
                 </Link>
-                <Link to="/admin/login">
-                    <button className="admin-menu-button">Login</button>
+                <Link to="/Admin/Artiest">
+                    <button className="admin-menu-button">Artiesten</button>
+                </Link>
+                <Link to="/Admin/band">
+                    <button className="admin-menu-button">Bands</button>
+                </Link>
+                <Link to="/Admin/Gebruiker">
+                    <button className="admin-menu-button">Gebruikers ophalen</button>
+                </Link>
+                <Link to="/Admin/Voorstelling">
+                    <button className="admin-menu-button">Voorstelling</button>
                 </Link>
             </div>
         </div>
+        <Footer/>
+        </>
+        
     )
 }

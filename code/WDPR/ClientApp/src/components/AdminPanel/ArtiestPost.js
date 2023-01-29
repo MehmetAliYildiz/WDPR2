@@ -39,7 +39,7 @@ const ArtiestPost = () => {
     return (
         <div>
             <NavBar/>
-            <h2>Create new Artiest</h2>
+            <h2>Artiesten Beheren</h2>
             <form onSubmit={handleSubmit}>
                 <label>
                     Gebruikersnaam:
@@ -56,11 +56,11 @@ const ArtiestPost = () => {
                     <input className="form-control" type="password" value={wachtwoord} onChange={e => setWachtwoord(e.target.value)} />
                 </label>
                 <br />
-                <button type="submit">Create</button>
+                <button type="submit">Aanmaken</button>
             </form>
             {message && <p>{message}</p>}
             {error && <p>{error}</p>}
-            <h1 className={"title"}>Table Artiest</h1>
+            <h1 className={"title"}>Artiesten Tabel</h1>
             <table className="table">
                 <thead>
                 <tr>

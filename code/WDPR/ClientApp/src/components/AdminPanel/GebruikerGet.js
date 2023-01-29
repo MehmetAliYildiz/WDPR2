@@ -15,13 +15,13 @@ const GebruikerGet = () => {
     return (
         <div>
             <NavBar/>
-            <h1 className={"title"}>Table Alle Gebruikers & Artiesten & Admins</h1>
+            <h1 className={"title"}>Tabel Gebruikers, Artiesten & Admins</h1>
             <table className="table">
                 <thead>
                 <tr>
                     <th>Id</th>
-                    <th>UserName</th>
-                    <th>Email</th>
+                    <th>Gebruikersnaam</th>
+                    <th>E-mail</th>
                 </tr>
                 </thead>
                 <tbody>

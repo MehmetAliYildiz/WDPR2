@@ -73,17 +73,17 @@ function VoorstellingPost() {
                     <input className="form-control" type="text" name="BandId" value={voorstelling.BandId} onChange={handleChange} />
                 </label>
                 <br />
-                <button type="submit">Save</button>
+                <button type="submit">Voeg voorstelling toe</button>
             </form>
             {message && <div>{message}</div>}
             {error && <div>{error}</div>}
-            <h1 className={"title"}>Table Voorstelling</h1>
+            <h1 className={"title"}>Tabel Voorstelling</h1>
             <table className="table">
                 <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>beschrijving</th>
-                    <th>Img</th>
+                    <th>Naam</th>
+                    <th>Beschrijving</th>
+                    <th>Afbeelding</th>
                     <th>BandId</th>
                 </tr>
                 </thead>
