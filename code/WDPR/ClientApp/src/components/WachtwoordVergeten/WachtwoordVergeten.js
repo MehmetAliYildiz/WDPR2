@@ -9,7 +9,7 @@ function Login() {
         border: '0px'
     }
 
-
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [wachtwoord, setWachtwoord] = useState('');
     const [herhaalWachtwoord, setHerhaalWachtwoord] = useState('');
@@ -25,17 +25,22 @@ function Login() {
         }
 
         try {
-            const response = await fetch('http://groep3theaterlaak.switzerlandnorth.cloudapp.azure.com/api/Account/wachtwoordWijzigen', {
-                method: 'POST',
+            const response = await fetch('https://localhost:7260/api/Account/wachtwoordWijzigen', {
+                method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, wachtwoord, herhaalWachtwoord }),
+                body: JSON.stringify({ 
+                    Email: email,
+                    NewPassword: wachtwoord,
+                    ConfirmPassword: herhaalWachtwoord }),
             });
 
-            if (!response.ok) {
+            if (!response.status == 200) {
                 console.log(response.text)
                 throw new Error(await response.text());
             }
-            console.log(response.text)
+            console.log('wachtwoord is aangepast')
+            alert('uw wachtwoord is aangepast, u word doorverwezen naar de login');
+            navigate('/inloggen');
 
             // Handle successful password reset
         } catch (err) {
@@ -54,7 +59,7 @@ function Login() {
                     <h2>Wachtwoord vergeten?</h2>
                     <p className="mb-2">Dat kan gebeuren, voer je email in om je wachtwoord te herstellen</p>
                 </div>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className="mb-3">
                     <label htmlFor="email" className="form-label">Email</label>
                     <input type="email" id="email" className="form-control" name="email" value={email} placeholder="email@test.com" onChange={(e) => setEmail(e.target.value)} required/>
@@ -72,6 +77,7 @@ function Login() {
                     </div>
                     <span>terug naar login? <a href="/inloggen" style={{color: '#F39A05'}}>inloggen</a></span>
                 </form>
+                <div className="error" style={{color: '#8B0001', marginTop: '10px'}}>{error ? <p>{error}</p> : null}</div>
                 </div>
             </div>
             </div>

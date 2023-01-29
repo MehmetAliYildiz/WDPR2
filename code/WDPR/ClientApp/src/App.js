@@ -44,7 +44,7 @@ export default function App() {
                 <Route path='/admin/exceltoevoegen' element={<ExcelUploaden/>}></Route>
                 <Route path={'/pay'} element={<PaymentForm />}></Route>
                 <Route path={'/wwVergeten'} element={<WachtwoordVergeten />}></Route>
-                <Route pathe={'/gebruikerportaal'} element={<GebruikersPortaal/>}></Route>
+                <Route path={'/gebruikerportaal'} element={<GebruikersPortaal/>}></Route>
             </Routes>
         </>
 

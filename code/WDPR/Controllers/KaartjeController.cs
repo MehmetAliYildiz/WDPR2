@@ -183,12 +183,19 @@ namespace WDPR.Controllers
 
 
 
-        [HttpGet("kaartjeBIjGebruiker")]
-        public async Task<IActionResult> KaartjeBijGebruikerAsync([FromBody] string email)
+        [HttpGet("kaartjeBijGebruiker/{email}")]
+        public async Task<IActionResult> KaartjeBijGebruikerAsync(string email)
         {
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _context.FindGebruikerByEmail(email);
+            if(user == null)
+            return NotFound("user not found");
 
-            var bestellingOpId = _context.GetBestellingen().Where(u => u.Gebruiker.Id == user.Id);
+            var bestellingOpId = _context.GetBestellingen().Where(b => {
+                if(b.Gebruiker == null){
+                    return false;
+                }
+                return b.Gebruiker.Id == user.Id;
+            });
             if (!bestellingOpId.Any())
             {
                 return NotFound("er zijn geen kaartjes gekoppeld aan je account");

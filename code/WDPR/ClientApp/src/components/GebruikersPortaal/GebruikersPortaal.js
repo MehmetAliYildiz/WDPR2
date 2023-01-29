@@ -1,22 +1,22 @@
-import React, {useState} from "react";
-import {FaRegCalendar} from 'react-icons/fa';
-import {IoPersonAdd} from 'react-icons/io5';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import QrCode from './qrCode';
+import Footer from "../navFoot/Footer";
+import NavBar from "../navFoot/navbar"
 
-
-function KaartjesCards() {
+function GebruikersPortaal() {
     const [kaartjes, setKaartjes] = useState([]);
     const [error, setError] = useState('');
 
     useEffect(() => {
         // Get the email from the user's session
-        const email = sessionStorage.getItem("email");
+        const email = sessionStorage.getItem("gebruikersNaam");
 
         // Fetch the kaartjes when the component mounts
-        fetch(`https://groep3theaterlaak.switzerlandnorth.cloudapp.azure.com/api/Account/kaartjeBIjGebruiker`, {
-            method: 'POST',
-            body: JSON.stringify({ email }),
-            headers: { 'Content-Type': 'application/json' }
+        fetch(`https://localhost:7260/Kaartje/kaartjeBijGebruiker/${email}`,{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
         })
             .then(res => res.json())
             .then(data => {
@@ -30,26 +30,21 @@ function KaartjesCards() {
     }, []);
 
     return (
-        <div className="container">
-            <h1 className="text-center my-5">Kaartjes</h1>
-            {error && <p className="text-danger">{error}</p>}
-            {kaartjes.length > 0 ? (
-                <div className="card-columns">
-                    {kaartjes.map(kaartje => (
-                        <div key={kaartje.id} className="card">
-                            <div className="card-body">
-                                <h5 className="card-title">{kaartje.name}</h5>
-                                <p className="card-text">
-                                    {kaartje.description}
-                                </p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            ) : (
-                <p className="text-center">Er zijn geen kaartjes gekoppeld aan je account</p>
-            )}
-        </div>
+        <>
+            <NavBar/>
+            <div className="container">
+                <h1 className="text-center my-5">Kaartjes</h1>
+                {error && <p className="text-danger">{error}</p>}
+                {kaartjes.length > 0 ? (
+                    <div className="row row-cols-1 row-cols-md-3 g-4">
+                        <QrCode kaartjes={kaartjes}/>
+                    </div>
+                ) : (
+                    <p className="text-center">Er zijn nog geen kaartjes gekoppeld aan uw account</p>
+                )}
+            </div>
+            <Footer/>
+        </>
     );
 }
 

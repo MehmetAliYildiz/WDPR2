@@ -7,9 +7,9 @@ import './Footer.css';
 function Footer(props) {
 
     return (
-        <footer className="bg-light text-center text-lg-start">
+    <footer className="bg-light text-center text-lg-start">
 
-            <div className="footer-container" style={props.style}>
+    <div className="footer-container" style={props.style}>
 
     <div className="row justify-content-md-center">
 
