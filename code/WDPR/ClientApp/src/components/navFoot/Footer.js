@@ -32,7 +32,7 @@ function Footer(props) {
                         <a href="/doneren" className="text-dark">Doneren</a>
                     </li>
                     <li>
-                        <a href="/Tickets" className="text-dark">Tickets</a>
+                        <a href="/reserveren" className="text-dark">Zaal huren</a>
                     </li>
                 </ul>
             </div>
@@ -57,13 +57,13 @@ function Footer(props) {
 
             <ul className="list-unstyled">
                 <li>
-                    <a href="" className="text-dark">Facebook</a>
+                    <a href="https://www.facebook.com/" className="text-dark">Facebook</a>
                 </li>
                 <li>
-                    <a href="" className="text-dark">Instagram</a>
+                    <a href="https://www.instagram.com/" className="text-dark">Instagram</a>
                 </li>
                 <li>
-                    <a href="" className="text-dark">Twitter</a>
+                    <a href="https://twitter.com" className="text-dark">Twitter</a>
                 </li>
             </ul>
             </div>

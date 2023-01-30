@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { FaRegCalendar } from 'react-icons/fa';
+import { FaUserAlt, FaLock } from 'react-icons/fa';
+import {GrMail} from 'react-icons/gr';
 import { IoPersonAdd } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import GetEndpoint from "../Admin/EndPointUtil";
@@ -100,28 +101,28 @@ function Registratie() {
 
                                         <div className="input-group mb-4">
                                             <div className="input-group-prepend">
-                                                <span className="input-group-text" id="Gebruikersnaam"><FaRegCalendar /></span>
+                                                <span className="input-group-text" id="Gebruikersnaam"><FaUserAlt /></span>
                                             </div>
                                             <input type="text" id="form2Example11" className="form-control" name="naam" aria-describedby="Gebruikersnaam" placeholder="naam" onChange={(e) => handleChangeNaam(e.target.value)} />
                                         </div>
 
                                         <div className="form-outline input-group mb-4">
                                             <div className="input-group-prepend">
-                                                <span className="input-group-text" id="basic-addon1">@</span>
+                                                <span className="input-group-text" id="basic-addon1"><GrMail /></span>
                                             </div>
                                             <input type="mail" id="form2Example11" className="form-control" name="email" placeholder="email" onChange={(e) => handleChangeEmail(e.target.value)} />
                                         </div>
 
                                         <div className="form-outline input-group mb-4">
                                             <div className="input-group-prepend">
-                                                <span className="input-group-text" id="basic-addon1">@</span>
+                                                <span className="input-group-text" id="basic-addon1"><FaLock /></span>
                                             </div>
                                             <input type="password" id="form2Example11" className="form-control" name="wachtwoord" placeholder="wachtwoord" onChange={(e) => handleChangeWachtwoord(e.target.value)} />
                                         </div>
 
                                         <div className="form-outline input-group mb-4">
                                             <div className="input-group-prepend">
-                                                <span className="input-group-text" id="basic-addon1">@</span>
+                                                <span className="input-group-text" id="basic-addon1"><FaLock /></span>
                                             </div>
                                             <input type="password" id="form2Example11" className="form-control" name="wachtwoord2" placeholder="herhaal wachtwoord" onChange={(e) => handleChangeWachtwoord2(e.target.value)} />
                                         </div>

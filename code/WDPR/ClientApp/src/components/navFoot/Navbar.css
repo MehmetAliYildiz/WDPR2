@@ -14,3 +14,7 @@
 .uitklapper{
     background-color: white;
 }
+
+.nav-link:hover{
+    color: #F39A05;
+}

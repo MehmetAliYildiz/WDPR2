@@ -107,7 +107,7 @@ class VoorstellingDetail extends Component {
 
         const agendaItems = this.state.agendas.map(agenda => {
             const startDatumTijd = new Date(agenda.startDatumTijd).toLocaleDateString(undefined, {hour: '2-digit', minute:'2-digit'});
-            const eindDatumTijd = new Date(agenda.startDatumTijd).toLocaleDateString(undefined, {hour: '2-digit', minute:'2-digit'});
+            const eindDatumTijd = new Date(agenda.eindDatumTijd).toLocaleDateString(undefined, {hour: '2-digit', minute:'2-digit'});
 
             return (
                 <section className="AgendaItem">

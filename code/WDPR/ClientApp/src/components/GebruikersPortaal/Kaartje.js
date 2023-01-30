@@ -24,10 +24,27 @@ function Kaartje(props) {
             (<div>naam: {kaartje.bestelling.gebruiker.userName}</div>);
     }
 
+    const addToCalendar = () => {
+        const start = new Date(kaartje.agenda.startDatumTijd).toISOString();
+        const eind = new Date(kaartje.agenda.eindDatumTijd).toISOString();
+        const event = 
+        `BEGIN:VCALENDAR
+BEGIN:VEVENT
+DTSTART:${start}
+DTEND:${eind}
+LOCATION:Theater Laak
+SUMMARY:Voorstelling
+END:VEVENT
+END:VCALENDAR`;
+
+        const data = encodeURIComponent(event);
+        window.location = "data:text/calendar;charset=utf8," + data;
+    };
+
     return (
         <div>
-            <div className="card " key={kaartje.Id}>
-                <div id='ticket' className={" text-center ticket ${printen ? 'print-ticket' : ''}"} >
+            <div className="card text-center" key={kaartje.Id}>
+                <div id='ticket' className={" ticket ${printen ? 'print-ticket' : ''}"} >
                     <QRCode value={kaartje.code} />
                     <div className="card-body">
                         {getNaam()}
@@ -36,8 +53,8 @@ function Kaartje(props) {
                         <div>kaartje code: {kaartje.code}</div>
                     </div>
                 </div>
-                <button className="btn btn-primary" onClick={handlePrint}>Print</button>
-                <button className="btn btn-primary" onClick={handlePrint}>Agenda</button>
+                <button className="btn btn-primary mb-2" onClick={handlePrint}>Print</button>
+                <button className="btn btn-primary mb-2" onClick={addToCalendar}>Agenda</button>
             </div>
         </div>
     );

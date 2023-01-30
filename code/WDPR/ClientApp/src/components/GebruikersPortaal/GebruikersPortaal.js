@@ -38,7 +38,7 @@ function GebruikersPortaal() {
     const getKaartjes = () => {
         return(kaartjes.map(kaartje => {
             return (
-                <div className="row row-cols-1 row-cols-md-3 g-4">
+                <div className="row ">
                     <Kaartje kaartje={kaartje} />
                 </div>
             );
