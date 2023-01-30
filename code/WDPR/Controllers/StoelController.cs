@@ -16,7 +16,7 @@ namespace WDPR.Controllers{
         }
 
         [HttpPost]
-         public async Task<ActionResult<Zaal>> PostStoel(Stoel stoel)
+        public async Task<ActionResult<Zaal>> PostStoel(Stoel stoel)
         {
             _context.AddStoel(stoel);
             await _context.SaveChangesAsync();
@@ -25,11 +25,34 @@ namespace WDPR.Controllers{
         }
 
 
-         [HttpGet]
-         public ActionResult<IEnumerable<Stoel>> GetStoel()
-         {
-             return Ok(_context.GetStoelen());
-         }
+        [HttpGet]
+        public ActionResult<IEnumerable<Stoel>> GetStoel()
+        {
+            return Ok(_context.GetStoelen());
+        }
+
+        // Post doen is niet RESTful
+        [HttpPost("getSkFromKaartjes")]
+        public ActionResult<IEnumerable<StoelKaartje>> GetSKFromKaartjes([FromBody] List<Kaartje> kaartjes)
+        {
+            var stoelKaartjes = _context.GetStoelKaartjes().ToList();
+            var output = new List<StoelKaartje>();
+            foreach (Kaartje kaartje in kaartjes)
+            {
+                var stoelKaartje = stoelKaartjes.Where(sk => sk.KaartjeId == kaartje.Id).FirstOrDefault();
+                if (stoelKaartje == null) continue;
+                output.Add(stoelKaartje);
+            }
+
+            output.ForEach(o => {
+                o.Kaartje.StoelKaartjes = new List<StoelKaartje>();
+                o.Kaartje.Bestelling = null;
+                o.Kaartje.Agenda = null;
+                o.Stoel.StoelKaartjes = new List<StoelKaartje>();
+            });
+
+            return output;
+        }
          
         [HttpGet("{zaalId}/{agendaId}")]
         public IActionResult GetStoelenMetBeschikbaarheid(int zaalId, int agendaId)
@@ -42,12 +65,14 @@ namespace WDPR.Controllers{
 
             var stoelen = zaal.First().Stoelen;
             var kaartjes = _context.GetKaartjes().ToList();
-            var beschikbareStoelen = stoelen.Where(
+            var beschikbareStoelen = stoelen.Where
+            (
                 s => !_context.GetStoelKaartjes().Any(sk => sk.Stoel.Id == s.Id && kaartjes.Any(k =>
                 {
                     if (k.Agenda == null) return false;
                     return k.Id == sk.KaartjeId && k.Agenda.Id == agendaId;
-                })));
+                }))
+            );
 
             stoelen.ToList().ForEach(s => s.Status = "Bezet"); // Zet de status van -ALLE- stoelen in de zaal naar bezet
             beschikbareStoelen.ToList().ForEach(bs => bs.Status = "Vrij"); // Zet de status van beschikbare stoelen naar vrij

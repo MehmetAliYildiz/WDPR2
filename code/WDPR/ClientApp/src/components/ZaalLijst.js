@@ -10,17 +10,13 @@ class ZaalLijst extends Component {
     }
 
     componentDidMount = async () => {
-        const res = await fetch(GetEndpoint()+"/VrijeRuimte");
+        const res = await fetch(GetEndpoint() + "VrijeRuimte");
         console.log(res.body);
         const data = await res.json();
         this.setState({ buttons: data });
     };
-
-    // Function to generate buttons based on response data
     generateButtons = response => {
-        // Create an array of buttons
         const buttons = response.map(zaal => {
-            // Return a new button element for each zaal
             return (
                 <button
                     key={`Zaal ${zaal.id}`}

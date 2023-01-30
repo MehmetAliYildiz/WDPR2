@@ -463,6 +463,9 @@ namespace WDPR.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("BandId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Img")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -476,6 +479,8 @@ namespace WDPR.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BandId");
 
                     b.ToTable("Voorstelling");
                 });
@@ -515,6 +520,13 @@ namespace WDPR.Migrations
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.HasDiscriminator().HasValue("Gebruiker");
+                });
+
+            modelBuilder.Entity("WDPR.Models.Admin", b =>
+                {
+                    b.HasBaseType("WDPR.Models.Gebruiker");
+
+                    b.HasDiscriminator().HasValue("Admin");
                 });
 
             modelBuilder.Entity("WDPR.Models.Artiest", b =>
@@ -678,6 +690,17 @@ namespace WDPR.Migrations
                     b.Navigation("Stoel");
                 });
 
+            modelBuilder.Entity("WDPR.Models.Voorstelling", b =>
+                {
+                    b.HasOne("WDPR.Models.Band", "Band")
+                        .WithMany("Voorstelling")
+                        .HasForeignKey("BandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Band");
+                });
+
             modelBuilder.Entity("WDPR.Models.Agenda", b =>
                 {
                     b.Navigation("Kaartjes");
@@ -686,6 +709,8 @@ namespace WDPR.Migrations
             modelBuilder.Entity("WDPR.Models.Band", b =>
                 {
                     b.Navigation("ArtiestBands");
+
+                    b.Navigation("Voorstelling");
                 });
 
             modelBuilder.Entity("WDPR.Models.Kaartje", b =>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import * as XLSX from 'xlsx';
 import axios from 'axios';
 import GetEndpoint from '../../Admin/EndPointUtil';
+import { FaBandAid } from 'react-icons/fa';
 
 const ExcelUpload = () => {
     const [file, setFile] = useState(null);
@@ -30,7 +31,8 @@ const ExcelUpload = () => {
 
     const createVoorstelling = async (voorstelling) => {
         try {
-            const response = await axios.post(GetEndpoint+`/api/voorstelling`, voorstelling);
+            console.log(voorstelling)
+            const response = await axios.post(GetEndpoint()+`api/voorstelling`, voorstelling);
             return response.data.id;
         } catch (error) {
             console.log(error);
@@ -49,15 +51,18 @@ const ExcelUpload = () => {
                         startDatumTijd: row.StartDatumTijd,
                         eindDatumTijd: row.EindDatumTijd
                     }
-                    axios.post(GetEndpoint+`/api/agenda`, agenda)
+                    console.log(agenda);
+                    axios.post(GetEndpoint()+`api/agenda`, agenda)
                         .then(response => console.log(response))
                         .catch(error => console.log(error));
                 } else {
                     const voorstelling = {
                         name: row.Naam,
                         beschrijving: row.Beschrijving,
-                        img: row.Img
+                        img: row.Img,
+                        bandId: row.BandId,
                     }
+                    console.log(voorstelling)
                     const voorstellingId = await createVoorstelling(voorstelling);
 
                     const agenda = {
@@ -67,7 +72,7 @@ const ExcelUpload = () => {
                         startDatumTijd: row.StartDatumTijd,
                         eindDatumTijd: row.EindDatumTijd
                     }
-                    axios.post(GetEndpoint+`/api/agenda`, agenda)
+                    axios.post(GetEndpoint()+`api/agenda`, agenda)
                         .then(response => console.log(response))
                         .catch(error => console.log(error));
                 }

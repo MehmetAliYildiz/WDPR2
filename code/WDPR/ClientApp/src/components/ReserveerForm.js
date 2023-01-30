@@ -2,7 +2,7 @@
 import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
-import { addToCartDetail } from './ShoppingCartUtil';
+import { addToCartDetail } from './Payment/ShoppingCartUtil';
 import { appendZero } from './Scheduler/SchedulerUtil';
 import axios from 'axios';
 
@@ -38,17 +38,17 @@ class ReserveerForm extends Component
     }
 
     async validate() {
-        const zaalId = this.getZaalId();
-        if (zaalId == null) {
-            console.log("ZaalId required");
+        const ruimteId = this.getZaalId();
+        if (ruimteId == null) {
+            console.log("RuimteId required");
             this.setState({ redirect: true });
             return;
         }
 
-        const res = await fetch(GetEndpoint()+`Zaal/${zaalId}`); 
+        const res = await fetch(GetEndpoint() + `VrijeRuimte/${ruimteId}`); 
         const data = await res.json();
         if (data.length === 0) {
-            console.log(`No zaal with ID ${zaalId} found`);
+            console.log(`No ruimte with ID ${ruimteId} found`);
             this.setState({ redirect: true });
             return;
         }
@@ -65,9 +65,9 @@ class ReserveerForm extends Component
 
     getZaalId = event => {
         const queryParameters = new URLSearchParams(window.location.search)
-        const zaalId = queryParameters.get("zaalId")
+        const ruimteId = queryParameters.get("ruimteId")
 
-        return (zaalId);
+        return (ruimteId);
     }
 
     setPaymentPopup = (val) => {
@@ -99,19 +99,19 @@ class ReserveerForm extends Component
     }
 
     handleSubmit = async event => {
-        const zaalId = this.getZaalId();
+        const ruimteId = this.getZaalId();
         if (!this.validateAppointment()) {
             return;
         }
 
         event.preventDefault();
-        const endpoint = GetEndpoint()+'/reservering/post';
+        const endpoint = GetEndpoint() + 'reservering/post';
         const appointment = this.state.schedulerRef.current.tryGetAppointment();
         const data = {
             naam: appointment.name,
             startTijd: appointment.startTime.toISOString(),
             eindTijd: appointment.endTime.toISOString(),
-            bestelling: {},
+            bestelling: { type: "Reservering" },
             vrijeRuimteId: this.getZaalId(),
         };
         try {
@@ -120,7 +120,7 @@ class ReserveerForm extends Component
             console.error(err);
         }
         localStorage.setItem("appointments", "[]");
-        addToCartDetail(`Reservering Zaal ${zaalId}`, `${appointment.startTime.toDateString()}, van ${appendZero(appointment.startTime.getHours())}:${appendZero(appointment.startTime.getMinutes())} tot ${appendZero(appointment.endTime.getHours())}:${appendZero(appointment.endTime.getMinutes())}`, (appointment.duration * 0.25).toFixed(2), appointment);
+        addToCartDetail(`Reservering ruimte ${ruimteId}`, `${appointment.startTime.toDateString()}, van ${appendZero(appointment.startTime.getHours())}:${appendZero(appointment.startTime.getMinutes())} tot ${appendZero(appointment.endTime.getHours())}:${appendZero(appointment.endTime.getMinutes())}`, (appointment.duration * 0.25).toFixed(2), appointment);
     };
 
     render() {
@@ -131,11 +131,11 @@ class ReserveerForm extends Component
             <div>
                 <NavBar></NavBar>
                 <h1>
-                    Plan een reservering voor zaal {this.getZaalId()}
+                    Plan een reservering voor ruimte {this.getZaalId()}
                 </h1>
                 <Scheduler ref={this.state.schedulerRef} date={new Date(`${new Date().getFullYear()}/${new Date().getMonth() + 1}/${new Date().getDate() + 1}`)}/>
                 <div key="paymentDiv">
-                    <button type="button" onClick={() => this.setState({ paymentPopup: true })}>Click me!</button>
+                    <button type="button" onClick={() => this.setState({ paymentPopup: true })}>Selecteer betaalmethode</button>
                     <Popup
                         trigger={this.state.paymentPopup}
                         setTrigger={this.setPaymentPopup}
@@ -230,7 +230,7 @@ class ReserveerForm extends Component
                     </Popup>
                 </div>
 
-                <button type="button" onClick={this.handleSubmit}>Rent Room</button>
+                <button type="button" onClick={this.handleSubmit}>Huren</button>
                 <Footer></Footer>
             </div>
         );

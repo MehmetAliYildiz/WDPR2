@@ -48,11 +48,11 @@ class Scheduler extends Component {
         localStorage.setItem("appointments", JSON.stringify(this.state.appointments));
     }
 
-    getZaalId = event => {
+    getRuimteId = event => {
         const queryParameters = new URLSearchParams(window.location.search)
-        const zaalId = queryParameters.get("zaalId")
+        const ruimteId = queryParameters.get("ruimteId")
 
-        return (zaalId);
+        return (ruimteId);
     }
 
     tryGetAppointment = () => {
@@ -132,7 +132,7 @@ class Scheduler extends Component {
 
     fetchData = async () => {
         // Fetch alle reserveringen op de huidige dag
-        const res = await fetch(GetEndpoint()+`reservering/${this.getZaalId()}/${this.state.date.getFullYear()}-${this.state.date.getMonth() + 1}-${this.state.date.getDate()}`);
+        const res = await fetch(GetEndpoint() + `reservering/${this.getRuimteId()}/${this.state.date.getFullYear()}-${this.state.date.getMonth() + 1}-${this.state.date.getDate()}`);
         if (!res.ok) {
             throw Error(res.statusText);
             return;

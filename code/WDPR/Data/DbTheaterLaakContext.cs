@@ -12,6 +12,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     #region DbSets
     private DbSet<Voorstelling> Voorstelling { get; set; }
+    private DbSet<Admin> Admin {get; set;}
     private DbSet<Reservering> Reserveringen { get; set; }
     private DbSet<Bestelling> Bestellingen { get; set; }
     private DbSet<Gebruiker> Gebruiker { get; set; }
@@ -21,7 +22,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     private DbSet<Agenda> Agenda { get; set; }
     private DbSet<Band> Band { get; set; }
     private DbSet<Artiest> Artiest { get; set; }
-    private DbSet<ArtiestBand> ArtiestBand { get; set; }
+    public DbSet<ArtiestBand> ArtiestBand { get; set; }
     private DbSet<Kaartje> Kaartjes { get; set; }
     private DbSet<StoelKaartje> StoelKaartjes { get; set; }
     private DbSet<Review> Review { get; set; }
@@ -35,6 +36,10 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     public void AddGebruiker(Gebruiker r){
         Gebruiker.Add(r);
+    }
+
+    public void AddAdmin(Admin a){
+        Admin.Add(a);
     }
 
     public void AddAgenda(Agenda a){
@@ -125,6 +130,11 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
         Artiest.Remove(Artiest.Find(id));
     }
 
+    public void RemoveAdmin(string id)
+    {
+        Admin.Remove(Admin.Find(id));
+    }
+
     public void RemoveReview(int id)
     {
         Review.Remove(Review.Find(id));
@@ -141,6 +151,12 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     {
         return Gebruiker;
     }
+
+    public IEnumerable<Admin> GetAdmin()
+    {
+        return Admin;
+    }
+
 
     public IEnumerable<Agenda> GetAgenda()
     {
@@ -164,12 +180,12 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     public IEnumerable<Kaartje> GetKaartjes()
     {
-        return Kaartjes;
+        return Kaartjes.Include(k => k.Bestelling).Include(k => k.Agenda);
     }
 
     public IEnumerable<Bestelling> GetBestellingen()
     {
-        return Bestellingen;
+        return Bestellingen.Include(b => b.Gebruiker);
     }
 
     public IEnumerable<Stoel> GetStoelen()
@@ -179,7 +195,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     public IEnumerable<StoelKaartje> GetStoelKaartjes()
     {
-        return StoelKaartjes.Include(sk => sk.Stoel).Include(sk => sk.Kaartje);
+        return StoelKaartjes.Include(sk => sk.Stoel).Include(sk => sk.Kaartje).Include(sk => sk.Kaartje.Agenda);
     }
 
     public IEnumerable<Review> GetReview()
@@ -209,6 +225,12 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     {
         return await Gebruiker.FindAsync(Id);
     }
+
+    public async Task<Admin> FindAdmin(string Id)
+    {
+        return await Admin.FindAsync(Id);
+    }
+
     public async Task<Voorstelling> FindVoorstelling(int id)
     {
         return await Voorstelling.FindAsync(id);
@@ -256,13 +278,19 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
-        builder.UseSqlServer("Data Source=Database,1433;User Id=SA;Password =Pass@word; Initial Catalog=laak;TrustServerCertificate=True;");
+    
+        builder.UseSqlServer("Data Source=Database;MultipleActiveResultSets=true;User Id=SA;Password =Pass@word; Initial Catalog=laak;TrustServerCertificate=True;");
 
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+
+        builder.Entity<Voorstelling>()
+        .HasOne(v => v.Band)
+        .WithMany(b => b.Voorstelling)
+        .HasForeignKey(v => v.BandId);
 
         builder.Entity<Agenda>()
             .HasMany(a => a.Kaartjes)

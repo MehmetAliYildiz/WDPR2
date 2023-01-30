@@ -47,7 +47,7 @@ export default class GetPanel extends EndpointPanel {
                     </h3>
                     {fieldSections}
                     <button type="button" onClick={this.handleGetSubmit}>
-                        Get
+                        Vraag zaal op
                     </button>
                 </form>
                 Response:

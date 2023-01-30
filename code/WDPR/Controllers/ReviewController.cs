@@ -43,40 +43,6 @@ namespace WDPR.Controllers
 
             return review;
         }
-
-        // // PUT: api/Review/5
-        // // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        // [HttpPut("{Id}")]
-        // public async Task<IActionResult> PutReview(int Id, Review review)
-        // {
-        //     if (Id != review.Id)
-        //     {
-        //         return BadRequest();
-        //     }
-
-        //     _context.Entry(review).State = EntityState.Modified;
-
-        //     try
-        //     {
-        //         await _context.SaveChangesAsync();
-        //     }
-        //     catch (DbUpdateConcurrencyException)
-        //     {
-        //         if (!ReviewExists(Id))
-        //         {
-        //             return NotFound();
-        //         }
-        //         else
-        //         {
-        //             throw;
-        //         }
-        //     }
-
-        //     return NoContent();
-        // }
-
-        // POST: api/Review
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Review>> PostReview(ReviewDTO reviewDTO)
         {
@@ -85,14 +51,9 @@ namespace WDPR.Controllers
                 .Where(r => r.VoorstellingId == reviewDTO.voorstellingId)
                 .FirstOrDefault();
 
-            // if (existingReview != null)
-            // {
-            //     return BadRequest("You have already posted a review for this voorstelling");
-            // }
-
-            if (reviewDTO.sterren < 0 || reviewDTO.sterren > 5)
+            if (existingReview != null)
             {
-                return BadRequest("Je mag alleen maar tussen de 0 en 5 Sterren geven.");
+                return BadRequest("You have already posted a review for this voorstelling");
             }
             var review = new Review()
             {

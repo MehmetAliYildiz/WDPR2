@@ -9,16 +9,30 @@ function Voorstelling() {
 
     const [post, setPost] = useState([]);
     const [searchNaam, setSearchNaam] = useState("");
+    const [bands, setBands] = useState([]);
+
+
 
     useEffect(() => {
-        Axios.get(GetEndpoint()+"/api/Voorstelling").then((res) => {
+        Axios.get(GetEndpoint()+"api/Voorstelling").then((res) => {
+
             setPost(res.data);
             console.log(res.data);
         });
         //api("Voorstelling")
     }, []);
 
-    return (
+    useEffect(() => {
+        async function fetchData() {
+          const res = await Axios.get(GetEndpoint()+"api/band");
+          setBands(res.data);
+          console.log(res.data)
+        }
+        fetchData();
+      }, []);
+      
+
+      return (
         <>
             {/*<NavBar></NavBar>*/}
             <NavBar></NavBar>
@@ -41,17 +55,16 @@ function Voorstelling() {
 
                         <div className="col">
                             <div className="card">
-                                <h5 className="card-title" key={item.Id}>{item.name}</h5>
                                 <img src={item.img} className="card-img-top" alt="..." />
                             </div>
                         </div>
                         <div className="col">
                             <div className="card-body">
-                                <p className="card-text">
-                                    {item.beschrijving}
-                                </p>
-                                <p>{item.datum}</p>
-                                <a href={`voorstelling/geselecteerd?itemId=${item.id}`}>Button</a>
+                                <h5 className="card-title" key={item.Id}>{item.name}</h5>
+                                <div className="Lijn"></div>
+                                <p className="card-text">{item.beschrijving}</p>
+                                <p className="card-text">Band: {bands.find(band => band.id === item.bandId)?.naam}</p>
+                                <a href={`voorstelling/geselecteerd?itemId=${item.id}`} className="VoorstellingButton">Bekijk Voorstelling</a>
                             </div>
                         </div>
                     </div>
@@ -59,6 +72,6 @@ function Voorstelling() {
             </div>
             <Footer></Footer>
         </>
-    );
+    );;
 }
 export default Voorstelling;

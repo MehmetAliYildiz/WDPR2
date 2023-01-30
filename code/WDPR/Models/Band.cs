@@ -6,5 +6,6 @@
         public string Naam { get; set; }
 
         public ICollection<ArtiestBand> ArtiestBands { get; set; }
+        public ICollection<Voorstelling> Voorstelling { get; set; }
     }
 }
