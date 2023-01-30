@@ -1,3 +1,3 @@
 export default function GetEndpoint(){
-    return "https://localhost:7260/";
+    return "http://wdprtheaterlaak.uksouth.cloudapp.azure.com/";
 }
