@@ -11,6 +11,10 @@
     color: white;
 }
 
+.nav-link:hover {
+    color: #F39A05;
+}
+
 .uitklapper{
     background-color: white;
 }

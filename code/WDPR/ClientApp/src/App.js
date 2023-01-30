@@ -1,7 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Voorstelling from "./components/VoorstellingPagina/Voorstelling";
-import './custom.css';
 import Homepage from './components/HomePagina/Homepage';
 import Doneer from './components/DonatiePagina/DoneerOphalen';
 import Inloggen from './components/Login/Login';
@@ -28,8 +27,8 @@ import BandPost from './components/AdminPanel/BandPost';
 import AdminHoofdMenu from './components/AdminPanel/AdminHoofdMenu';
 import AdminLogin from './components/Admin/adminLogin';
 
-
-
+import ArtiestBandPut from './components/AdminPanel/ArtiestBandPut';
+import AdminPost from './components/AdminPanel/AdminPost';
 
 export default function App() {
 
@@ -63,6 +62,10 @@ export default function App() {
 
                 <Route path={'/admin'} element={<AdminHoofdMenu />}></Route>
                 <Route path={'/admin/login'} element={<AdminLogin />}></Route>
+                <Route path={'/admin/artiestband'} element={<ArtiestBandPut />}></Route>
+                <Route path={'/admin/postadmin'} element={<AdminPost />}></Route>
+
+
             </Routes>
         </>
 

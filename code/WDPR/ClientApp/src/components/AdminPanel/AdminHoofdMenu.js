@@ -29,6 +29,12 @@ export default function AdminHoofdMenu() {
                 <Link to="/Admin/Voorstelling">
                     <button className="admin-menu-button">Voorstelling</button>
                 </Link>
+                <Link to="/Admin/artiestband">
+                    <button className="admin-menu-button">ArtiestBand</button>
+                </Link>
+                <Link to="/Admin/postadmin">
+                    <button className="admin-menu-button">AdminPost</button>
+                </Link>
             </div>
         </div>
         <Footer/>

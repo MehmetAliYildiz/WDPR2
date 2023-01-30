@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
+import GetEndpoint from "../Admin/EndPointUtil";
 
 function Login() {
     const loginKnop = {
@@ -25,7 +26,7 @@ function Login() {
         }
 
         try {
-            const response = await fetch('https://localhost:7260/api/Account/wachtwoordWijzigen', {
+            const response = await fetch(GetEndpoint()+'api/Account/wachtwoordWijzigen', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 

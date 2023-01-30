@@ -89,7 +89,7 @@ function Navigatie() {
             <div className="row align-items-center">
               <div className="col-6">
                 <a className="mb-0" href="/">
-                  <img src={"img/Logo_theater_laak_V2 (1).png"} style={{width: "128px", height: '128px'}}  alt="theater laak logo"/>
+                  <img src={"img/Logo_theater_laak_V2-wit.png"} style={{width: "128px", height: '128px'}}  alt="theater laak logo"/>
                 </a>
               </div>
               <div className="col-6">
@@ -120,8 +120,8 @@ function Navigatie() {
                   
                 <><li className="nav-item">
                     <div className="nav-link dropdown-toggle" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome {gebruikersnaam}</div>
-                    <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a className="dropdown-item" href="/gebruikerPortaal">Tickets</a>
+                    <div className="dropdown-menu " aria-labelledby="navbarDropdown">
+                    <a className="dropdown-item " href="/gebruikerPortaal">Tickets</a>
                     </div>
                   </li>
                   <li className="nav-item">
@@ -134,7 +134,7 @@ function Navigatie() {
                 
                  : 
                 <li className="nav-item">
-                  <a className="btn koop" href="/inloggen">Inloggen</a>
+                  <a className="btn koop nav-link" href="/inloggen">Inloggen</a>
                 </li>
                 
                 }
