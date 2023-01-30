@@ -59,7 +59,7 @@ namespace WDPR.Controllers
             }
 
             _context.AddReservering(nieuweReservering);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return Ok();
         }

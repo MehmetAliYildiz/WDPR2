@@ -10,6 +10,7 @@ class Appointment extends Component {
             allAppointments: props.allAppointments,
             renderer: props.renderer,
             scheduler: props.scheduler,
+            removed: false,
             elementIndex: props.elementIndex,
             calcVars: {
                 su: 'vh', // Size unit
@@ -298,17 +299,21 @@ class Appointment extends Component {
 
     // Verwijder de huidige appointment
     removeElement = () => {
-        this.state.renderer.setState({
-            elements: this.state.renderer.state.elements.filter((_, i) => i !== this.state.elementIndex)
-        });
-
         this.state.scheduler.setState({
             appointments: this.state.scheduler.state.appointments.filter(a => a !== this.state.appointment)
         });
-
         this.setState({
-            elementIndex: this.state.elementIndex - 1
+            removed: true
         });
+
+        const localAppointments = JSON.parse(localStorage.getItem("appointments"));
+        for (let i = 0; i < localAppointments.length; i++) {
+            if (localAppointments[i].id == this.state.appointment.id) {
+                localAppointments.splice(i, 1);
+            }
+        }
+
+        localStorage.setItem("appointments", JSON.stringify(localAppointments));
     };
 
     // Render de appointment
@@ -353,7 +358,7 @@ class Appointment extends Component {
             </button>
         );
 
-        return (
+        return this.state.removed ? ("") : (
             <div className="appointment-outer" style={buttonStyle} ref={this.state.outerDivRef}>
                 {appointment.allowModify ? removeButton : ""}
                 {appointment.allowModify ? resizingTable : ""}

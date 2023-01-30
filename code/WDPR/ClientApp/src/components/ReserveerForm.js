@@ -105,7 +105,7 @@ class ReserveerForm extends Component
         }
 
         event.preventDefault();
-        const endpoint = GetEndpoint() + 'reservering/post';
+        const endpoint = GetEndpoint() + 'Reservering/post';
         const appointment = this.state.schedulerRef.current.tryGetAppointment();
         const data = {
             naam: appointment.name,
@@ -116,6 +116,7 @@ class ReserveerForm extends Component
         };
         try {
             const response = axios.post(endpoint, data);
+            console.log(response);
         } catch (err) {
             console.error(err);
         }
