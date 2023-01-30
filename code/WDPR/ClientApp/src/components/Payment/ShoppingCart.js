@@ -7,6 +7,7 @@ import GetEndpoint from '../Admin/EndPointUtil';
 import { Navigate } from 'react-router-dom';
 import Footer from '../navFoot/Footer';
 import Navigatie from '../navFoot/navbar';
+import '../../style/ShoppingCart.css'
 
 export default class ShoppingCart extends Component {
     constructor(props) {
@@ -117,7 +118,7 @@ export default class ShoppingCart extends Component {
 
             return (
                 <div>
-                    <h3>
+                    <h3 style={{ fontWeight: "bold", padding: "0px 0px 4px 0px" }}>
                         {voorstelling.name}
                     </h3>
                     <p>
@@ -136,7 +137,7 @@ export default class ShoppingCart extends Component {
     getBestellingenDOM = () => {
         return (this.state.bestellingen.map(bestelling => {
             return (
-                <div key={bestelling.id}>
+                <div key={bestelling.id} className="bestelling">
                     {this.getBestellingDetail(bestelling)}
                 </div>
             );
@@ -170,7 +171,7 @@ export default class ShoppingCart extends Component {
 
     getMain() {
         return this.state.bestellingen.length > 0 ? (
-            <div>
+            <div className="bestelling-container">
                 {this.getBestellingenDOM()}
                 < button className="boek-knop" type="button" onClick={this.handleSubmit} >
                     Afrekenen
