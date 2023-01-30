@@ -120,7 +120,7 @@ class VoorstellingDetail extends Component {
         let reviewItems;
         if (this.state.reviews.length > 0) {
             reviewItems = this.state.reviews.map(review => {
-                // Axios.get(`https://localhost:7260/api/gebruiker/${review.gebruikerId}`)
+                // Axios.get(GetEndpoint()+`api/gebruiker/${review.gebruikerId}`)
                 return (
                     <section className="reviewItem">
                         <p className="ReviewText">{review.recensie}</p>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Footer from "../navFoot/Footer";
 import NavBar from "../navFoot/navbar";
+import GetEndpoint from '../Admin/EndPointUtil';
 
 const ArtiestPost = () => {
     const [artiesten, setArtiesten] = useState([]);
@@ -12,7 +13,7 @@ const ArtiestPost = () => {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        axios.get('https://localhost:7260/api/artiest')
+        axios.get(GetEndpoint()+'api/artiest')
             .then(response => setArtiesten(response.data))
             .catch(error => console.error(error));
     }, []);
@@ -24,7 +25,7 @@ const ArtiestPost = () => {
             Email: email,
             Wachtwoord: wachtwoord
         };
-        axios.post('https://localhost:7260/api/artiest', artiestDTO)
+        axios.post(GetEndpoint()+'api/artiest', artiestDTO)
             .then(response => {
                 setArtiesten([...artiesten, response.data]);
                 setMessage('Artiest created successfully');

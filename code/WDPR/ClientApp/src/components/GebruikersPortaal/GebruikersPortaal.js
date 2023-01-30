@@ -4,6 +4,7 @@ import Footer from "../navFoot/Footer";
 import NavBar from "../navFoot/navbar"
 import Kaartje from "./Kaartje";
 import { Navigate } from "react-router-dom";
+import GetEndpoint from "../Admin/EndPointUtil";
 
 function GebruikersPortaal() {
     const [kaartjes, setKaartjes] = useState([]);
@@ -16,7 +17,7 @@ function GebruikersPortaal() {
 
         if (email == null) setRedirect("/inloggen");
         // Fetch the kaartjes when the component mounts
-        fetch(`https://localhost:7260/Kaartje/kaartjeBijGebruiker/${email}`,{
+        fetch(GetEndpoint()+`Kaartje/kaartjeBijGebruiker/${email}`,{
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

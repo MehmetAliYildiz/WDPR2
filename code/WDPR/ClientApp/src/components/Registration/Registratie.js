@@ -50,7 +50,7 @@ function Registratie() {
     let handleRegistratie = async (e) => {
         e.preventDefault();
         try {
-            let res = await fetch("https://localhost:7260/api/Account/registreer", {
+            let res = await fetch(GetEndpoint()+"api/Account/registreer", {
                 headers: {'Content-Type': 'application/json'},
                 method: "POST",
                 mode: "cors",
