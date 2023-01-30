@@ -22,7 +22,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     private DbSet<Agenda> Agenda { get; set; }
     private DbSet<Band> Band { get; set; }
     private DbSet<Artiest> Artiest { get; set; }
-    private DbSet<ArtiestBand> ArtiestBand { get; set; }
+    public DbSet<ArtiestBand> ArtiestBand { get; set; }
     private DbSet<Kaartje> Kaartjes { get; set; }
     private DbSet<StoelKaartje> StoelKaartjes { get; set; }
     private DbSet<Review> Review { get; set; }
@@ -152,9 +152,17 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
         return Gebruiker;
     }
 
+<<<<<<< HEAD
+    public IEnumerable<ArtiestBand> GetArtiestBands()
+    {
+        return ArtiestBand
+        .Include(ab => ab.Artiest)
+        .Include(ab => ab.Band);
+=======
     public IEnumerable<Admin> GetAdmin()
     {
         return Admin;
+>>>>>>> a84d62ba4e81ed9e66bc5cb01ac89e71aaf2233c
     }
 
 
@@ -279,7 +287,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
     
-        builder.UseSqlServer("Data Source=20.77.66.80,1433;MultipleActiveResultSets=true;User Id=SA;Password =Pass@word; Initial Catalog=laak;TrustServerCertificate=True;");
+        builder.UseSqlServer("Data Source=20.77.66.80,1433;User Id=SA;Password =Pass@word; Initial Catalog=laak;TrustServerCertificate=True;");
 
     }
 

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Footer from "../navFoot/Footer";
 import NavBar from "../navFoot/navbar";
-import GetEndpoint from "../Admin/EndPointUtil";
 
 function BandPost() {
   const [bandName, setBandName] = useState("");
@@ -17,7 +16,7 @@ function BandPost() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(GetEndpoint()+"api/band", {
+      const res = await axios.post("https://localhost:7260/api/band", {
         Naam: bandName,
       });
       if (res.status === 201) {
@@ -35,7 +34,7 @@ function BandPost() {
 
   const getBands = async () => {
     try {
-      const res = await axios.get(GetEndpoint()+"api/band");
+      const res = await axios.get("https://localhost:7260/api/band");
       setBands(res.data);
     } catch (error) {
       console.error(error);
@@ -51,11 +50,11 @@ function BandPost() {
           <input className="form-control" type="text" value={bandName} onChange={(e) => setBandName(e.target.value)}
           />
         </label>
-        <button type="submit">Band aanmaken</button>
+        <button type="submit">Add Band</button>
       </form>
       {postSuccess && <p>Band added successfully!</p>}
       {postError && <p>Error adding band. Please try again.</p>}
-      <h1 className={"title"}>Alle Bands</h1>
+      <h1 className={"title"}>Table Band</h1>
       <table className="table">
         <thead>
           <tr>

@@ -35,13 +35,13 @@ class VoorstellingDetail extends Component {
             alert("Helaas, je moet inloggen om voor deze voorstelling een review te plaatsen");
             return;
         }
-        Axios.get(GetEndpoint()+`api/gebruiker/GebruikerIdOpvragen?email=${gebruikersnaam}`).then((res) => {
+        Axios.get(`https://localhost:7260/api/gebruiker/GebruikerIdOpvragen?email=${gebruikersnaam}`).then((res) => {
             this.setState({ gebruiker: res.data });
             this.state.newReview.gebruikerId = res.data.id;
     
             this.state.newReview.voorstellingId = this.state.voorstelling.id;
     
-            Axios.post(GetEndpoint()+"api/review", this.state.newReview)
+            Axios.post("https://localhost:7260/api/review", this.state.newReview)
                 .then(res => {
                     this.setState(prevState => {
                         return {
@@ -55,7 +55,7 @@ class VoorstellingDetail extends Component {
                         }
                     });
                     // Here you can make the API call to get the new average rating
-                    Axios.get(GetEndpoint()+`api/review/average/${this.state.voorstelling.id}`)
+                    Axios.get(`https://localhost:7260/api/review/average/${this.state.voorstelling.id}`)
                     .then(res => {
                         
                         this.setState({ averageRating: Math.round(res.data * 10) / 10 });
@@ -73,7 +73,7 @@ class VoorstellingDetail extends Component {
         const voorstellingId = queryParameters.get("itemId");
 
 
-        Axios.get(GetEndpoint()+`api/review/average/${voorstellingId}`)
+        Axios.get(`https://localhost:7260/api/review/average/${voorstellingId}`)
             .then(res => {
                 this.setState({ averageRating: Math.round(res.data * 10) / 10 });
 
@@ -81,12 +81,12 @@ class VoorstellingDetail extends Component {
             .catch(err => console.log(err));
 
 
-        Axios.get(GetEndpoint()+`api/Voorstelling/${voorstellingId}`).then((res) => {
+        Axios.get(`https://localhost:7260/api/Voorstelling/${voorstellingId}`).then((res) => {
             console.log(res.data.BandId);
             this.setState({ voorstelling: res.data });
         });
 
-        Axios.get(GetEndpoint()+`api/agenda/voorstelling/${voorstellingId}`)
+        Axios.get(`https://localhost:7260/api/agenda/voorstelling/${voorstellingId}`)
 
             .then((res) => {
                 if (res.data == null) return;
@@ -97,7 +97,7 @@ class VoorstellingDetail extends Component {
                 }
             }
         );
-        Axios.get(GetEndpoint()+`api/review/voorstelling/${voorstellingId}`)
+        Axios.get(`https://localhost:7260/api/review/voorstelling/${voorstellingId}`)
             .then((res) => {
                 this.setState({ reviews: res.data });
             });
@@ -117,10 +117,11 @@ class VoorstellingDetail extends Component {
                 </section>
             );
         });
+
         let reviewItems;
         if (this.state.reviews.length > 0) {
             reviewItems = this.state.reviews.map(review => {
-                // Axios.get(GetEndpoint()+`api/gebruiker/${review.gebruikerId}`)
+                // Axios.get(`https://localhost:7260/api/gebruiker/${review.gebruikerId}`)
                 return (
                     <section className="reviewItem">
                         <p className="ReviewText">{review.recensie}</p>
@@ -167,6 +168,9 @@ class VoorstellingDetail extends Component {
                             <input type="submit" value="Plaats Review" />
                         </form>
                         </div>
+                    
+
+
 
                         <h2>Boek Stoelen Voor {this.state.voorstelling.name}</h2>
                         <div className="agendaItem">{agendaItems}</div>

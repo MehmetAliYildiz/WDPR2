@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Footer from "../navFoot/Footer";
 import NavBar from "../navFoot/navbar";
-import GetEndpoint from '../Admin/EndPointUtil';
 
 const GebruikerGet = () => {
     const [gebruikers, setGebruikers] = useState([]);
 
     useEffect(() => {
-        axios.get(GetEndpoint()+'api/gebruiker')
+        axios.get('https://localhost:7260/api/gebruiker')
             .then(response => setGebruikers(response.data))
             .catch(error => console.error(error));
     }, []);
@@ -16,13 +15,13 @@ const GebruikerGet = () => {
     return (
         <div>
             <NavBar/>
-            <h1 className={"title"}>Tabel Gebruikers, Artiesten & Admins</h1>
+            <h1 className={"title"}>Table Alle Gebruikers & Artiesten & Admins</h1>
             <table className="table">
                 <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Gebruikersnaam</th>
-                    <th>E-mail</th>
+                    <th>UserName</th>
+                    <th>Email</th>
                 </tr>
                 </thead>
                 <tbody>

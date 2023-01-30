@@ -24,6 +24,8 @@ import VoorstellingPost from './components/AdminPanel/VoorstellingPost';
 import ArtiestPost from './components/AdminPanel/ArtiestPost';
 import GebruikerGet from './components/AdminPanel/GebruikerGet';
 import BandPost from './components/AdminPanel/BandPost';
+import AdminPost from './components/AdminPanel/AdminPost';
+import ArtiestBandPut from './components/AdminPanel/ArtiestBandPut';
 
 import AdminHoofdMenu from './components/AdminPanel/AdminHoofdMenu';
 import AdminLogin from './components/Admin/adminLogin';
@@ -59,9 +61,14 @@ export default function App() {
                 <Route path={'/Admin/Artiest'} element={<ArtiestPost />}></Route>
                 <Route path={'/Admin/Gebruiker'} element={<GebruikerGet />}></Route>
                 <Route path={'/Admin/Band'} element={<BandPost />}></Route>
+<<<<<<< HEAD
+                <Route path={'/Admin/AdminPost'} element={<AdminPost />}></Route>
+                <Route path={'/Admin/ArtiestBand'} element={<ArtiestBandPut />}></Route>
+=======
 
                 <Route path={'/admin'} element={<AdminHoofdMenu />}></Route>
                 <Route path={'/admin/login'} element={<AdminLogin />}></Route>
+>>>>>>> a84d62ba4e81ed9e66bc5cb01ac89e71aaf2233c
             </Routes>
         </>
 

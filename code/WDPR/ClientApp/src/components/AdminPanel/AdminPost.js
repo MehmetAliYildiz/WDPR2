@@ -3,8 +3,8 @@ import axios from 'axios';
 import Footer from "../navFoot/Footer";
 import NavBar from "../navFoot/navbar";
 
-const ArtiestPost = () => {
-    const [artiesten, setArtiesten] = useState([]);
+const AdminPost = () => {
+    const [admins, setAdmins] = useState([]);
     const [gebruikersnaam, setGebruikersnaam] = useState('');
     const [email, setEmail] = useState('');
     const [wachtwoord, setWachtwoord] = useState('');
@@ -12,26 +12,26 @@ const ArtiestPost = () => {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        axios.get('https://localhost:7260/api/artiest')
-            .then(response => setArtiesten(response.data))
+        axios.get('https://localhost:7260/api/admin')
+            .then(response => setAdmins(response.data))
             .catch(error => console.error(error));
     }, []);
 
     const handleSubmit = event => {
         event.preventDefault();
-        const artiestDTO = {
+        const adminDTO = {
             gebruikersnaam: gebruikersnaam,
             Email: email,
             Wachtwoord: wachtwoord
         };
-        axios.post('https://localhost:7260/api/artiest', artiestDTO)
+        axios.post('https://localhost:7260/api/admin', adminDTO)
             .then(response => {
-                setArtiesten([...artiesten, response.data]);
-                setMessage('Artiest created successfully');
+                setAdmins([...admins, response.data]);
+                setMessage('Admin created successfully');
                 setError('');
             })
             .catch(error => {
-                setError('Error creating artiest: ' + error.message);
+                setError('Error creating admin: ' + error.message);
                 setMessage('');
             });
     }
@@ -39,7 +39,7 @@ const ArtiestPost = () => {
     return (
         <div>
             <NavBar/>
-            <h2>Create new Artiest</h2>
+            <h2>Create new Admin</h2>
             <form onSubmit={handleSubmit}>
                 <label>
                     Gebruikersnaam:
@@ -60,28 +60,27 @@ const ArtiestPost = () => {
             </form>
             {message && <p>{message}</p>}
             {error && <p>{error}</p>}
-            <h1 className={"title"}>Table Artiest</h1>
+            <h1 className={"title"}>Table Admin</h1>
             <table className="table">
                 <thead>
                 <tr>
-                    <th>Id</th>
                     <th>Name</th>
                     <th>Email</th>
                 </tr>
                 </thead>
                 <tbody>
-                {artiesten.map((artiest) => (
-                    <tr key={artiest.Id}>
-                        <td>{artiest.id}</td>
-                        <td>{artiest.userName}</td>
-                        <td>{artiest.email}</td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
-            <Footer/>
-        </div>
-    );
-}
+                {admins.map((admin) => (
 
-export default ArtiestPost;
+            <tr key={admin.id}>
+              <td>{admin.userName}</td>
+              <td>{admin.email}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <Footer/>
+    </div>
+  );
+};
+
+export default AdminPost;

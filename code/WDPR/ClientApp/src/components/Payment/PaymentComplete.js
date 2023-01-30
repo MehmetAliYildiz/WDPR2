@@ -3,9 +3,6 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import GetEndpoint from '../Admin/EndPointUtil';
 import KaartjesDisplay from '../KaartjesDisplay';
-import Kaartje from '../GebruikersPortaal/Kaartje';
-import Navigatie from '../navFoot/navbar';
-import Footer from '../navFoot/Footer';
 
 export default class PaymentComplete extends Component {
     constructor(props) {
@@ -66,17 +63,12 @@ export default class PaymentComplete extends Component {
 
     render() {
         const kaartjes = this.state.kaartjes.map(k =>
-            <Kaartje key={k.code} kaartje={k} />
+            <KaartjesDisplay key={k.code} kaartje={k}/>
         );
         return (
             <div>
-                <Navigatie/>
-                <h1>
-                    Bestelling voltooid
-                </h1>
                 <p>Bedankt voor het betalen ;)</p>
                 {kaartjes}
-                <Footer/>
             </div>
         );
     }

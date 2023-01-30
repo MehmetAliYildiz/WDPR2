@@ -6,6 +6,7 @@ using WDPR.Models;
         IEnumerable<Review> GetReview();
         IEnumerable<Admin> GetAdmin();
         IEnumerable<Agenda> GetAgenda();
+        IEnumerable<ArtiestBand> GetArtiestBands();
         IEnumerable<Gebruiker> GetGebruiker();
         IEnumerable<Reservering> GetReserveringen();
         IEnumerable<Zaal> GetZalen();

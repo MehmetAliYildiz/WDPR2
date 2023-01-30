@@ -17,7 +17,7 @@ function VoorstellingPost() {
     const [voorstellingen, setVoorstellingen] = useState([]);
 
     useEffect(() => {
-        axios.get(GetEndpoint()+'api/Voorstelling')
+        axios.get('https://localhost:7260/api/Voorstelling')
             .then(response => {
                 console.log(response.data)
                 setVoorstellingen(response.data);
@@ -33,7 +33,7 @@ function VoorstellingPost() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post(GetEndpoint()+'api/Voorstelling', voorstelling)
+        axios.post('https://localhost:7260/api/Voorstelling', voorstelling)
             .then(response => {
                 console.log(response);
                 setVoorstelling({ Name: '', beschrijving: '', Img: '', BandId: '' });
@@ -73,17 +73,17 @@ function VoorstellingPost() {
                     <input className="form-control" type="text" name="BandId" value={voorstelling.BandId} onChange={handleChange} />
                 </label>
                 <br />
-                <button type="submit">Voeg voorstelling toe</button>
+                <button type="submit">Save</button>
             </form>
             {message && <div>{message}</div>}
             {error && <div>{error}</div>}
-            <h1 className={"title"}>Tabel Voorstelling</h1>
+            <h1 className={"title"}>Table Voorstelling</h1>
             <table className="table">
                 <thead>
                 <tr>
-                    <th>Naam</th>
-                    <th>Beschrijving</th>
-                    <th>Afbeelding</th>
+                    <th>Name</th>
+                    <th>beschrijving</th>
+                    <th>Img</th>
                     <th>BandId</th>
                 </tr>
                 </thead>

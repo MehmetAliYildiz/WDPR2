@@ -85,10 +85,16 @@ namespace WDPR.Controllers
                 UserName = adminDTO.gebruikersnaam,
                 PasswordHash = adminDTO.Wachtwoord,
                 Email = adminDTO.Email
+                
             };
 
+<<<<<<< HEAD
+            var result = await _userManager.CreateAsync(admin, adminDTO.Wachtwoord);
+            // await _userManager.AddToRoleAsync(admin, "Admin");
+=======
             // await _userManager.AddToRoleAsync(admin, "Admin");
             _context.AddAdmin(admin);
+>>>>>>> a84d62ba4e81ed9e66bc5cb01ac89e71aaf2233c
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetAdmin", new { id = admin.Id }, admin);

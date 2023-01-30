@@ -51,7 +51,6 @@ function Navigatie() {
       // alert('U bent uigelogd!');
       
     };
-    
     return (
         <>
         <nav className="navbar navbar-expand-lg site-navigation navKleur">
@@ -83,25 +82,19 @@ function Navigatie() {
                 <li className="nav-item">
                   <a className="nav-link" href="/doneren">Doneren</a>
                 </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="/reserveren">Zaal huren</a>
-                </li>
                 
                 
                 {isLoggedIn ? 
                   
                 <><li className="nav-item">
-                    <div className="nav-link dropdown-toggle" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome {gebruikersnaam}</div>
-                    <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a className="dropdown-item" href="/gebruikerPortaal">Tickets</a>
-                    </div>
+                    <div className="nav-link">Welcome {gebruikersnaam}</div>
                   </li>
                   <li className="nav-item">
                     <a className="btn koop nav-link" onClick={handleLogout} >uitloggen</a>
                   </li>
-                  {/* <li className="nav-item">
+                  <li className="nav-item">
                       <a className="btn koop nav-link" href="/winkelmand">winkelmand</a>
-                  </li> */}
+                  </li>
                 </>
                 
                  : 

@@ -35,7 +35,7 @@ function Login() {
     let handleLogin = async (e) => {
         e.preventDefault();
         try {
-            let res = await fetch(GetEndpoint()+"api/Account/login", {
+            let res = await fetch("https://localhost:7260/api/Account/login", {
                 headers: {'Content-Type': 'application/json'},
                 method: "POST",
                 mode:"cors",
