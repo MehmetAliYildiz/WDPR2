@@ -9,7 +9,7 @@ import Reserveren from './components/Reserveren';
 import Registratie from './components/Registration/Registratie';
 import ZaalLijst from './components/ZaalLijst';
 import ReserveerForm from './components/ReserveerForm';
-import ShoppingCart from './components/ShoppingCart';
+import ShoppingCart from './components/Payment/ShoppingCart';
 import AdminPanel from './components/AdminPanel/AdminPanel';
 import PaymentForm from "./components/FakePayPagina/PaymentForm";
 import VoorstellingDetail from './components/VoorstellingPagina/VoorstellingDetail';
@@ -55,6 +55,7 @@ export default function App() {
                 <Route path={'/wwVergeten'} element={<WachtwoordVergeten />}></Route>
                 <Route path={'/gebruikerportaal'} element={<GebruikersPortaal />}></Route>
                 <Route path={'/paymentcomplete'} element={<PaymentComplete />}></Route>
+                <Route path={'/winkelmandje'} element={<ShoppingCart/>}></Route>
 
                 <Route path={'/Admin/Artiest'} element={<ArtiestPost />}></Route>
                 <Route path={'/Admin/Gebruiker'} element={<GebruikerGet />}></Route>

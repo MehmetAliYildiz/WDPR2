@@ -14,3 +14,30 @@
 .uitklapper{
     background-color: white;
 }
+
+.cart-knop {
+    padding: 4px 0px 0px 4px;
+    border-style: none;
+    background-color: rgba(0,0,0,0.0);
+    margin: 0px 24px 0px 12px;
+}
+
+.cart-amount {
+    background-color: #8B0001;
+    width: 26px;
+    height: 26px;
+    border-radius: 12px;
+    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
+
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    position: relative;
+    top: -20px;
+    left: 40px;
+}
+
+a.cart-link {
+    text-decoration: none;
+}

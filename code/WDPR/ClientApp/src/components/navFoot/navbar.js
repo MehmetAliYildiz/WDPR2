@@ -1,9 +1,12 @@
 import {useEffect, useState} from "react";
 import { useNavigate } from 'react-router-dom';
+import { FaShoppingBasket } from 'react-icons/fa';
+import { getAmountFromCart } from '../Payment/ShoppingCartUtil';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.js';
 import './Navbar.css'
 import jwt_decode from 'jwt-decode';
+import shoppingCart from '../../assets/payment/shopping_cart.png'
 
 function Navigatie() {
     const navigate = useNavigate();
@@ -42,7 +45,8 @@ function Navigatie() {
         navigate('/');
       }
       else{
-        sessionStorage.clear();
+          sessionStorage.clear();
+          localStorage.removeItem("shoppingCart");
         setIsLoggedIn(false);
         navigate('/');
       }
@@ -51,6 +55,30 @@ function Navigatie() {
       // alert('U bent uigelogd!');
       
     };
+
+    const getCart = () => {
+        console.log(getAmountFromCart());
+        return (
+            <li>
+                <a className="cart-link" href="/winkelmandje">
+                    <button className="cart-knop">
+                        <img height="36px" src={shoppingCart} />
+                    </button>
+                    {getAmountDetail()}
+                </a>
+            </li>
+        );
+    }
+
+    const getAmountDetail = () => {
+        return getAmountFromCart() > 0 ? (
+            <div className="cart-amount">
+                <p>
+                    {getAmountFromCart()}
+                </p>
+            </div>
+        ) : ("");
+    }
     
     return (
         <>
@@ -73,7 +101,7 @@ function Navigatie() {
               <span className="navbar-toggler-icon"></span>
             </button>
               <div className="collapse navbar-collapse col-xl-1 " id={"navbarKlap"}>
-              <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <ul className="navbar-nav ms-auto mb-2 mb-lg-0" style={{}}>
                 <li className="nav-item">
                   <a className="nav-link" href="/">Home</a>
                 </li>
@@ -85,8 +113,8 @@ function Navigatie() {
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="/reserveren">Zaal huren</a>
-                </li>
-                
+                            </li>
+                {getCart()}
                 
                 {isLoggedIn ? 
                   
@@ -110,7 +138,6 @@ function Navigatie() {
                 </li>
                 
                 }
-
 
 
               </ul>

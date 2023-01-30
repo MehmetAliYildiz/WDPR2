@@ -16,7 +16,7 @@ namespace WDPR.Controllers{
         }
 
         [HttpPost]
-         public async Task<ActionResult<Zaal>> PostStoel(Stoel stoel)
+        public async Task<ActionResult<Zaal>> PostStoel(Stoel stoel)
         {
             _context.AddStoel(stoel);
             await _context.SaveChangesAsync();
@@ -25,11 +25,34 @@ namespace WDPR.Controllers{
         }
 
 
-         [HttpGet]
-         public ActionResult<IEnumerable<Stoel>> GetStoel()
-         {
-             return Ok(_context.GetStoelen());
-         }
+        [HttpGet]
+        public ActionResult<IEnumerable<Stoel>> GetStoel()
+        {
+            return Ok(_context.GetStoelen());
+        }
+
+        // Post doen is niet RESTful
+        [HttpPost("getSkFromKaartjes")]
+        public ActionResult<IEnumerable<StoelKaartje>> GetSKFromKaartjes([FromBody] List<Kaartje> kaartjes)
+        {
+            var stoelKaartjes = _context.GetStoelKaartjes().ToList();
+            var output = new List<StoelKaartje>();
+            foreach (Kaartje kaartje in kaartjes)
+            {
+                var stoelKaartje = stoelKaartjes.Where(sk => sk.KaartjeId == kaartje.Id).FirstOrDefault();
+                if (stoelKaartje == null) continue;
+                output.Add(stoelKaartje);
+            }
+
+            output.ForEach(o => {
+                o.Kaartje.StoelKaartjes = new List<StoelKaartje>();
+                o.Kaartje.Bestelling = null;
+                o.Kaartje.Agenda = null;
+                o.Stoel.StoelKaartjes = new List<StoelKaartje>();
+            });
+
+            return output;
+        }
          
         [HttpGet("{zaalId}/{agendaId}")]
         public IActionResult GetStoelenMetBeschikbaarheid(int zaalId, int agendaId)

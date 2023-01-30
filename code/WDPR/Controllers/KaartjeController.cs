@@ -124,8 +124,14 @@ namespace WDPR.Controllers
                 new BoekingUpdateHub(_boekingHubContext).SendStoelBezet(stoelId);
             }
 
+            // Loop prevention
+            kaartje.Bestelling.Gebruiker = null;
+            kaartje.StoelKaartjes = null;
+            kaartje.Agenda = null;
+
+
             // Response
-            return Ok(kaartje.Id);
+            return Ok(kaartje);
         }
 
         // Post maken is niet RESTful, maar het kan eenmaal niet anders als we een lijst in de body willen

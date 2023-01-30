@@ -2,7 +2,7 @@
 import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
-import { addToCartDetail } from './ShoppingCartUtil';
+import { addToCartDetail } from './Payment/ShoppingCartUtil';
 import { appendZero } from './Scheduler/SchedulerUtil';
 import axios from 'axios';
 

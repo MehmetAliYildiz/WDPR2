@@ -19,11 +19,31 @@ namespace WDPR.Controllers
         }
 
         [HttpGet("getBestellingFromCode/{betaalCode}")]
-        public IActionResult GetBestellingFromBezoeker([FromRoute] string betaalCode)
+        public IActionResult GetBestellingFromCode([FromRoute] string betaalCode)
         {
-            if (betaalCode == "" || betaalCode == null) return BadRequest("bezoekerId mag niet leeg zijn");
+            if (betaalCode == "" || betaalCode == null) return BadRequest("betaalCode mag niet leeg zijn");
 
             return Ok(_context.GetBestellingen().Where(b => b.BetaalCode == betaalCode));
+        }
+
+        [HttpGet("getBestellingFromBezoeker/{bezoekerId}")]
+        public IActionResult GetBestellingFromBezoeker([FromRoute] string bezoekerId)
+        {
+            if (bezoekerId == "" || bezoekerId == null) return BadRequest("bezoekerId mag niet leeg zijn");
+
+            return Ok(_context.GetBestellingen().Where(b => b.BezoekerId == bezoekerId && !b.Betaald));
+        }
+
+        [HttpGet("getBestellingFromGebruiker/{gebruikerEmail}")]
+        public IActionResult GetBestellingFromGebruiker([FromRoute] string gebruikerEmail)
+        {
+            if (gebruikerEmail == "" || gebruikerEmail == null) return BadRequest("gebruikerEmail mag niet leeg zijn");
+
+            return Ok(_context.GetBestellingen().Where(b =>
+            {
+                if (b.Gebruiker == null) return false;
+                return b.Gebruiker.Email == gebruikerEmail && !b.Betaald;
+            }));
         }
 
         [HttpGet("payment/bezoeker/{bezoekerCode}")]
@@ -83,7 +103,9 @@ namespace WDPR.Controllers
             {
                 b.Betaald = true;
             });
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
+
+            Console.WriteLine(bestellingen.Where(b => b.Betaald == false).Count());
 
             return Ok(codeWrapper.Code);
         }

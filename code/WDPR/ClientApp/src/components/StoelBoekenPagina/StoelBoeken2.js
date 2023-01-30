@@ -14,6 +14,8 @@ import stoelWit from '../../assets/stoelboeken/stoel_wit.png';
 import stoelZwart from '../../assets/stoelboeken/stoel_zwart.png';
 import stoelRood from '../../assets/stoelboeken/stoel_rood.png';
 import stoelGoud from '../../assets/stoelboeken/stoel_goud.png';
+import { Navigate } from 'react-router-dom';
+import { addToCart } from '../Payment/ShoppingCartUtil';
 
 export default class StoelBoeken extends Component {
     constructor(props) {
@@ -115,6 +117,7 @@ export default class StoelBoeken extends Component {
         }
 
         let endpoint = GetEndpoint() + 'Kaartje/' + (gebruikersNaam ? 'gebruiker' : 'bezoeker');
+        let kaartje;
         const data = {
             agendaId: this.getAgendaId(),
             stoelIds: geselecteerdeStoelen,
@@ -123,19 +126,15 @@ export default class StoelBoeken extends Component {
             code: ""
         };
         try {
-            await axios.post(endpoint, data);
+            kaartje = (await axios.post(endpoint, data)).data;
         } catch (err) {
             console.error(err);
         }
 
-        endpoint = GetEndpoint() + 'Bestelling/payment/' + (gebruikersNaam ? 'gebruiker/' : 'bezoeker/') + (gebruikersNaam ? gebruikersNaam : bezId);
-        console.log(endpoint);
-        try {
-            const response = await axios.get(endpoint);
-            this.setState({ redirectLink: "http://allyourgoods-transport-webapp-staging.azurewebsites.net/?id=" + response.data.code });
-        } catch (err) {
-            console.error(err);
-        }
+        console.log(kaartje);
+        addToCart("kaartje-" + kaartje.id, kaartje.bestelling.bedrag, kaartje);
+
+        this.setState({ redirectLink: "/winkelmandje" });
     }
 
     getImage(rang, status) {
@@ -208,7 +207,7 @@ export default class StoelBoeken extends Component {
             );
         }
 
-        return (
+        return this.state.redirectLink !== null ? (<Navigate to={this.state.redirectLink}/>) : (
             <div>
                 <Navigatie/>
                 <div className="main">
