@@ -22,7 +22,7 @@ public class DbTheaterLaakContext : IdentityDbContext, IDbTheaterLaakContext
     private DbSet<Agenda> Agenda { get; set; }
     private DbSet<Band> Band { get; set; }
     private DbSet<Artiest> Artiest { get; set; }
-    private DbSet<ArtiestBand> ArtiestBand { get; set; }
+    public DbSet<ArtiestBand> ArtiestBand { get; set; }
     private DbSet<Kaartje> Kaartjes { get; set; }
     private DbSet<StoelKaartje> StoelKaartjes { get; set; }
     private DbSet<Review> Review { get; set; }
