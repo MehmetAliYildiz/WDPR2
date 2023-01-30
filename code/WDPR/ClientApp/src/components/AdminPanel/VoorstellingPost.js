@@ -17,7 +17,7 @@ function VoorstellingPost() {
     const [voorstellingen, setVoorstellingen] = useState([]);
 
     useEffect(() => {
-        axios.get('https://localhost:7260/api/Voorstelling')
+        axios.get(GetEndpoint()+'api/Voorstelling')
             .then(response => {
                 console.log(response.data)
                 setVoorstellingen(response.data);
@@ -33,7 +33,7 @@ function VoorstellingPost() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('https://localhost:7260/api/Voorstelling', voorstelling)
+        axios.post(GetEndpoint()+'api/Voorstelling', voorstelling)
             .then(response => {
                 console.log(response);
                 setVoorstelling({ Name: '', beschrijving: '', Img: '', BandId: '' });

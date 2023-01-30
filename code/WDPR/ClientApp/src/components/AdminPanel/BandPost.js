@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Footer from "../navFoot/Footer";
 import NavBar from "../navFoot/navbar";
+import GetEndpoint from "../Admin/EndPointUtil";
 
 function BandPost() {
   const [bandName, setBandName] = useState("");
@@ -16,7 +17,7 @@ function BandPost() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("https://localhost:7260/api/band", {
+      const res = await axios.post(GetEndpoint()+"api/band", {
         Naam: bandName,
       });
       if (res.status === 201) {
@@ -34,7 +35,7 @@ function BandPost() {
 
   const getBands = async () => {
     try {
-      const res = await axios.get("https://localhost:7260/api/band");
+      const res = await axios.get(GetEndpoint()+"api/band");
       setBands(res.data);
     } catch (error) {
       console.error(error);
