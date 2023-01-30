@@ -73,8 +73,8 @@ namespace WDPR.Controllers
                 var values = new
                 {
                     amount = bestellingen.Sum(b => b.Bedrag),
-                    redirectUrl = "https://localhost:44469/paymentcomplete",
-                    feedbackUrl = "http://20.77.66.80/bestelling/voltooid"
+                    redirectUrl = "http://wdprtheaterlaak.uksouth.cloudapp.azure.com/paymentcomplete",
+                    feedbackUrl = "http://wdprtheaterlaak.uksouth.cloudapp.azure.com/bestelling/voltooid"
                 };
 
                 var json = JsonSerializer.Serialize(values);
